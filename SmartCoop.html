@@ -252,20 +252,39 @@
     var numEggs;
 
     (async function(){
-        $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID')}, function(result){
-            result.forEach(function(eggs){
-                
-            })
-        })
-
     
-
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Green'],
-                datasets
+                labels: ['Eggs'],
+                datasets: [{
+                    label: 'Date',
+                    data: [],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
+        })
+
+
+        $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID')}, function(result){
+            result.forEach(function(eggs){
+                let label = eggs.Date
+                let newData = eggs.Number
+                function addData(ctx, label, newData){
+                    ctx.data.labels.push(label);
+                    chart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(newData);
+                    });
+                    chart.update();
+                }
+            })
         })
     })
     
@@ -382,15 +401,16 @@
 
     $('#btnViewSetting').on('click',function(){
         let strSetting = $('#txtViewSetting').val();
-        $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID'), setting:strSettings}, function(result) {
+        $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID'), setting:strSetting}, function(result) {
             console.log(result);
         })
     })
-    $('#btnSettings').on('click',function(){
+    //I think we have a duplicate block of code here (see lines 321-325), so I commented this one out:
+    /*$('#btnSettings').on('click',function(){
         $('#divDashboard').slideUp(function(){
             $('#divSettings').slideDown();
         })
-    })
+    })*/
     $('#btnEggs').on('click',function(){
         $('#divDashboard').slideUp(function(){
             $('#divEggs').slideDown();
@@ -442,6 +462,11 @@
     })
     $('#btnReturnEnvironment').on('click',function(){
         $('#divEnvironment').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    })
+    $('#btnReturnSettings').on('click',function(){
+        $('#divSettings').slideUp(function(){
             $('#divDashboard').slideDown();
         })
     })
