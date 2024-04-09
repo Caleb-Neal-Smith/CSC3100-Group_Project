@@ -249,14 +249,24 @@
     <script>
     var strCoopID;
     const ctx = document.getElementById('chartEggs');
+    var numEggs;
 
-    var numEggs = $.getJSON('https://Simplecoop.swollenhippo.com/eggs.php')
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Green'],
-            datasets
-        }
+    (async function(){
+        $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID')}, function(result){
+            result.forEach(function(eggs){
+                
+            })
+        })
+
+    
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Green'],
+                datasets
+            }
+        })
     })
     
     //Generates a new Coop ID when web page is loaded and pre-fills the Coop ID input on the registration page.
@@ -371,6 +381,7 @@
     })
 
     $('#btnViewSetting').on('click',function(){
+        let strSetting = $('#txtViewSetting').val();
         $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID'), setting:strSettings}, function(result) {
             console.log(result);
         })
