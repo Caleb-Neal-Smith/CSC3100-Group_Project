@@ -362,36 +362,39 @@
         }
     })
     $('#btnDelSettings').on('click',function(){
-        strSettings = $('#txtSettings').val();
-        strValue = $('#txtValue').val();
+        strDelSetting = $('#txtDelSetting').val();
+        //strValue = $('#txtValue').val();
 
         let blnError = false;
         let strErrorMessage = '';
         //Settings must not be blank
-        if (strSettings.length < 1){
+        if (strDelSetting.length < 1){
             blnError = true;
             strErrorMessage = strErrorMessage + '<p>Settings cannot be blank.</p>';
         }
         if(blnError == true){
             console.log(strErrorMessage);
             Swal.fire({
-            title: "Oops",
-            html: strErrorMessage,
-            icon: "error"
+                title: "Oops",
+                html: strErrorMessage,
+                icon: "error"
             });
         }
         else{
             $.ajax({
             url: 'https://simplecoop.swollenhippo.com/settings.php',
             type: 'DELETE',
-            data: {SessionID:sessionStorage.getItem('SessionID'),strSetting:"txtDelSetting"},
+            data: {SessionID:sessionStorage.getItem('SessionID'),setting:strDelSetting},
             success: function(result) {
-                if(result.Error) {
+                result = JSON.parse(result);
+                if(result.Error){
                     Swal.fire({
                         title: "Oops",
                         html:  result.Error + '<p> :The error that occured</p>',
                         icon: "error"
-                    })
+                    });
+                } else{
+                    console.log(result.Outcome);
                 }
             }
             });
@@ -401,7 +404,7 @@
 
     $('#btnViewSetting').on('click',function(){
         let strSetting = $('#txtViewSetting').val();
-        $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID'), setting:strSetting}, function(result) {
+        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:strSetting}, function(result) {
             console.log(result);
         })
     })
@@ -807,6 +810,7 @@
                 console.log("Logout button clicked")
                 sessionStorage.removeItem('SessionID');
                 $('#divDashboard').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
                     $('#divLogin').slideDown();
                 }) 
             }
