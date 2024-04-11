@@ -204,7 +204,8 @@
                 <h3>Environment</h3>
                 <button class="col-12 btn text-center btn btn-primary" id="btnEnvCreate" type="button">Create Environment</button>
                 <button class="col-12 btn text-center btn btn-danger" id="btnEnvDelet" type="button">Delete Environment</button>
-                <button class="col-12 btn text-center btn btn-success" id="btnEnvView" type="button">View Environment></button>
+                <button class="col-12 btn text-center btn btn-success" id="btnEnvView" type="button">View Environment</button>
+                <button class="col-12 btn text-center btn btn-success" id="btnViewEnvDetails" type="button">View Environment Details</button>
                 <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEnvironment" type="button">Return to Dashboard</button>
             </div>
         </div>
@@ -263,6 +264,8 @@
     
     //Gets the ammount of eggs to display on the dashboard
     
+    //Our CoopID: 9QWFCCR4
+
     //Generatee-fill the Coop ID input on the registration page.
     //We only need to generate one Coop ID, so we will leave this commented out
     /*$.post('https://simplecoop.swollenhippo.com/coop.php', function(result) {
@@ -871,7 +874,7 @@ function phoneFormat(input){
         return input; 
     }
     //Generate random enviroment
-/*function getRandomObservationDatetime() {
+function getRandomObservationDatetime() {
   // Get the current date
    var currentDate = new Date();
   // Generate a random number of days between 0 and 100
@@ -892,6 +895,7 @@ function getRandomHumidity() {
    return Math.random() * (98 - 30) + 30;
 }
 /* I don't know if we need the loop down here or not. I think we may need to 
+   do this loop whenever an account (or Coop ID) is registered.
 // Loop to execute the code block 100 times
 for (var i = 0; i < 100; i++) {
   // The SessionID and additional data with random temperature, humidity, and observationdatetime
@@ -906,6 +910,16 @@ for (var i = 0; i < 100; i++) {
       console.log(result);
    });
 } */
+
+$('#btnViewEnvDetails').on('click',function(){
+    let intDays = 5;
+    $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
+        envResults.forEach(function(envDetail) {
+            console.log(envDetail);
+        })
+    })
+})
+
 </script>
 </body>
 </html>
