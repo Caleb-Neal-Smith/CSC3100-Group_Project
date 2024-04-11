@@ -717,7 +717,8 @@
                             coopUpdate = JSON.parse(coopUpdate)
                             console.log(coopUpdate.Outcome);
                             // Loop to execute the code block 100 times
-                            for (var i = 0; i < 100; i++) {
+                            //I'm commenting out the for loop for now to avoid overloading the database
+                            /*for (var i = 0; i < 100; i++) {
                                 // The SessionID and additional data with random temperature, humidity, and observationdatetime
                                 var requestData = {
                                     SessionID:sessionStorage.getItem('SessionID'),
@@ -729,7 +730,7 @@
                                 $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
                                     console.log(result);
                                 });
-                            }
+                            }*/
                             $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID')}, function(coopResults) {
                                 coopResults.forEach(function(strCoopDetail) {
                                     console.log(strCoopDetail);
