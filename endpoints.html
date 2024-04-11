@@ -92,6 +92,21 @@ $.post('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage
     console.log('Post request successful');
     console.log(result.Outcome);
 })
+
+
+$.getJSON('https://simplecoop.swollenhippo',function(result){
+    if(result){
+        result.forEach(egg)
+        {
+            numEggs = numEggs + egg.num;
+        }
+        document.getElementById("numEggs").innerHTML = numEggs;
+    }
+    else{
+        numEggs = 0;
+    }
+    })
+    
 $.ajax({
     url: 'https://simplecoop.swollenhippo.com/eggs.php',
     type: 'PUT',
