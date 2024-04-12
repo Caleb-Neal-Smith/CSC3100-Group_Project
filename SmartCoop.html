@@ -282,10 +282,11 @@
         function(sessionDetails){
             console.log(sessionDetails);    
             if(sessionDetails == null){
-                $('#divLogin').slideToggle("slow")  
+                $('#divLogin').slideToggle("slow")
             } else{
                 $('#divDashboard').slideToggle("slow")  
             }
+            updateNavbar(sessionDetails);
         })
     
     $('#btnUserAddress').on('click',function(){
@@ -738,7 +739,8 @@
                         }
                     })
                 })
-            })  
+            })
+            updateNavbar();  
         }
     })
     //Click event for the Login Button
@@ -810,28 +812,17 @@
                             $('#divDashboard').slideDown();
                             $('#navLogin').attr('data-card', 'Dashboard');
                             $('#navRegister').attr('data-card', 'Dashboard');
+                            updateNavbar(result);
                         })
                     })
+
                 }
         })
     })
     
     //This function shows up on the dashboard and gives the user the option to logout
     $('#btnLogout').on('click', function(){
-    $.ajax({
-            url: 'https://simplecoop.swollenhippo.com/sessions.php',
-            type: 'DELETE',
-            data: {SessionID:sessionStorage.getItem('SessionID')},
-            success: function(result) {
-                // remove the SessionID item from the browsers Session Storage
-                console.log("Logout button clicked")
-                sessionStorage.removeItem('SessionID');
-                $('#divDashboard').slideUp(function(){
-                    $('#divMain').addClass('vh-100');
-                    $('#divLogin').slideDown();
-                }) 
-            }
-        });
+        logout();
     })
 //On a key click, set var phoneNumber to the Phone Number text box and sent the value to the phoneFormat function
 document.getElementById('txtPhoneNumber').addEventListener('keyup',function(evt){
@@ -842,6 +833,79 @@ document.getElementById('txtPhoneNumber').addEventListener('keyup',function(evt)
 
 // We need to manually format the phone number on page load
 document.getElementById('txtPhoneNumber').value = phoneFormat(document.getElementById('txtPhoneNumber').value);
+
+function logout() {
+    $.ajax({
+        url: 'https://simplecoop.swollenhippo.com/sessions.php',
+        type: 'DELETE',
+        data: {SessionID:sessionStorage.getItem('SessionID')},
+        success: function(result) {
+            // remove the SessionID item from the browsers Session Storage
+            console.log("Logout button clicked")
+            sessionStorage.removeItem('SessionID');
+            $('#divDashboard').slideUp(function(){
+                $('#divMain').addClass('vh-100');
+                $('#divLogin').slideDown();
+                updateNavbar();
+                $('#divDashboard').getElementById('txtLoginEmail').value = '';
+                $('#divDashboard').getElementById('txtLoginPassword').value = '';
+            }) 
+        }
+    });
+
+}
+// NOTE: isLoggedIn is not currently being used, so should be fine to delete but ive been using it as a test.
+function isLoggedIn(sessionDetails) {
+    // Check if there's a user session cookie or local storage item
+    if (sessionDetails != null) {
+        // if user is logged in, log the status and return true
+        console.log("User is not logged in.");
+        return false;
+    } else {
+        // if the user isnt logged in, log the status and return false
+        console.log("User is logged in.");
+        return true;
+    }
+}
+
+// Update the navbar based on the user's login status
+function updateNavbar(sessionDetails) {
+    if(sessionDetails != null) {        
+        // If the user is logged in, change the navLogin to navSettings and navRegister to navLogout
+        $('#navLogin').text('Settings');
+        $('#navLogin').attr('id', 'navSettings');
+        $('#navSettings').off('click'); // Remove the previous click event handler
+        $('#navSettings').on('click', function() {
+            // Add functionality to show the settings
+            $('#btnSettings').click();
+        });
+
+        $('#navRegister').text('Logout');
+        $('#navRegister').attr('id', 'navLogout');
+        $('#navLogout').off('click'); // Remove the previous click event handler
+        $('#navLogout').on('click', function() {
+            // Add functionality to log out the user
+            logout();
+        });
+    } else {
+        // If the user is not logged in, change the navSettings to navLogin and navLogout to navRegister
+        $('#navSettings').text('Login');
+        $('#navSettings').attr('id', 'navLogin');
+        $('#navLogin').off('click'); // Remove the previous click event handler
+        $('#navLogin').on('click', function() {
+            // Add functionality to show the login form
+            $('#divLogin').slideDown();
+        });
+
+        $('#navLogout').text('Register');
+        $('#navLogout').attr('id', 'navRegister');
+        $('#navRegister').off('click'); // Remove the previous click event handler
+        $('#navRegister').on('click', function() {
+            // Add functionality to show the registration form
+            $('#divRegister').slideDown();
+        });
+    }
+}
 
 // A function to determine if the pressed key is an integer
 function numberPressed(evt){
