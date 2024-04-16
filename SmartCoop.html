@@ -250,6 +250,15 @@
                 <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
             </div>
         </div>
+        <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
+            <div class="card-header">
+                <h3>Environment</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
     </div>
     <!-- Necessary scripts for jquery, bootstrap, sweetalert, and chartJS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -258,8 +267,42 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     var strCoopID;
+    //Temporarily commenting this out
     const ctx = document.getElementById('chartEggs');
+    const ctxTwo = document.getElementById('myChart');
+    new Chart(ctxTwo, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
     var numEggs = 0;
+
+    $('#btnViewEnvDetails').on('click',function(){
+        /*let intDays = 5;
+        $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
+            envResults.forEach(function(envDetail) {
+                console.log(envDetail);
+            })
+        })*/
+        $('#divEnvironment').slideUp(function() {
+            $('#divEnvChart').slideDown();
+        });
+    })
 
     
     //Gets the ammount of eggs to display on the dashboard
@@ -411,7 +454,7 @@
             console.log(result);
         })
     })
-    //I think we have a duplicate block of code here (see lines 321-325), so I commented this one out:
+    //I think we have a duplicate block of code here, so I commented this one out:
     /*$('#btnSettings').on('click',function(){
         $('#divDashboard').slideUp(function(){
             $('#divSettings').slideDown();
@@ -912,14 +955,7 @@ for (var i = 0; i < 100; i++) {
    });
 } */
 
-$('#btnViewEnvDetails').on('click',function(){
-    let intDays = 5;
-    $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
-        envResults.forEach(function(envDetail) {
-            console.log(envDetail);
-        })
-    })
-})
+
 
 </script>
 </body>
