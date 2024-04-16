@@ -255,7 +255,8 @@
                 <h3>Environment</h3>
             </div>
             <div class="card-body">
-                <canvas id="myChart"></canvas>
+                <canvas id="envChart"></canvas>
+                <!--<canvas id="myChart"></canvas>-->
             </div>
         </div>
 
@@ -267,10 +268,32 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     var strCoopID;
-    //Temporarily commenting this out
     const ctx = document.getElementById('chartEggs');
     const ctxTwo = document.getElementById('myChart');
-    new Chart(ctxTwo, {
+    const ctxEnvironment = document.getElementById('envChart');
+    //Configuration object for tempChart
+    var objConfig = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Temperature (°F)',
+                data: [],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        },
+    }
+    //I may delete this commented code later because it may not be needed. - Caleb
+    /*new Chart(ctxTwo, {
         type: 'bar',
         data: {
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -289,19 +312,51 @@
             responsive: true,
             maintainAspectRatio: false
         }
-    });
+    });*/
+    /*var tempChart = new Chart(ctxEnvironment, {
+        type: 'line',
+        data: {
+            //labels: [],
+            datasets: [{
+                label: 'Temperature (°F)',
+                //data: [12, 19, 3, 5, 2, 3],
+                //borderWidth: 1
+            }]
+        },
+        options: {},
+    });*/
+    /*let intDays = 5;
+    $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
+        
+        envResults.forEach(function(envDetail) {
+            console.log(envDetail);
+            
+        })
+    })*/
+    
     var numEggs = 0;
 
     $('#btnViewEnvDetails').on('click',function(){
-        /*let intDays = 5;
+        let intDays = 5;
+        let count = 0;
+        let day = '';
         $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
             envResults.forEach(function(envDetail) {
                 console.log(envDetail);
+                count++;
+                //day = envDetail.ObservationDateTime.getDay() + '-' + envDetail.ObservationDateTime.getMonth() + '-' + envDetail.ObservationDateTime.getFullYear();
+                day = envDetail.ObservationDateTime.split(' ')[0]; 
+                objConfig.data.labels.push(day);
+                objConfig.data.datasets.forEach((dataset) => {
+                    dataset.data.push(envDetail.Temperature);
+                })
             })
-        })*/
-        $('#divEnvironment').slideUp(function() {
-            $('#divEnvChart').slideDown();
-        });
+            console.log(count);
+            var tempChart = new Chart(ctxEnvironment, objConfig);
+            $('#divEnvironment').slideUp(function() {
+                $('#divEnvChart').slideDown();
+            });
+        })
     })
 
     
