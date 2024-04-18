@@ -250,14 +250,29 @@
                 <button class="col-12 btn text-center btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
             </div>
         </div>
-        <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
+        <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none;">
             <div class="card-header">
                 <h3>Environment</h3>
             </div>
             <div class="card-body">
-                <canvas id="envChart"></canvas>
+                <div id="divTempChart" class="card"> <!--IMPORTANT: May need to add back "height:100vh" into style attribute-->
+                    <div class="card-header">
+                        <h5>Temperature</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="envTemperatureChart"></canvas>
+                    </div>
+                </div>
+                <div id="divHumidityChart" class="card">
+                    <div class="card-header">
+                        <h5>Humidity</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="envHumidityChart"></canvas>
+                    </div>
+                </div>
                 <!--<canvas id="myChart"></canvas>-->
-                <button class="col-12 btn text-center btn-secondary" id="btnReturnEnvDetails" type="button">Return to Dashboard</button>
+                <!--<button class="col-12 btn text-center btn-secondary" id="btnReturnEnvDetails" type="button">Return to Dashboard</button>-->
             </div>
         </div>
 
@@ -270,16 +285,38 @@
     <script>
     var strCoopID;
     var tempChart;
+    var humidityChart;
     const ctx = document.getElementById('chartEggs');
     const ctxTwo = document.getElementById('myChart');
-    const ctxEnvironment = document.getElementById('envChart');
+    const ctxTemperature = document.getElementById('envTemperatureChart');
+    const ctxHumidity = document.getElementById('envHumidityChart');
     //Configuration object for tempChart
-    var objConfig = {
+    var objTempConfig = {
         type: 'line',
         data: {
             labels: [],
             datasets: [{
                 label: 'Temperature (°F)',
+                data: [],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        },
+    }
+    var objHumidityConfig = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Humidity',
                 data: [],
                 borderWidth: 1
             }]
@@ -315,7 +352,7 @@
             maintainAspectRatio: false
         }
     });*/
-    /*var tempChart = new Chart(ctxEnvironment, {
+    /*var tempChart = new Chart(ctxTemperature, {
         type: 'line',
         data: {
             //labels: [],
@@ -349,13 +386,19 @@
                 count++;
                 //day = envDetail.ObservationDateTime.getDay() + '-' + envDetail.ObservationDateTime.getMonth() + '-' + envDetail.ObservationDateTime.getFullYear();
                 day = envDetail.ObservationDateTime.split(' ')[0]; 
-                objConfig.data.labels.push(day);
-                objConfig.data.datasets.forEach((dataset) => {
+                objTempConfig.data.labels.push(day);
+                objTempConfig.data.datasets.forEach((dataset) => {
                     dataset.data.push(envDetail.Temperature);
+                })
+                objHumidityConfig.data.labels.push(day);
+                objHumidityConfig.data.datasets.forEach((dataset) => {
+                    dataset.data.push(envDetail.Humidity);
                 })
             })
             console.log(count);
-            var tempChart = new Chart(ctxEnvironment, objConfig);
+            tempChart = new Chart(ctxTemperature, objTempConfig);
+            humidityChart = new Chart(ctxHumidity, objHumidityConfig);
+
             $('#divEnvironment').slideUp(function() {
                 $('#divEnvChart').slideDown();
             });
@@ -575,6 +618,47 @@
     $('#btnReturnEnvDetails').on('click',function(){
         $('#divEnvChart').slideUp(function(){
             tempChart.destroy();
+            humidityChart.destroy();
+            objTempConfig = {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Temperature (°F)',
+                        data: [],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                },
+            }
+            objHumidityConfig = {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Temperature (°F)',
+                        data: [],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                },
+            }
             $('#divDashboard').slideDown();
         })
     })
