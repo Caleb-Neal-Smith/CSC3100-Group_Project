@@ -160,17 +160,6 @@
             </div>
             <div class="card-body">
                 <form>
-                    <!--
-                    <div class="row">
-                        <div class="column">
-                        <div class="card">
-                            <h3><span id="numEggs"></span></h3>
-                            <p>Eggs</p>
-                        </div>
-                    </div>
-                    -->
-                </form>
-                <form>
                     <button class="col-12 btn text-center btn btn-primary" id="btnEggs" type="button">Eggs</button>   
                 </form>
                 <form>
@@ -190,16 +179,20 @@
                 <h3>Eggs</h3>
             </div>
             <div class="card-body">
-                        <form class="col-4">
-                            <label for="txtEggs" class="form-label">Number of Eggs</label>
-                            <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
-                            <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
-                            <label for="eggDate" class="form-label">Days to View</label>
-                            <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
-                            <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
-                            <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
-                        </form>
+                    
+                <div class="col-12 row">
+                    <form class="col-4">
+                        <label for="txtEggs" class="form-label">Number of Eggs</label>
+                        <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
+                        <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
+                        <label for="eggDate" class="form-label">Days to View</label>
+                        <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
+                        <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
+                        <button class="btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
+                    </form>
+                    <div class="col-8">
                         <canvas id="eggsChart" style="display:none"></canvas>
+                    </div>
             </div>
         </div>
          
