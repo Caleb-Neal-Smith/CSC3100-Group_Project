@@ -337,6 +337,7 @@
     var numEggs = 0;
 
     $('#btnViewEnvDetails').on('click',function(){
+        
         let intDays = 5;
         let count = 0;
         let day = '';
@@ -911,6 +912,21 @@
                             $('#navRegister').attr('data-card', 'Dashboard');
                         })
                     })
+                    // Loop to execute the code block 100 times
+                    //I'm commenting out the for loop for now to avoid overloading the database
+                    for (var i = 0; i < 100; i++) {
+                        // The SessionID and additional data with random temperature, humidity, and observationdatetime
+                        var requestData = {
+                            SessionID:sessionStorage.getItem('SessionID'),
+                            observationDateTime: getRandomObservationDatetime(),
+                            temperature: getRandomTemperature(),
+                            humidity: getRandomHumidity()
+                        };
+                        // Making the AJAX request using POST
+                        $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
+                            console.log(result);
+                        });
+                    }
                 }
         })
     })
