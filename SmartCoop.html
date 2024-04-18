@@ -911,22 +911,31 @@
                             $('#navLogin').attr('data-card', 'Dashboard');
                             $('#navRegister').attr('data-card', 'Dashboard');
                         })
+                        /*for (var i = 0; i < 100; i++) {
+                            // The SessionID and additional data with random temperature, humidity, and observationdatetime
+                            var requestData = {
+                                SessionID:sessionStorage.getItem('SessionID'),
+                                observationDateTime: getRandomObservationDatetime(),
+                                temperature: getRandomTemperature(),
+                                humidity: getRandomHumidity()
+                            };
+                            // Making the AJAX request using POST
+                            $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
+                                console.log(result);
+                            });
+                            if(i == 99) {
+                                $('#divLogin').slideUp(function(){
+                                    $('#divMain').removeClass('vh-100');
+                                    $('#divDashboard').slideDown();
+                                    $('#navLogin').attr('data-card', 'Dashboard');
+                                    $('#navRegister').attr('data-card', 'Dashboard');
+                                })
+                            }
+                        }*/
                     })
                     // Loop to execute the code block 100 times
                     //I'm commenting out the for loop for now to avoid overloading the database
-                    for (var i = 0; i < 100; i++) {
-                        // The SessionID and additional data with random temperature, humidity, and observationdatetime
-                        var requestData = {
-                            SessionID:sessionStorage.getItem('SessionID'),
-                            observationDateTime: getRandomObservationDatetime(),
-                            temperature: getRandomTemperature(),
-                            humidity: getRandomHumidity()
-                        };
-                        // Making the AJAX request using POST
-                        $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
-                            console.log(result);
-                        });
-                    }
+                    
                 }
         })
     })
