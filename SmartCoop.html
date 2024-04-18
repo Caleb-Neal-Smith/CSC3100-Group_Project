@@ -24,7 +24,7 @@
                     <ul class="navbar-nav me-auto">
                         <!-- The home link -->
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Home
+                            <a class="nav-link active" id="navHome" href="#">Home
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
@@ -295,9 +295,7 @@
         })
     })
     $('#btnReturnUserAddress').on('click',function(){
-        $('#divUserAddress').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
+        returnHome();
     })
     $('#btnSettings').on('click',function(){ 
         /*$.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:strSetting}, function(result) {
@@ -457,9 +455,7 @@
         }
     })
     $('#btnReturnEggs').on('click',function(){
-        $('#divEggs').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
+        returnHome();
     })
     
     $('#btnEnvModify').on('click',function(){
@@ -468,14 +464,10 @@
         })
     })
     $('#btnReturnEnvironment').on('click',function(){
-        $('#divEnvironment').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
+        returnHome();
     })
     $('#btnReturnSettings').on('click',function(){
-        $('#divSettings').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
+        returnHome();
     })
 
     //When a button is clicked with the class btnToggle the function gathers the information from the Login and registration text boxes
@@ -583,6 +575,9 @@
         }
     })
 
+    $('#navHome').on('click',function() {
+        returnHome();
+    })
     //On click of the button register
     $('#btnRegister').on('click', function(){
     //Initializes btnError and strError message to flase and empty
@@ -852,8 +847,28 @@ function logout() {
             }) 
         }
     });
-
 }
+//This function is used to return to the dashboard from any of the 
+function returnHome() {
+    if($('#divEggs').is(':visible')){
+        $('#divEggs').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    } else if ($('#divEnvironment').is(':visible')){
+        $('#divEnvironment').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    } else if ($('#divSettings').is(':visible')){
+        $('#divSettings').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    } else if ($('#divUserAddress').is(':visible')){
+        $('#divUserAddress').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    }
+}
+
 // NOTE: isLoggedIn is not currently being used, so should be fine to delete but ive been using it as a test.
 function isLoggedIn(sessionDetails) {
     // Check if there's a user session cookie or local storage item
