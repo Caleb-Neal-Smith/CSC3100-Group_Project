@@ -838,13 +838,52 @@ function logout() {
             // remove the SessionID item from the browsers Session Storage
             console.log("Logout button clicked")
             sessionStorage.removeItem('SessionID');
-            $('#divDashboard').slideUp(function(){
-                $('#divMain').addClass('vh-100');
-                $('#divLogin').slideDown();
-                updateNavbar();
-                $('#divDashboard').getElementById('txtLoginEmail').value = '';
-                $('#divDashboard').getElementById('txtLoginPassword').value = '';
-            }) 
+            if ($('#divDashboard').is(':visible')) {
+                $('#divDashboard').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divEggs').is(':visible')) {
+                $('#divEggs').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divEnvironment').is(':visible')) {
+                $('#divEnvironment').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divSettings').is(':visible')) {
+                $('#divSettings').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divUserAddress').is(':visible')) {
+                $('#divUserAddress').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            }
+            updateNavbar();
+
+            // old code: dont delete yet
+            // $('#divDashboard').slideUp(function(){
+            //     $('#divMain').addClass('vh-100');
+            //     $('#divLogin').slideDown();
+            //     updateNavbar();
+            //     $('#divDashboard').getElementById('txtLoginEmail').value = '';
+            //     $('#divDashboard').getElementById('txtLoginPassword').value = '';
+            // }) 
         }
     });
 }

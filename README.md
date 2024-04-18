@@ -8,18 +8,24 @@ dont merge until it's done, cause i dont want it to break everything else
 
 # **changelog**
 
+### 4.18.1
+**added**
+- none
+
+**changed**
+- modified navLogout to have an if statement where depending on the screen it's in, it will close that and logout. Currently it only opens the login screen next to the current one and changes the navbar.
+
+**to do**
+- change account button to 3 lines to make it more uniform like a normal webpage
+- change account dropdown to only show login or register
+
+
 ### 4.18.0
 **added**
 - added a return to dashboard function
 
 **changed**
 - modified the existing buttons to simply call the returnHome() function
-
-**to do**
-- change account button to 3 lines to make it more uniform like a normal webpage
-- change home button to actually send you to the dashboard(wip)
-- change account dropdown to only show login/register
-- need to modify navLogout to have an if statement where depending on the screen it's in, it will close that and logout. Currently it only opens the login screen next to the current one and changes the navbar. (next)
 
 
 ### 4.11.1
