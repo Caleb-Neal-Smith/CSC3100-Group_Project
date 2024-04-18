@@ -245,9 +245,9 @@
         <div class="card col-12 col-md-10 col-lg-9" id="divUserAddress" style="display:none">
             <div class="card-header">
                 <h3>Weather</h3>
-                <button class="col-12 btn text-center btn btn-primary" id="btnEnvCreate" type="button">Create Address</button>
-                <button class="col-12 btn text-center btn btn-success" id="btnEnvDelet" type="button">Delete Address</button>
-                <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
+                <button class="col-12 btn text-center btn-primary" id="btnEnvCreate" type="button">Create Address</button>
+                <button class="col-12 btn text-center btn-success" id="btnEnvDelet" type="button">Delete Address</button>
+                <button class="col-12 btn text-center btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
             </div>
         </div>
         <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
@@ -257,6 +257,7 @@
             <div class="card-body">
                 <canvas id="envChart"></canvas>
                 <!--<canvas id="myChart"></canvas>-->
+                <button class="col-12 btn text-center btn-secondary" id="btnReturnEnvDetails" type="button">Return to Dashboard</button>
             </div>
         </div>
 
@@ -268,6 +269,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     var strCoopID;
+    var tempChart;
     const ctx = document.getElementById('chartEggs');
     const ctxTwo = document.getElementById('myChart');
     const ctxEnvironment = document.getElementById('envChart');
@@ -567,6 +569,12 @@
     })
     $('#btnReturnEnvironment').on('click',function(){
         $('#divEnvironment').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    })
+    $('#btnReturnEnvDetails').on('click',function(){
+        $('#divEnvChart').slideUp(function(){
+            tempChart.destroy();
             $('#divDashboard').slideDown();
         })
     })
