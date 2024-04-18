@@ -258,6 +258,7 @@
                 <canvas id="envChart"></canvas>
                 <!--<canvas id="myChart"></canvas>-->
             </div>
+            <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnTempChart" type="button">Return to Dashboard</button>
         </div>
 
     </div>
@@ -395,6 +396,11 @@
     $('#btnReturnUserAddress').on('click',function(){
         $('#divUserAddress').slideUp(function(){
             $('#divDashboard').slideDown();
+        })
+    })
+    $('#btnReturnTempChart').on('click',function(){
+        $('#divEnvChart').slideUp(function(){
+            $('#divEnvironment').slideDown();
         })
     })
     $('#btnSettings').on('click',function(){ 
