@@ -190,10 +190,13 @@
                 <h3>Eggs</h3>
             </div>
             <div class="card-body">
-                <form>
+                <form class="col-4">
                     <label for="txtEggs" class="form-label">Number of Eggs</label>
                     <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
-                    <button class="col-12 btn text-center btn btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
+                    <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
+                    <label for="eggDate" class="form-label">Date to View</label>
+                    <input id="txtEggs" placeholder="Date" aria-placeholder="Date" class="form-control">
+                    <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
                     <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
                 </form>
             </div>
@@ -334,7 +337,6 @@
         })
     })*/
     
-    var numEggs = 0;
 
     $('#btnViewEnvDetails').on('click',function(){
         
@@ -524,6 +526,7 @@
     $('#btnAddEggs').on('click',function(){
         numEggs = $('#txtEggs').val();
 
+        let currentDate = new Date();
         let blnError = false;
         let strErrorMessage = '';
         //numEggs must not be blank
