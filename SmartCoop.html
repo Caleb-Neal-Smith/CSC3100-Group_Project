@@ -179,27 +179,23 @@
             <div class="card-header">
                 <h3>Eggs</h3>
             </div>
-            <div class="card col-12 col-md-10 col-lg-9" id="divEggs" style="display:none">
-                <div class="card-header">
-                    <h3>Eggs</h3>
-                </div>
-                <div class="card-body">
-                        
-                    <div class="col-12 row">
-                        <form class="col-4">
-                            <label for="txtEggs" class="form-label">Number of Eggs</label>
-                            <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
-                            <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
-                            <label for="txtEggsDate" class="form-label">Days to View</label>
-                            <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
-                            <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
-                            <button class="btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
-                        </form>
-                        <div class="col-8">
-                            <canvas id="eggsChart" style="display:none"></canvas>
-                        </div>
-                </div>
+            <div class="card-body">
+                    
+                <div class="col-12 row">
+                    <form class="col-4">
+                        <label for="txtEggs" class="form-label">Number of Eggs</label>
+                        <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
+                        <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
+                        <label for="txtEggsDate" class="form-label">Days to View</label>
+                        <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
+                        <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
+                        <button class="btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
+                    </form>
+                    <div class="col-8">
+                        <canvas id="eggsChart" style="display:none"></canvas>
+                    </div>
             </div>
+        </div>
          
         <div class="card col-12 col-md-10 col-lg-9" id="divEnvironment" style="display:none">
             <div class="card-header">
@@ -539,21 +535,7 @@
     $('#toggleClose').on('click',function(){
         $('#toggleOpen').prop('checked',false);
     })
-
-    //Gets the ammount of eggs to display on the dashboard
-    $.getJSON('https://simplecoop.swollenhippo',function(result){
-        if(result) {
-            result.forEach(egg)
-            {
-                numEggs = numEggs + egg.num;
-            }
-            document.getElementById("numEggs").innerHTML = numEggs;
-        } else {
-            numEggs = 0;
-        }
-     })
-    
-    //Gets the ammount of eggs to display on the dashboard
+   
     
     //Our CoopID: 9QWFCCR4
 
@@ -731,6 +713,7 @@
     $('#btnAddEggs').on('click',function(){
         numEggs = $('#txtEggs').val();
 
+        let currentDate = moment.format('YYYY-MM-DDTHH:mm')
         let blnError = false;
         let strErrorMessage = '';
         //numEggs must not be blank
