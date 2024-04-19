@@ -293,6 +293,27 @@
     const ctxTwo = document.getElementById('myChart');
     const ctxTemperature = document.getElementById('envTemperatureChart');
     const ctxHumidity = document.getElementById('envHumidityChart');
+    //Cofiguration object for eggChart
+    var objEggConfig = {
+        type: 'line',
+        data:{
+            labels: [],
+            datasets: [{
+                label: 'Eggs',
+                data: [],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        },
+    }
     //Configuration object for tempChart
     var objTempConfig = {
         type: 'line',
@@ -586,7 +607,7 @@
                 icon: "error"
             });
         } else {
-            $.post('https://www.thesimplehomestead.com/simpletime/eggs.php',{SessionID:sessionStorage.getItem('SessionID'),eggs:numEggs,observationDateTime:currentDate},function(result){
+            $.post('https://simplecoop.swollenhippo.com/eggs.php',{SessionID:sessionStorage.getItem('SessionID'),eggs:numEggs,observationDateTime:currentDate},function(result){
                 result = JSON.parse(result);
                 console.log(result);
                 if (result.Error) {
