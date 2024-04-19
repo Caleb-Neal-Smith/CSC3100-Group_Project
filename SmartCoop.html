@@ -7,6 +7,7 @@
     <title>Smart Coop</title>
     <!--Content delivery network for Bootstrap stylesheet (bootsrap).-->
     <link href="css/lib/bootsrap.min.css" rel="stylesheet">
+    <link href="data.css" rel="stylesheet">
 </head>
 <!--This Section of code formats the body of the file.-->
 <body class="bg-dark">
@@ -160,18 +161,7 @@
             </div>
             <div class="card-body">
                 <form>
-                    <!--
-                    <div class="row">
-                        <div class="column">
-                        <div class="card">
-                            <h3><span id="numEggs"></span></h3>
-                            <p>Eggs</p>
-                        </div>
-                    </div>
-                    -->
-                </form>
-                <form>
-                    <button class="col-12 btn text-center btn btn-primary" id="btnEggs" type="button">Add Eggs</button>   
+                    <button class="col-12 btn text-center btn btn-primary" id="btnEggs" type="button">Eggs</button>   
                 </form>
                 <form>
                     <button class="col-12 btn text-center btn btn-success" id="btnEnvModify" type="button">Modify Environment</button>
@@ -190,12 +180,20 @@
                 <h3>Eggs</h3>
             </div>
             <div class="card-body">
-                <form>
-                    <label for="txtEggs" class="form-label">Number of Eggs</label>
-                    <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
-                    <button class="col-12 btn text-center btn btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
-                    <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
-                </form>
+                <div class="col-12 row">
+                    <form class="col-4">
+                        <label for="txtEggs" class="form-label">Number of Eggs</label>
+                        <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
+                        <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
+                        <label for="eggDate" class="form-label">Days to View</label>
+                        <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
+                        <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
+                        <button class="btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
+                    </form>
+                    <div class="col-8">
+                        <canvas id="eggsChart" style="display:none"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
          
@@ -209,54 +207,118 @@
                 <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEnvironment" type="button">Return to Dashboard</button>
             </div>
         </div>
-        <div class="card col-12 col-md-10 col-lg-9" id="divSettings" style="display:none">
+        <div class="card col-12 col-md-10 col-lg-9" id="divSettings" style="display:none;height:100vh">
             <div class="card-header">
                 <h3>Settings</h3>
+            </div>
+            <div class="card-body">
                 <form>
-                    <label for="txtSettings" class="form-label">Setting</label>
-                    <input id="txtSettings" class="form-control" placeholder="Setting" aria-placeholder="Setting">
-                    <label for="txtValue" class="form-label">Value</label>
-                    <input id="txtValue" class="form-control" placeholder="Value" aria-placeholder="Value">
-                    <button class="col-12 btn text-center btn btn-success" id="btnAddSettings" type="button">Add Setting</button>
-                </form>
-                <form>
-                    <label for="txtViewSetting" class="form-label">Setting</label>
-                    <input id="txtViewSetting" class="form-control" placeholder="Setting" aria-placeholder="Setting">
-                    <button class="col-12 btn text-center btn btn-success" id="btnViewSetting" type="button">View Setting</button>
-                </form>
-                <form>
-                    <label for="txtDelSetting" class="form-label">Setting to Delete</label>
-                    <input id="txtDelSetting" class="form-control" placeholder="Setting" aria-placeholder="Setting">
-                    <button class="col-12 btn text-center btn btn-success" id="btnDelSettings" type="button">Delete Setting</button>
-                </form>
-                <form>
-                    <label for="txtUpdatedSetting" class="form-label">Setting</label>
-                    <input id="txtUpdatedSetting" class="form-control" type="text" placeholder="Setting" aria-placeholder="Setting">
-                    <label for="txtUpdatedValue" class="form-label">Updated Value</label>
-                    <input id="txtUpdatedValue" class="form-control" placeholder="Value" aria-placeholder="Value">
-                    <button class="col-12 btn text-center btn btn-success" id="btnUpdateSettings" type="button">Update Setting</button>
-                </form>
-                <form>
-                    <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnSettings" type="button">Return to Dashboard</button>
+                    <div class="card-header">
+                        <h3>Coop Door</h3>
+                        <!-- Input for door opening and closing times -->
+                        <div class="form-group">
+                            <label for="txtDoorOpeningTime" class="form-label">Opening Time</label>
+                            <input id="txtDoorOpeningTime" type="time" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDoorClosingTime" class="form-label">Closing Time</label>
+                            <input id="txtDoorClosingTime" type="time" class="form-control">
+                        </div>
+                        <body>
+                            <h3 class="mt-3">Emergency Override</h3>
+                            <div class="toggle">
+                                <input type="checkbox" id="toggleOpen" class="togglecheckbox">
+                                <label for="toggle-checkbox" class="toggle-label">Open</label>
+                                <input type="checkbox" id="toggleClose" class="togglecheckbox ms-4">
+                                <label for="toggle-checkbox" class="toggle-label">Close</label>
+                            </div>
+                         </body>
+                    </div>
                 </form>
                 
+                <!-- Input for updating temperature -->
+                <div class="card-body">
+                    <h3>Temperature</h3>
+                    <div>
+                        <button id="btnIncreaseTemperature" class="btn-image btn-primary mb-1" aria-label="Up Arrow button" type="button">
+                            <img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-512.png" width="20" height="20">
+                        </button>
+                        <input id="txtTemperature" type="number" class="form-control" width="20" height="20">
+                    </div>
+                    <button id="btnDecreaseTemperature" class="btn-image btn-primary mt-1" aria-label="Down Arrow button" type="button">
+                        <img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-down-01-512.png" width="20" height="20">
+                    </button>
                 </div>
+                <!-- Input for fan speed -->
+                <div class="form-group">
+                    <h3>Fan Speed</h3>
+                    <div class="d-flex justify-content-center">
+                        <input type="checkbox" id="toggleOffFan" class="togglecheckbox ms-4">
+                        <label for="toggle-checkbox" class="toggle-label">Off</label>
+                        <input type="checkbox" id="toggleLowFan" class="togglecheckbox ms-4">
+                        <label for="toggle-checkbox" class="toggle-label">Low</label>
+                        <input type="checkbox" id="toggleMediumFan" class="togglecheckbox ms-4">
+                        <label for="toggle-checkbox" class="toggle-label">Medium</label>
+                        <input type="checkbox" id="toggleHighFan" class="togglecheckbox ms-4">
+                        <label for="toggle-checkbox" class="toggle-label">High</label>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img src="https://cdn.icon-icons.com/icons2/2248/PNG/512/fan_off_icon_135650.png" width="100" height="100" class="ms-4 mt-3">
+                        <img src="https://static-00.iconduck.com/assets.00/fan-speed-1-icon-487x512-goboalws.png" width="100" height="100" class="ms-4 mt-3">
+                        <img src="https://static-00.iconduck.com/assets.00/fan-speed-2-icon-487x512-zowmbvgo.png" width="100" height="100" class="ms-4 mt-3">
+                        <img src="https://static-00.iconduck.com/assets.00/fan-speed-3-icon-487x512-zodsf8u5.png" width="100" height="100" class="ms-4 mt-3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h3 class="mt-3">Food Silo (Max: 100 gallons)</h3>
+                </div>
+                <div>
+                    <progress id="progressFood" value="65" max = "100"></progress>
+                    <input id="txtAddFood" placeholder="Add Food (Gallons)" aria-label="Add Food" class="form-control">
+                    <button class="col-12 btn text-center btn btn-primary mt-3" id="btnAddFood" type="button">Added Food</button>
+                </div>
+                <div class="form-group">
+                    <h3 class="mt-3">Water Storage (Max: 100 Liters)</h3>
+                </div>
+                <div>
+                    <progress id="progressWater" value="70" max = "100"></progress>
+                    <input id="txtAddWater" placeholder="Add Water (Liters)" aria-label="Add Water" class="form-control">
+                    <button class="col-12 btn text-center btn btn-primary mt-3" id="btnAddWater" type="button">Added Water</button>
+                </div>
+                <button class="col-12 btn text-center btn btn-secondary mt-3" id="btnReturnSettings" type="button">Return to Dashboard</button>
+            </div>
         </div>
         <div class="card col-12 col-md-10 col-lg-9" id="divUserAddress" style="display:none">
             <div class="card-header">
                 <h3>Weather</h3>
-                <button class="col-12 btn text-center btn btn-primary" id="btnEnvCreate" type="button">Create Address</button>
-                <button class="col-12 btn text-center btn btn-success" id="btnEnvDelet" type="button">Delete Address</button>
-                <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
+                <button class="col-12 btn text-center btn-primary" id="btnEnvCreate" type="button">Create Address</button>
+                <button class="col-12 btn text-center btn-success" id="btnEnvDelet" type="button">Delete Address</button>
+                <button class="col-12 btn text-center btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
             </div>
         </div>
-        <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
+        <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none;">
             <div class="card-header">
                 <h3>Environment</h3>
             </div>
             <div class="card-body">
-                <canvas id="envChart"></canvas>
+                <div id="divTempChart" class="card"> <!--IMPORTANT: May need to add back "height:100vh" into style attribute-->
+                    <div class="card-header">
+                        <h5>Temperature</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="envTemperatureChart"></canvas>
+                    </div>
+                </div>
+                <div id="divHumidityChart" class="card">
+                    <div class="card-header">
+                        <h5>Humidity</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="envHumidityChart"></canvas>
+                    </div>
+                </div>
                 <!--<canvas id="myChart"></canvas>-->
+                <!--<button class="col-12 btn text-center btn-secondary" id="btnReturnEnvDetails" type="button">Return to Dashboard</button>-->
             </div>
         </div>
 
@@ -268,16 +330,60 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     var strCoopID;
-    const ctx = document.getElementById('chartEggs');
+    var tempChart;
+    var humidityChart;
+    const ctx = document.getElementById('eggsChart');
     const ctxTwo = document.getElementById('myChart');
-    const ctxEnvironment = document.getElementById('envChart');
+    const ctxTemperature = document.getElementById('envTemperatureChart');
+    const ctxHumidity = document.getElementById('envHumidityChart');
+    //Cofiguration object for eggChart
+    var objEggConfig = {
+        type: 'line',
+        data:{
+            labels: [],
+            datasets: [{
+                label: 'Eggs',
+                data: [],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        },
+    }
     //Configuration object for tempChart
-    var objConfig = {
+    var objTempConfig = {
         type: 'line',
         data: {
             labels: [],
             datasets: [{
                 label: 'Temperature (°F)',
+                data: [],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        },
+    }
+    var objHumidityConfig = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Humidity',
                 data: [],
                 borderWidth: 1
             }]
@@ -313,7 +419,7 @@
             maintainAspectRatio: false
         }
     });*/
-    /*var tempChart = new Chart(ctxEnvironment, {
+    /*var tempChart = new Chart(ctxTemperature, {
         type: 'line',
         data: {
             //labels: [],
@@ -333,8 +439,24 @@
             
         })
     })*/
-    
-    var numEggs = 0;
+    $('#btnViewEggs').on('click',function(){
+         let intDays = $('#txtEggsDate').val();
+         let count = 0;
+         let day = '';
+         $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID'), days:intDays}, function(eggResults){
+             eggResults.forEach(function(eggDetails){
+                 console.log(eggDetails)
+                 count++;
+                 day = eggDetails.LogDateTime.split(' ')[0];
+                 objEggConfig.data.labels.push(day);
+                 objEggConfig.data.datasets.forEach((dataset) => {
+                     dataset.data.push(eggDetails.Harvested);
+                 })
+                 var tempChart = new Chart(ctx, objEggConfig);
+                 $('#eggsChart').show();
+             })
+         })
+     })
 
     $('#btnViewEnvDetails').on('click',function(){
         
@@ -347,19 +469,103 @@
                 count++;
                 //day = envDetail.ObservationDateTime.getDay() + '-' + envDetail.ObservationDateTime.getMonth() + '-' + envDetail.ObservationDateTime.getFullYear();
                 day = envDetail.ObservationDateTime.split(' ')[0]; 
-                objConfig.data.labels.push(day);
-                objConfig.data.datasets.forEach((dataset) => {
+                objTempConfig.data.labels.push(day);
+                objTempConfig.data.datasets.forEach((dataset) => {
                     dataset.data.push(envDetail.Temperature);
+                })
+                objHumidityConfig.data.labels.push(day);
+                objHumidityConfig.data.datasets.forEach((dataset) => {
+                    dataset.data.push(envDetail.Humidity);
                 })
             })
             console.log(count);
-            var tempChart = new Chart(ctxEnvironment, objConfig);
+            tempChart = new Chart(ctxTemperature, objTempConfig);
+            humidityChart = new Chart(ctxHumidity, objHumidityConfig);
+
             $('#divEnvironment').slideUp(function() {
                 $('#divEnvChart').slideDown();
             });
         })
     })
+    $('#btnAddFood').on('click',function(){
+         let foodAdded = +$('#txtAddFood').val();
+         let progressBarFood = document.getElementById('progressFood');
+         if (progressBarFood) {
+             progressBarFood.value = progressBarFood.value + foodAdded;
+         }
+         $('#txtAddFood').val('')
+     })
 
+     $('#btnAddWater').on('click',function(){
+         let waterAdded = +$('#txtAddWater').val();
+         let progressBarWater = document.getElementById('progressWater');
+         if (progressBarWater) {
+             progressBarWater.value = progressBarWater.value + waterAdded;
+         }
+         $('#txtAddWater').val('')
+     })
+
+    $('#btnSettings').on('click',function(){
+        let date = new Date();
+        console.log(date)
+        // Assuming you have a variable called foodAmount that holds the value for the food amount
+        let foodAmount = 70; // Example value
+        let progressBarFood = document.getElementById('progressFood');
+        if (progressBarFood) {
+            progressBarFood.value = foodAmount;
+        }
+
+        let waterAmount = 50; // Example value
+        let progressBarWater = document.getElementById('progressWater');
+        if (progressBarWater) {
+            progressBarWater.value = waterAmount;
+        }
+
+
+    });
+
+    
+    $('#toggleOffFan').on('click',function(){
+        $('#toggleLowFan').prop('checked',false);
+        $('#toggleMediumFan').prop('checked',false);
+        $('#toggleHighFan').prop('checked',false);
+    })
+    $('#toggleLowFan').on('click',function(){
+        $('#toggleOffFan').prop('checked',false);
+        $('#toggleMediumFan').prop('checked',false);
+        $('#toggleHighFan').prop('checked',false);
+    })
+    $('#toggleMediumFan').on('click',function(){
+        $('#toggleOffFan').prop('checked',false);
+        $('#toggleLowFan').prop('checked',false);
+        $('#toggleHighFan').prop('checked',false);
+    })
+    $('#toggleHighFan').on('click',function(){
+        $('#toggleOffFan').prop('checked',false);
+        $('#toggleLowFan').prop('checked',false);
+        $('#toggleMediumFan').prop('checked',false);
+    })
+
+    $('#toggleOpen').on('click',function(){
+        $('#toggleClose').prop('checked',false);
+    })
+
+    $('#toggleClose').on('click',function(){
+        $('#toggleOpen').prop('checked',false);
+    })
+
+    //Gets the ammount of eggs to display on the dashboard
+    $.getJSON('https://simplecoop.swollenhippo',function(result){
+        if(result) {
+            result.forEach(egg)
+            {
+                numEggs = numEggs + egg.num;
+            }
+            document.getElementById("numEggs").innerHTML = numEggs;
+        } else {
+            numEggs = 0;
+        }
+     })
     
     //Gets the ammount of eggs to display on the dashboard
     
@@ -419,12 +625,27 @@
         $.ajax({
             url: 'https://simplecoop.swollenhippo.com/settings.php',
             type: 'PUT',
-            data: {SessionID:sessionStorage.getItem('SessionID'),setting:strUpdatedSetting,value:strUpdatedValue},
+            data: {SessionID:sessionStorage.getItem('SessionID'),setting:strSettings,value:strValue},
             success: function(result) {
                 console.log(result);
             }
         });
     })
+
+    $('#btnIncreaseTemperature').on('click',function(){
+         strTempertaure = +$('#txtTemperature').val();
+         strTempertaure = strTempertaure + 1;
+         //Set the text box equal to the new value
+         $('#txtTemperature').val(strTempertaure);
+     })
+
+     $('#btnDecreaseTemperature').on('click',function(){
+         let strTempertaure = +$('#txtTemperature').val();
+         strTempertaure = strTempertaure - 1;
+         //Set the text box equal to the new value
+         $('#txtTemperature').val(strTempertaure);
+     })
+
     $('#btnAddSettings').on('click',function(){
         strSettings = $('#txtSettings').val();
         strValue = $('#txtValue').val();
@@ -523,7 +744,7 @@
     })
     $('#btnAddEggs').on('click',function(){
         numEggs = $('#txtEggs').val();
-
+        let currentDate = new Date();
         let blnError = false;
         let strErrorMessage = '';
         //numEggs must not be blank
@@ -539,7 +760,7 @@
                 icon: "error"
             });
         } else {
-            $.post('https://www.thesimplehomestead.com/simpletime/eggs.php',{SessionID:sessionStorage.getItem('SessionID'),eggs:numEggs,observationDateTime:currentDate},function(result){
+            $.post('https://simplecoop.swollenhippo.com/eggs.php',{SessionID:sessionStorage.getItem('SessionID'),LogDateTime:currentDate,Harvested:numEggs},function(result){
                 result = JSON.parse(result);
                 console.log(result);
                 if (result.Error) {
@@ -567,6 +788,53 @@
     })
     $('#btnReturnEnvironment').on('click',function(){
         $('#divEnvironment').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    })
+    $('#btnReturnEnvDetails').on('click',function(){
+        $('#divEnvChart').slideUp(function(){
+            tempChart.destroy();
+            humidityChart.destroy();
+            objTempConfig = {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Temperature (°F)',
+                        data: [],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                },
+            }
+            objHumidityConfig = {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Temperature (°F)',
+                        data: [],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                },
+            }
             $('#divDashboard').slideDown();
         })
     })
@@ -911,22 +1179,31 @@
                             $('#navLogin').attr('data-card', 'Dashboard');
                             $('#navRegister').attr('data-card', 'Dashboard');
                         })
+                         /*for (var i = 0; i < 100; i++) {
+                             // The SessionID and additional data with random temperature, humidity, and observationdatetime
+                             var requestData = {
+                                 SessionID:sessionStorage.getItem('SessionID'),
+                                 observationDateTime: getRandomObservationDatetime(),
+                                 temperature: getRandomTemperature(),
+                                 humidity: getRandomHumidity()
+                             };
+                             // Making the AJAX request using POST
+                             $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
+                                 console.log(result);
+                             });
+                             if(i == 99) {
+                                 $('#divLogin').slideUp(function(){
+                                     $('#divMain').removeClass('vh-100');
+                                     $('#divDashboard').slideDown();
+                                     $('#navLogin').attr('data-card', 'Dashboard');
+                                     $('#navRegister').attr('data-card', 'Dashboard');
+                                 })
+                             }
+                         }*/
                     })
                     // Loop to execute the code block 100 times
                     //I'm commenting out the for loop for now to avoid overloading the database
-                    for (var i = 0; i < 100; i++) {
-                        // The SessionID and additional data with random temperature, humidity, and observationdatetime
-                        var requestData = {
-                            SessionID:sessionStorage.getItem('SessionID'),
-                            observationDateTime: getRandomObservationDatetime(),
-                            temperature: getRandomTemperature(),
-                            humidity: getRandomHumidity()
-                        };
-                        // Making the AJAX request using POST
-                        $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
-                            console.log(result);
-                        });
-                    }
+
                 }
         })
     })
@@ -989,6 +1266,7 @@ function phoneFormat(input){
         return input; 
     }
     //Generate random enviroment
+/*
 function getRandomObservationDatetime() {
   // Get the current date
    var currentDate = new Date();
