@@ -185,7 +185,7 @@
                         <label for="txtEggs" class="form-label">Number of Eggs</label>
                         <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
                         <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
-                        <label for="eggDate" class="form-label">Days to View</label>
+                        <label for="txtEggsDate" class="form-label">Days to View</label>
                         <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
                         <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
                         <button class="btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
@@ -263,6 +263,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script>
     var strCoopID;
     const ctx = document.getElementById('eggsChart');
@@ -558,7 +559,7 @@
     $('#btnAddEggs').on('click',function(){
         numEggs = $('#txtEggs').val();
 
-        let currentDate = new Date();
+        let currentDate = new moment().format("YYYY-MM-DDTHH:mm");
         let blnError = false;
         let strErrorMessage = '';
         //numEggs must not be blank
