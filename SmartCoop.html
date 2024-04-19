@@ -335,9 +335,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script>
     var strCoopID;
-    const ctx = document.getElementById('chartEggs');
+    const ctx = document.getElementById('eggsChart');
     const ctxTwo = document.getElementById('myChart');
     const ctxEnvironment = document.getElementById('envChart');
+    //Cofiguration object for eggsChart
+    var objEggConfig = {
+        type: 'line',
+        data:{
+            labels: [],
+            datasets: [{
+                label: 'Eggs',
+                data: [],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        },
+        }
     //Configuration object for tempChart
     var objTempConfig = {
         type: 'line',
