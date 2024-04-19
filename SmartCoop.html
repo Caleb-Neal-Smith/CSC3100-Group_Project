@@ -179,15 +179,27 @@
             <div class="card-header">
                 <h3>Eggs</h3>
             </div>
-            <div class="card-body">
-                <form>
-                    <label for="txtEggs" class="form-label">Number of Eggs</label>
-                    <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
-                    <button class="col-12 btn text-center btn btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
-                    <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
-                </form>
+            <div class="card col-12 col-md-10 col-lg-9" id="divEggs" style="display:none">
+                <div class="card-header">
+                    <h3>Eggs</h3>
+                </div>
+                <div class="card-body">
+                        
+                    <div class="col-12 row">
+                        <form class="col-4">
+                            <label for="txtEggs" class="form-label">Number of Eggs</label>
+                            <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
+                            <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
+                            <label for="txtEggsDate" class="form-label">Days to View</label>
+                            <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
+                            <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
+                            <button class="btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
+                        </form>
+                        <div class="col-8">
+                            <canvas id="eggsChart" style="display:none"></canvas>
+                        </div>
+                </div>
             </div>
-        </div>
          
         <div class="card col-12 col-md-10 col-lg-9" id="divEnvironment" style="display:none">
             <div class="card-header">
