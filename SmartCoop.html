@@ -438,7 +438,24 @@
         })
     })*/
     
-    var numEggs = 0;
+    $('#btnViewEggs').on('click',function(){
+        let intDays = $('#txtEggsDate').val();
+        let count = 0;
+        let day = '';
+        $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID'), days:intDays}, function(eggResults){
+            eggResults.forEach(function(eggDetails){
+                console.log(eggDetails)
+                count++;
+                day = eggDetails.LogDateTime.split(' ')[0];
+                objEggConfig.data.labels.push(day);
+                objEggConfig.data.datasets.forEach((dataset) => {
+                    dataset.data.push(eggDetails.Harvested);
+                })
+                var tempChart = new Chart(ctx, objEggConfig);
+                $('#eggsChart').show();
+            })
+        })
+    })
 
     $('#btnViewEnvDetails').on('click',function(){
         
@@ -713,7 +730,7 @@
     $('#btnAddEggs').on('click',function(){
         numEggs = $('#txtEggs').val();
 
-        let currentDate = moment.format('YYYY-MM-DDTHH:mm')
+        let currentDate = moment().format('YYYY-MM-DD HH:mm:ss')
         let blnError = false;
         let strErrorMessage = '';
         //numEggs must not be blank
