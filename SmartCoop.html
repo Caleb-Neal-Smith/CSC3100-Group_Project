@@ -194,11 +194,12 @@
                     <label for="txtEggs" class="form-label">Number of Eggs</label>
                     <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
                     <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
-                    <label for="eggDate" class="form-label">Date to View</label>
-                    <input id="txtEggs" placeholder="Date" aria-placeholder="Date" class="form-control">
+                    <label for="eggDate" class="form-label">Days to View</label>
+                    <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
                     <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
                     <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
                 </form>
+                <canvas id="eggsChart" style="display:none"></canvas>
             </div>
         </div>
          
@@ -289,7 +290,7 @@
     var strCoopID;
     var tempChart;
     var humidityChart;
-    const ctx = document.getElementById('chartEggs');
+    const ctx = document.getElementById('eggsChart');
     const ctxTwo = document.getElementById('myChart');
     const ctxTemperature = document.getElementById('envTemperatureChart');
     const ctxHumidity = document.getElementById('envHumidityChart');
@@ -311,7 +312,7 @@
                 }
             },
             responsive: true,
-            maintainAspectRatio: false
+            maintainAspectRatio: true
         },
     }
     //Configuration object for tempChart
@@ -396,7 +397,24 @@
             
         })
     })*/
-    
+    $('#btnViewEggs').on('click',function(){
+         let intDays = $('#txtEggsDate').val();
+         let count = 0;
+         let day = '';
+         $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID'), days:intDays}, function(eggResults){
+             eggResults.forEach(function(eggDetails){
+                 console.log(eggDetails)
+                 count++;
+                 day = eggDetails.LogDateTime.split(' ')[0];
+                 objEggConfig.data.labels.push(day);
+                 objEggConfig.data.datasets.forEach((dataset) => {
+                     dataset.data.push(eggDetails.Harvested);
+                 })
+                 var tempChart = new Chart(ctx, objEggConfig);
+                 $('#eggsChart').show();
+             })
+         })
+     })
 
     $('#btnViewEnvDetails').on('click',function(){
         
@@ -607,7 +625,7 @@
                 icon: "error"
             });
         } else {
-            $.post('https://simplecoop.swollenhippo.com/eggs.php',{SessionID:sessionStorage.getItem('SessionID'),eggs:numEggs,observationDateTime:currentDate},function(result){
+            $.post('https://simplecoop.swollenhippo.com/eggs.php',{SessionID:sessionStorage.getItem('SessionID'),LogDateTime:currentDate,Harvested:numEggs},function(result){
                 result = JSON.parse(result);
                 console.log(result);
                 if (result.Error) {
