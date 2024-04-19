@@ -7,15 +7,21 @@
     <title>Smart Coop</title>
     <!--Content delivery network for Bootstrap stylesheet (bootsrap).-->
     <link href="css/lib/bootsrap.min.css" rel="stylesheet">
+    <!-- padding for the navbar -->
+    <style>
+        body {
+            padding-top: 56px;
+        }
+    </style>
 </head>
 <!--This Section of code formats the body of the file.-->
 <body class="bg-dark">
     <!-- The navigation bar -->
-        <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark"> <!--Source for NavBar: https://bootswatch.com/yeti/-->
+        <nav class="navbar navbar-expand-lg bg-success fixed-top" data-bs-theme="dark"> <!--Source for NavBar: https://bootswatch.com/yeti/-->
                                                                                                 
             <div class="container-fluid">
                 <!-- The brand logo -->
-                <a class="navbar-brand" href="#">Smart Coop</a>
+                <a class="navbar-brand" href="">Smart Coop</a>
                 <!-- The toggle button for collapsing the navigation links -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,7 +30,7 @@
                     <ul class="navbar-nav me-auto">
                         <!-- The home link -->
                         <li class="nav-item">
-                            <a class="nav-link active" id="navHome" href="#">Home
+                            <a class="nav-link active" id="navHome">Home
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
@@ -32,17 +38,17 @@
                         <!-- The account dropdown. -->
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Account</a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account</a>
                             <!-- The dropdown menu for account options. Currently both buttons do the same thing as each other, because it uses our existing login/signup button code. -->
                             <div class="dropdown-menu">
                                 <!-- The login option -->
                                 <!--The data-card attribute needs to be Register for this link so that 
                                     it will only work if the Registration card is showing.-->
-                                <a class="dropdown-item" data-card="Register" id="navLogin" href="#">Login</a>
+                                <a class="dropdown-item" data-card="Register" id="navLogin">Login</a>
                                 <!-- The sign up option -->
                                 <!--The data-card attribute needs to be Login for this link so that 
                                     it will only work if the Login card is showing.-->
-                                <a class="dropdown-item" data-card="Login" id="navRegister" href="#">Register</a>
+                                <a class="dropdown-item" data-card="Login" id="navRegister">Register</a>
                             </div>
                         </li>
 
@@ -504,76 +510,78 @@
             }
         })
     
+// commented out the following because i believe it is redundant from what updateNavbar() does
 
-    $('#navRegister').on('click',function(){
-        //When "Register" is clicked on the navigation bar, toggle from the login card to the registration card
-        //Note: we don't want the "Register" anchor to do anything if the user is already on the registration card
-        let strCard = $(this).attr('data-card')
-        if(strCard == 'Login') {
-            $('#divLogin').slideUp(function(){
-                $('#divRegister').slideDown();
-            })
-            /*Sets the value of each text box on the login card to an empty string and removes the class
-            that forces divMain to take up the entire viewport height */
-            $('#txtLoginEmail').val('');
-            $('#txtLoginPassword').val('');
-            $('#divMain').removeClass('vh-100')
-        } else if(strCard == 'Dashboard') {
-            $('#txtLoginEmail').val('');
-            $('#txtLoginPassword').val('');
+// $('#navRegister').on('click',function(){
+    //     //When "Register" is clicked on the navigation bar, toggle from the login card to the registration card
+    //     //Note: we don't want the "Register" anchor to do anything if the user is already on the registration card
+    //     let strCard = $(this).attr('data-card')
+    //     if(strCard == 'Login') {
+    //         $('#divLogin').slideUp(function(){
+    //             $('#divRegister').slideDown();
+    //         })
+    //         /*Sets the value of each text box on the login card to an empty string and removes the class
+    //         that forces divMain to take up the entire viewport height */
+    //         $('#txtLoginEmail').val('');
+    //         $('#txtLoginPassword').val('');
+    //         $('#divMain').removeClass('vh-100')
+    //     } else if(strCard == 'Dashboard') {
+    //         $('#txtLoginEmail').val('');
+    //         $('#txtLoginPassword').val('');
 
-            $('#divDashboard').slideUp(function(){
-                $('#navRegister').attr('data-card', 'Login');
-                $('#navLogin').attr('data-card', 'Register');
-                $('#divRegister').slideDown();
-            })
-            $('#divMain').removeClass('vh-100')
-        }
-    })
+    //         $('#divDashboard').slideUp(function(){
+    //             $('#navRegister').attr('data-card', 'Login');
+    //             $('#navLogin').attr('data-card', 'Register');
+    //             $('#divRegister').slideDown();
+    //         })
+    //         $('#divMain').removeClass('vh-100')
+    //     }
+    // })
 
-    $('#navLogin').on('click',function(){
-        //When "Login" is clicked on the navigation bar, toggle from the registration card to the login card
-        //Note: we don't want the "Login" anchor to do anything if the user is already on the login card
-        let strCard = $(this).attr('data-card')
-        if(strCard == 'Register'){
-            $('#divRegister').slideUp(function(){
-                $('#divLogin').slideDown();
-            })
-            /*Sets the value of each text box on the registraion card to an empty string and adds back the viewport 
-            height class (this is so the login card will be centered)  */
-            $('#txtFirstName').val('');
-            $('#txtLastName').val('');
-            $('#txtEmail').val('');
-            $('#txtPassword').val('');
-            //$('#txtRegistrationID').val(''); //Gonna comment this out for now until I find out if we need it here or not
-            $('#txtStreetAddress1').val('');
-            $('#txtStreetAddress2').val('');
-            $('#txtCity').val('');
-            $('#txtState').val('');
-            $('#txtZipCode').val('');
-            $('#txtPhoneNumber').val('');
-            $('#divMain').addClass('vh-100');
-        } else if(strCard == 'Dashboard') {
-            $('#txtFirstName').val('');
-            $('#txtLastName').val('');
-            $('#txtEmail').val('');
-            $('#txtPassword').val('');
-            //$('#txtRegistrationID').val('');
-            $('#txtStreetAddress1').val('');
-            $('#txtStreetAddress2').val('');
-            $('#txtCity').val('');
-            $('#txtState').val('');
-            $('#txtZipCode').val('');
-            $('#txtPhoneNumber').val('');
+    // $('#navLogin').on('click',function(){
+    //     //When "Login" is clicked on the navigation bar, toggle from the registration card to the login card
+    //     //Note: we don't want the "Login" anchor to do anything if the user is already on the login card
+    //     let strCard = $(this).attr('data-card')
+    //     if(strCard == 'Register'){
+    //         $('#divRegister').slideUp(function(){
+    //             $('#divLogin').slideDown();
+    //         })
+    //         /*Sets the value of each text box on the registraion card to an empty string and adds back the viewport 
+    //         height class (this is so the login card will be centered)  */
+    //         $('#txtFirstName').val('');
+    //         $('#txtLastName').val('');
+    //         $('#txtEmail').val('');
+    //         $('#txtPassword').val('');
+    //         //$('#txtRegistrationID').val(''); //Gonna comment this out for now until I find out if we need it here or not
+    //         $('#txtStreetAddress1').val('');
+    //         $('#txtStreetAddress2').val('');
+    //         $('#txtCity').val('');
+    //         $('#txtState').val('');
+    //         $('#txtZipCode').val('');
+    //         $('#txtPhoneNumber').val('');
+    //         $('#divMain').addClass('vh-100');
+    //     } else if(strCard == 'Dashboard') {
+    //         $('#txtFirstName').val('');
+    //         $('#txtLastName').val('');
+    //         $('#txtEmail').val('');
+    //         $('#txtPassword').val('');
+    //         //$('#txtRegistrationID').val('');
+    //         $('#txtStreetAddress1').val('');
+    //         $('#txtStreetAddress2').val('');
+    //         $('#txtCity').val('');
+    //         $('#txtState').val('');
+    //         $('#txtZipCode').val('');
+    //         $('#txtPhoneNumber').val('');
 
-            $('#divDashboard').slideUp(function(){
-                $('#navRegister').attr('data-card', 'Login');
-                $('#navLogin').attr('data-card', 'Register');
-                $('#divLogin').slideDown();
-            })
-            $('#divMain').addClass('vh-100');
-        }
-    })
+    //         $('#divDashboard').slideUp(function(){
+    //             $('#navRegister').attr('data-card', 'Login');
+    //             $('#navLogin').attr('data-card', 'Register');
+    //             $('#divLogin').slideDown();
+    //         })
+    //         $('#divMain').addClass('vh-100');
+    //     }
+    //     
+    // })
 
     $('#navHome').on('click',function() {
         returnHome();
@@ -873,7 +881,30 @@ function logout() {
                     $('#txtLoginEmail').val('');
                     $('#txtLoginPassword').val('');
                 })
+            } else if ($('#divRegister').is(':visible')) {
+                $('#divRegister').slideToggle(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideToggle();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divLogin').is(':visible')) {
+                $('#divLogin').slideUp(function(){
+                    $('#divRegister').slideDown();
+                    $('#divMain').addClass('vh-100');
+                    $('#txtFirstName').val('');
+                    $('#txtLastName').val('');
+                    $('#txtEmail').val('');
+                    $('#txtPassword').val('');
+                    $('#txtStreetAddress1').val('');
+                    $('#txtStreetAddress2').val('');
+                    $('#txtCity').val('');
+                    $('#txtState').val('');
+                    $('#txtZipCode').val('');
+                    $('#txtPhoneNumber').val('');
+                })
             }
+            // add any other divs that need to be closed here^
             updateNavbar();
 
             // old code: dont delete yet
@@ -948,15 +979,30 @@ function updateNavbar(sessionDetails) {
         $('#navLogin').off('click'); // Remove the previous click event handler
         $('#navLogin').on('click', function() {
             // Add functionality to show the login form
-            $('#divLogin').slideDown();
+            // $('#divLogin').slideDown();
+            logout();
         });
 
         $('#navLogout').text('Register');
         $('#navLogout').attr('id', 'navRegister');
         $('#navRegister').off('click'); // Remove the previous click event handler
         $('#navRegister').on('click', function() {
-            // Add functionality to show the registration form
-            $('#divRegister').slideDown();
+                //commented out the following because of redundancy with logout()
+                // $('#divLogin').slideUp(function(){
+                //     $('#divRegister').slideDown();
+                //     $('#divMain').addClass('vh-100');
+                //     $('#txtFirstName').val('');
+                //     $('#txtLastName').val('');
+                //     $('#txtEmail').val('');
+                //     $('#txtPassword').val('');
+                //     $('#txtStreetAddress1').val('');
+                //     $('#txtStreetAddress2').val('');
+                //     $('#txtCity').val('');
+                //     $('#txtState').val('');
+                //     $('#txtZipCode').val('');
+                //     $('#txtPhoneNumber').val('');
+                // })
+                logout();
         });
     }
 }

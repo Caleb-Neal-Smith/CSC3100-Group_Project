@@ -6,18 +6,35 @@ Authors: Alec Jones, Nolen Jensen, Samuel Sims, Mitchell Kiriazes, Caleb Smith, 
 **navbar branch that mostly works ish**  
 dont merge until it's done, cause i dont want it to break everything else
 
-# **changelog**
+## **ideas**
+- change dashboard to a grid with icons?
+- add additional buttons to navbar?
+- add About Us page somewhere maybe?
+- consolidate the btnToggle functions onto the main logout() function?
 
+## **changelog**
+
+### 4.18.2
+**added**
+- added padding for navbar so things arent under it when scrolled to top.
+
+**changed**
+- modified navbar so that it is fixed -- is frontmost above everything, and also stays fixed on the top instead of disappearing when you scroll.
+- fixed navbar when logged out. **If possible, I need help where one of the two dropdown buttons disappears when logged out.**
+- changed smartcoop button so it refreshes page.(subject to change)
+
+**to do**
+- change account button to 3 lines to make it more uniform like a normal webpage
+- change account dropdown to only show login or register
+- change smartcoop button to be an icon and not lame  
+  
+  
 ### 4.18.1
 **added**
 - none
 
 **changed**
-- modified navLogout to have an if statement where depending on the screen it's in, it will close that and logout. Currently it only opens the login screen next to the current one and changes the navbar.
-
-**to do**
-- change account button to 3 lines to make it more uniform like a normal webpage
-- change account dropdown to only show login or register
+- modified navLogout to have an if statement where depending on the screen it's in, it will close that and logout.
 
 
 ### 4.18.0
@@ -38,6 +55,3 @@ dont merge until it's done, cause i dont want it to break everything else
     - options to open setting screen
     - button to logout(work in progress)
     
-**ideas**
-- change dashboard to a grid with icons?
-- add additional buttons to navbar?
