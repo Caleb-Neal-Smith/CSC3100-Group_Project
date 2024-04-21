@@ -13,7 +13,7 @@
 <body class="bg-dark">
     <!-- The navigation bar -->
         <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark"> <!--Source for NavBar: https://bootswatch.com/yeti/-->
-
+                                                                                                
             <div class="container-fluid">
                 <!-- The brand logo -->
                 <a class="navbar-brand" href="#">Smart Coop</a>
@@ -161,17 +161,16 @@
             </div>
             <div class="card-body">
                 <form>
-                    <button class="col-12 btn text-center btn-primary" id="btnEggs" type="button">Eggs</button>   
+                    <button class="col-12 btn text-center btn btn-primary" id="btnEggs" type="button">Eggs</button>   
                 </form>
                 <form>
-                    <button class="col-12 btn text-center btn-success" id="btnEnvModify" type="button">Modify Environment</button>
+                    <button class="col-12 btn text-center btn btn-success" id="btnEnvModify" type="button">Modify Environment</button>
                 </form>
                 <form>
-                                                        <!--Should this be mb-1?-->
-                    <button class="col-12 btn text-center btn-primary mb1 bg-black" id="btnUserAddress" type="button">View Weather</button>
+                    <button class="col-12 btn text-center btn btn-primary mb1 bg-black" id="btnUserAddress" type="button">View Weather</button>
                 </form>
                 <form>
-                    <button class="col-12 btn text-center btn-secondary" id="btnSettings" type="button">Settings</button>
+                    <button class="col-12 btn text-center btn btn-secondary" id="btnSettings" type="button">Settings</button>
                 </form>
                 <button class="col-12 btn btn-danger mt-4" id="btnLogout" type="button">Logout</button>
             </div>
@@ -188,8 +187,8 @@
                         <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
                         <label for="txtEggsDate" class="form-label">Days to View</label>
                         <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
-                        <button class="btn text-center btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
-                        <button class="btn text-center btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
+                        <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
+                        <button class="btn text-center btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
                     </form>
                     <div class="col-8">
                         <canvas id="eggsChart" style="display:none"></canvas>
@@ -201,11 +200,11 @@
         <div class="card col-12 col-md-10 col-lg-9" id="divEnvironment" style="display:none">
             <div class="card-header">
                 <h3>Environment</h3>
-                <button class="col-12 btn text-center btn-primary" id="btnEnvCreate" type="button">Create Environment</button>
-                <button class="col-12 btn text-center btn-danger" id="btnEnvDelete" type="button">Delete Environment</button>
-                <button class="col-12 btn text-center btn-success" id="btnEnvView" type="button">View Environment</button>
-                <button class="col-12 btn text-center btn-success" id="btnViewEnvDetails" type="button">View Environment Details</button>
-                <button class="col-12 btn text-center btn-secondary" id="btnReturnEnvironment" type="button">Return to Dashboard</button>
+                <button class="col-12 btn text-center btn btn-primary" id="btnEnvCreate" type="button">Create Environment</button>
+                <button class="col-12 btn text-center btn btn-danger" id="btnEnvDelete" type="button">Delete Environment</button>
+                <button class="col-12 btn text-center btn btn-success" id="btnEnvView" type="button">View Environment</button>
+                <button class="col-12 btn text-center btn btn-success" id="btnViewEnvDetails" type="button">View Environment Details</button>
+                <button class="col-12 btn text-center btn btn-secondary" id="btnReturnEnvironment" type="button">Return to Dashboard</button>
             </div>
         </div>
         <div class="card col-12 col-md-10 col-lg-9" id="divSettings" style="display:none;height:100vh">
@@ -220,12 +219,10 @@
                         <div class="form-group">
                             <label for="txtDoorOpeningTime" class="form-label">Opening Time</label>
                             <input id="txtDoorOpeningTime" type="time" class="form-control">
-                            <button class="btn text-center btn-primary btnUpdateSetting" type="button">Update</button>
                         </div>
                         <div class="form-group">
                             <label for="txtDoorClosingTime" class="form-label">Closing Time</label>
                             <input id="txtDoorClosingTime" type="time" class="form-control">
-                            <button class="btn text-center btn-primary btnUpdateSetting" type="button">Update</button>
                         </div>
                         <body>
                             <h3 class="mt-3">Emergency Override</h3>
@@ -234,7 +231,6 @@
                                 <label for="toggle-checkbox" class="toggle-label">Open</label>
                                 <input type="checkbox" id="toggleClose" class="togglecheckbox ms-4">
                                 <label for="toggle-checkbox" class="toggle-label">Close</label>
-                                <button class="btn text-center btn-primary btnUpdateSetting" type="button">Update</button>
                             </div>
                          </body>
                     </div>
@@ -252,7 +248,6 @@
                     <button id="btnDecreaseTemperature" class="btn-image btn-primary mt-1" aria-label="Down Arrow button" type="button">
                         <img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-down-01-512.png" width="20" height="20">
                     </button>
-                    <button class="btn text-center btn-primary btnUpdateSetting" type="button">Update</button>
                 </div>
                 <!-- Input for fan speed -->
                 <div class="form-group">
@@ -335,25 +330,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script>
-    /*async function settingAjax(sessionID, setSetting, setValue) {
-        let result;
-
-        try {
-            result = await $.ajax({
-                url: 'https://simplecoop.swollenhippo.com/settings.php',
-                type: 'POST',
-                data: {
-                    SessionID: sessionID,
-                    setting: setting,
-                    value: value
-                }
-            })
-        } catch (error) {
-            console.error(error);
-        }
-    }*/
-
-    var objDefaultSettings;
     var strCoopID;
     const ctx = document.getElementById('eggsChart');
     const ctxTwo = document.getElementById('myChart');
@@ -991,7 +967,7 @@
         $.getJSON('https://simplecoop.swollenhippo.com/users.php', {Email:strEmail}, function(result) {
             //temporary console.log
             console.log(result);
-            if(result) {
+            if(result.Email == strEmail) {
                 blnError = true;
                 strErrorMessage = strErrorMessage + '<p>Email is already in use. </p>';
             }
@@ -1062,164 +1038,62 @@
                     html: strErrorMessage,
                     icon: "error"
                 });
-        } else {
-            //Create new user
-            $.post('https://simplecoop.swollenhippo.com/users.php', {Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strRegistrationID}, function(result) {
+            } else {
+            //Displays success if there are no errors in the input validation
+                Swal.fire({
+                    title: "Successful Registered",
+                    text: 'You have successfully logged in!',
+                    icon: "success"
+                });
+            //If success, slide register up and slide up dashboard
+                $('#divRegister').slideUp(function(){
+                    $('#divDashboard').slideDown();
+                    $('#navLogin').attr('data-card', 'Dashboard');
+                    $('#navRegister').attr('data-card', 'Dashboard');
+                })
+                console.log('No errors found');
+                //Create new user
+                $.post('https://simplecoop.swollenhippo.com/users.php', {Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strRegistrationID}, function(result) {
                     result = JSON.parse(result);
                     console.log(result.Outcome);
                     $.post('https://simplecoop.swollenhippo.com/sessions.php', {Email:strEmail,Password:strPassword}, function(result){
-                        //The names of the JSON values passed may need to be changed
-                        //Should I change names of callback function parameters?
-                        result = JSON.parse(result)
-                        console.log(result);
-                        sessionStorage.setItem('SessionID', result.SessionID);
-                        console.log(sessionStorage.getItem('SessionID'));
-                        $.ajax({
-                            url: 'https://simplecoop.swollenhippo.com/coop.php',
-                            type: 'PUT',
-                            data: {SessionID:sessionStorage.getItem('SessionID'),Street1:strStreetAddress1,Street2:strStreetAddress2,City:strCity,State:strState,ZIP:strZipCode}, //Is this right?
-                            success: function(coopUpdate) {
-                                coopUpdate = JSON.parse(coopUpdate)
-                                console.log(coopUpdate.Outcome);
-                                // Loop to execute the code block 100 times
-                                //I'm commenting out the for loop for now to avoid overloading the database
-                                /*for (var i = 0; i < 100; i++) {
-                                    // The SessionID and additional data with random temperature, humidity, and observationdatetime
-                                    var requestData = {
-                                        SessionID:sessionStorage.getItem('SessionID'),
-                                        observationDateTime: getRandomObservationDatetime(),
-                                        temperature: getRandomTemperature(),
-                                        humidity: getRandomHumidity()
-                                    };
-                                    // Making the AJAX request using POST
-                                    $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
-                                        console.log(result);
-                                    });
-                                }*/
-                                //IMPORTANT: May not need this "get" to coop.php
-                                $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID')}, function(coopResults) {
-                                    coopResults.forEach(function(strCoopDetail) {
-                                        console.log(strCoopDetail);
-                                    })
-                                })
-                                //Displays success if there are no errors in the input validation
-                                Swal.fire({
-                                    title: "Successful Registered",
-                                    text: 'You have successfully logged in!',
-                                    icon: "success"
+                    //The names of the JSON values passed may need to be changed
+                    //Should I change names of callback function parameters?
+                    result = JSON.parse(result)
+                    console.log(result);
+                    sessionStorage.setItem('SessionID', result.SessionID);
+                    console.log(sessionStorage.getItem('SessionID'));
+                    $.ajax({
+                        url: 'https://simplecoop.swollenhippo.com/coop.php',
+                        type: 'PUT',
+                        data: {SessionID:sessionStorage.getItem('SessionID'),Street1:strStreetAddress1,Street2:strStreetAddress2,City:strCity,State:strState,ZIP:strZipCode}, //Is this right?
+                        success: function(coopUpdate) {
+                            coopUpdate = JSON.parse(coopUpdate)
+                            console.log(coopUpdate.Outcome);
+                            // Loop to execute the code block 100 times
+                            //I'm commenting out the for loop for now to avoid overloading the database
+                            /*for (var i = 0; i < 100; i++) {
+                                // The SessionID and additional data with random temperature, humidity, and observationdatetime
+                                var requestData = {
+                                    SessionID:sessionStorage.getItem('SessionID'),
+                                    observationDateTime: getRandomObservationDatetime(),
+                                    temperature: getRandomTemperature(),
+                                    humidity: getRandomHumidity()
+                                };
+                                // Making the AJAX request using POST
+                                $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
+                                    console.log(result);
                                 });
-                                //If success, slide register up and slide up dashboard
-                                objDefaultSettings = {
-                                    "settings":["temperature", "fan_state", "door_state", "water_in_liters", "food_in_gallons"],
-                                    "values":["70", "off", "closed", "5", "5"]
-                                }
-                                /*strSettings = $('#txtSettings').val();
-                                strValue = $('#txtValue').val();
-
-                                let blnError = false;
-                                let strErrorMessage = '';
-                                //Settings must not be blank
-                                if (strSettings.length < 1){
-                                    blnError = true;
-                                    strErrorMessage = strErrorMessage + '<p>Settings cannot be blank.</p>';
-                                }
-                                //Value must not be blank
-                                if (strValue.length < 1){
-                                    blnError = true;
-                                    strErrorMessage = strErrorMessage + '<p>Value cannot be blank.</p>';
-                                }
-                                if(blnError == true){
-                                        console.log(strErrorMessage);
-                                        Swal.fire({
-                                            title: "Oops",
-                                            html: strErrorMessage,
-                                            icon: "error"
-                                        });
-                                } else {*/
-                                console.log(objDefaultSettings.settings.length);
-                              
-                                
-                                    
-                                $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[0],value:objDefaultSettings.values[0]},function(result){
-                                    result = JSON.parse(result);
-                                    if (result.Error) {
-                                        Swal.fire({
-                                            title: "Oops!",
-                                            html:  result.Error + '<p> :The error that occured</p>',
-                                            icon: "error"
-                                        });
-                                    } else {
-                                        console.log(result);
-                                        $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[1],value:objDefaultSettings.values[1]},function(result){
-                                            result = JSON.parse(result);
-                                            if (result.Error) {
-                                                Swal.fire({
-                                                    title: "Oops!",
-                                                    html:  result.Error + '<p> :The error that occured</p>',
-                                                    icon: "error"
-                                                });
-                                            } else {
-                                                console.log(result);
-                                                $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[2],value:objDefaultSettings.values[2]},function(result){
-                                                    result = JSON.parse(result);
-                                                    if (result.Error) {
-                                                        Swal.fire({
-                                                            title: "Oops!",
-                                                            html:  result.Error + '<p> :The error that occured</p>',
-                                                            icon: "error"
-                                                        });
-                                                    } else {
-                                                        console.log(result);
-                                                        $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[3],value:objDefaultSettings.values[3]},function(result){
-                                                            result = JSON.parse(result);
-                                                            if (result.Error) {
-                                                                Swal.fire({
-                                                                    title: "Oops!",
-                                                                    html:  result.Error + '<p> :The error that occured</p>',
-                                                                    icon: "error"
-                                                                });
-                                                            } else {
-                                                                console.log(result);
-                                                                $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[4],value:objDefaultSettings.values[4]},function(result){
-                                                                    result = JSON.parse(result);
-                                                                    if (result.Error) {
-                                                                        Swal.fire({
-                                                                            title: "Oops!",
-                                                                            html:  result.Error + '<p> :The error that occured</p>',
-                                                                            icon: "error"
-                                                                        });
-                                                                    } else {
-                                                                        console.log(result);
-                                                                        $('#divRegister').slideUp(function(){
-                                                                            console.log("hello");
-                                                                            $('#divDashboard').slideDown();
-                                                                            $('#navLogin').attr('data-card', 'Dashboard');
-                                                                            $('#navRegister').attr('data-card', 'Dashboard');
-                                                                            $.getJSON('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[2]},function(result){
-                                                                                console.log(result);
-                                                                            })
-                                                                        })
-                                                                        console.log('No errors found');
-                                                                    }
-                                                                })
-                                                               
-                                                            }
-                                                            
-                                                        })
-                                                        
-                                                    }  
-                                                })
-                                                
-                                            }
-                                        })
-                                    }
-                                    
+                            }*/
+                            $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID')}, function(coopResults) {
+                                coopResults.forEach(function(strCoopDetail) {
+                                    console.log(strCoopDetail);
                                 })
-                                
-                            }
-                        })
+                            })
+                        }
                     })
-            })
+                })
+            })  
         }
     })
     //Click event for the Login Button
