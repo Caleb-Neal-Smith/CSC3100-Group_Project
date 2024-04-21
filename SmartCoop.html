@@ -299,7 +299,7 @@
                 </div>
                 <button class="col-12 btn text-center btn btn-secondary mt-3" id="btnReturnSettings" type="button">Return to Dashboard</button>
             </div>
-        </div>
+        
                     <!-- Input for updating temperature -->
                     <div class="card-body">
                         <h3>Temperature</h3>
@@ -353,6 +353,7 @@
                     <button class="col-12 btn text-center btn btn-secondary mt-3" id="btnReturnSettings" type="button">Return to Dashboard</button>
                 </div>
             </div>
+        </div>
         <div class="card col-12 col-md-10 col-lg-9" id="divUserAddress" style="display:none">
             <div class="card-header">
                 <h3>Weather</h3>
@@ -395,6 +396,17 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script>
+    $.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
+        {SessionID:sessionStorage.getItem('SessionID')},
+        function(sessionDetails){
+            console.log(sessionDetails);    
+            if(sessionDetails == null){
+                $('#divLogin').slideToggle("slow")  
+            } else{
+                $('#divDashboard').slideToggle("slow")  
+            }
+    })
+    
     /*async function settingAjax(sessionID, setSetting, setValue) {
         let result;
 
@@ -417,7 +429,9 @@
     var strCoopID;
     const ctx = document.getElementById('eggsChart');
     const ctxTwo = document.getElementById('myChart');
-    const ctxEnvironment = document.getElementById('envChart');
+    //const ctxEnvironment = document.getElementById('envChart');
+    var ctxTemperature = document.getElementById('envTemperatureChart');
+    var ctxHumidity = document.getElementById('envHumidityChart');
     //Cofiguration object for eggsChart
     var objEggConfig = {
         type: 'line',
@@ -465,7 +479,7 @@
         data: {
             labels: [],
             datasets: [{
-                label: 'Humidity',
+                label: 'Humidity (%)',
                 data: [],
                 borderWidth: 1
             }]
@@ -570,7 +584,7 @@
             });
         })
     })
-    const ctx = document.getElementById('chartEggs');
+    ctx = document.getElementById('chartEggs');
     var numEggs = 0;
 
     $('#btnAddFood').on('click',function(){
@@ -734,7 +748,7 @@
 
     
 
-    $.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
+    /*$.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
         {SessionID:sessionStorage.getItem('SessionID')},
         function(sessionDetails){
             console.log(sessionDetails);    
@@ -743,7 +757,7 @@
             } else{
                 $('#divDashboard').slideToggle("slow")  
             }
-        })
+    })*/
     
     $('#btnUserAddress').on('click',function(){
         $('#divDashboard').slideUp(function(){
@@ -933,6 +947,7 @@
                 } else {
                     console.log(result);
                 }
+                })
             })
         }
     })
@@ -1370,29 +1385,6 @@
                         })
                     })
             })
-                    //IMPORTANT: May have duplicate code here that needs to be rempoed
-                    //The names of the JSON values passed may need to be changed
-                    //Should I change names of callback function parameters?
-                    result = JSON.parse(result)
-                    console.log(result);
-                    sessionStorage.setItem('SessionID', result.SessionID);
-                    console.log(sessionStorage.getItem('SessionID'));
-                    $.ajax({
-                        url: 'https://simplecoop.swollenhippo.com/coop.php',
-                        type: 'PUT',
-                        data: {SessionID:sessionStorage.getItem('SessionID'),Street1:strStreetAddress1,Street2:strStreetAddress2,City:strCity,State:strState,ZIP:strZipCode}, //Is this right?
-                        success: function(coopUpdate) {
-                            coopUpdate = JSON.parse(coopUpdate)
-                            console.log(coopUpdate.Outcome);
-                            $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID')}, function(coopResults) {
-                                coopResults.forEach(function(strCoopDetail) {
-                                    console.log(strCoopDetail);
-                                })
-                            })
-                        }
-                    })
-                })
-            })  
         }
     })
     //Click event for the Login Button
@@ -1492,8 +1484,9 @@
 
                 }
         })
-    })
     
+    })
+
     //This function shows up on the dashboard and gives the user the option to logout
     $('#btnLogout').on('click', function(){
     $.ajax({
