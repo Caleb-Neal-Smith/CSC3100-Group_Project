@@ -1110,8 +1110,8 @@
                                 });
                                 //If success, slide register up and slide up dashboard
                                 objDefaultSettings = {
-                                    "settings":["temperature", "door_state", "water_in_liters", "food_in_gallons"],
-                                    "values":["70", "closed", "5", "5"]
+                                    "settings":["temperature", "fan_state", "door_state", "water_in_liters", "food_in_gallons"],
+                                    "values":["70", "off", "closed", "5", "5"]
                                 }
                                 /*strSettings = $('#txtSettings').val();
                                 strValue = $('#txtValue').val();
@@ -1139,33 +1139,83 @@
                                 console.log(objDefaultSettings.settings.length);
                               
                                 
-                                for (var i = 0; i < 4; i++) {
-                                    $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[i],value:objDefaultSettings.values[i]},function(result){
-                                        result = JSON.parse(result);
-                                        if (result.Error) {
-                                            Swal.fire({
-                                                title: "Oops!",
-                                                html:  result.Error + '<p> :The error that occured</p>',
-                                                icon: "error"
-                                            });
-                                        } else {
-                                            console.log(result);
-                                        }
-                                        if(i == 3) {
-                                            $.getJSON('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[3]},function(result){
+                                    
+                                $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[0],value:objDefaultSettings.values[0]},function(result){
+                                    result = JSON.parse(result);
+                                    if (result.Error) {
+                                        Swal.fire({
+                                            title: "Oops!",
+                                            html:  result.Error + '<p> :The error that occured</p>',
+                                            icon: "error"
+                                        });
+                                    } else {
+                                        console.log(result);
+                                        $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[1],value:objDefaultSettings.values[1]},function(result){
+                                            result = JSON.parse(result);
+                                            if (result.Error) {
+                                                Swal.fire({
+                                                    title: "Oops!",
+                                                    html:  result.Error + '<p> :The error that occured</p>',
+                                                    icon: "error"
+                                                });
+                                            } else {
                                                 console.log(result);
-                                            })
-
-                                            /*}*/
-                                            $('#divRegister').slideUp(function(){
-                                                $('#divDashboard').slideDown();
-                                                $('#navLogin').attr('data-card', 'Dashboard');
-                                                $('#navRegister').attr('data-card', 'Dashboard');
-                                            })
-                                            console.log('No errors found');
-                                        }
-                                    })
-                                }
+                                                $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[2],value:objDefaultSettings.values[2]},function(result){
+                                                    result = JSON.parse(result);
+                                                    if (result.Error) {
+                                                        Swal.fire({
+                                                            title: "Oops!",
+                                                            html:  result.Error + '<p> :The error that occured</p>',
+                                                            icon: "error"
+                                                        });
+                                                    } else {
+                                                        console.log(result);
+                                                        $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[3],value:objDefaultSettings.values[3]},function(result){
+                                                            result = JSON.parse(result);
+                                                            if (result.Error) {
+                                                                Swal.fire({
+                                                                    title: "Oops!",
+                                                                    html:  result.Error + '<p> :The error that occured</p>',
+                                                                    icon: "error"
+                                                                });
+                                                            } else {
+                                                                console.log(result);
+                                                                $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[4],value:objDefaultSettings.values[4]},function(result){
+                                                                    result = JSON.parse(result);
+                                                                    if (result.Error) {
+                                                                        Swal.fire({
+                                                                            title: "Oops!",
+                                                                            html:  result.Error + '<p> :The error that occured</p>',
+                                                                            icon: "error"
+                                                                        });
+                                                                    } else {
+                                                                        console.log(result);
+                                                                        $('#divRegister').slideUp(function(){
+                                                                            console.log("hello");
+                                                                            $('#divDashboard').slideDown();
+                                                                            $('#navLogin').attr('data-card', 'Dashboard');
+                                                                            $('#navRegister').attr('data-card', 'Dashboard');
+                                                                            $.getJSON('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[2]},function(result){
+                                                                                console.log(result);
+                                                                            })
+                                                                        })
+                                                                        console.log('No errors found');
+                                                                    }
+                                                                })
+                                                               
+                                                            }
+                                                            
+                                                        })
+                                                        
+                                                    }  
+                                                })
+                                                
+                                            }
+                                        })
+                                    }
+                                    
+                                })
+                                
                             }
                         })
                     })
