@@ -771,8 +771,11 @@
                 icon: "error"
             });
         } else {
-            $.post('https://simplecoop.swollenhippo.com/eggs.php',{SessionID:sessionStorage.getItem('SessionID'),LogDateTime:currentDate,Harvested:numEggs},function(result){
-                result = JSON.parse(result);
+            $.ajax({
+                method: "POST",
+                url: 'https://simplecoop.swollenhippo.com/eggs.php',
+                data: {SessionID:sessionStorage.getItem('SessionID'), ObservationDateTime:currentDate, eggs:numEggs},
+            }).done(function(result) {
                 console.log(result);
                 if (result.Error) {
                     Swal.fire({
