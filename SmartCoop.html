@@ -188,7 +188,7 @@
                         <label for="txtEggsDate" class="form-label">Days to View</label>
                         <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
                         <button class="btn text-center btn btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
-                        <button class="btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
+                        <button class="btn text-center btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
                     </form>
                     <div class="col-8">
                         <canvas id="eggsChart" style="display:none"></canvas>
@@ -201,10 +201,10 @@
             <div class="card-header">
                 <h3>Environment</h3>
                 <button class="col-12 btn text-center btn btn-primary" id="btnEnvCreate" type="button">Create Environment</button>
-                <button class="col-12 btn text-center btn btn-danger" id="btnEnvDelet" type="button">Delete Environment</button>
+                <button class="col-12 btn text-center btn btn-danger" id="btnEnvDelete" type="button">Delete Environment</button>
                 <button class="col-12 btn text-center btn btn-success" id="btnEnvView" type="button">View Environment</button>
                 <button class="col-12 btn text-center btn btn-success" id="btnViewEnvDetails" type="button">View Environment Details</button>
-                <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEnvironment" type="button">Return to Dashboard</button>
+                <button class="col-12 btn text-center btn btn-secondary" id="btnReturnEnvironment" type="button">Return to Dashboard</button>
             </div>
         </div>
         <div class="card col-12 col-md-10 col-lg-9" id="divSettings" style="display:none;height:100vh">
@@ -291,8 +291,8 @@
         <div class="card col-12 col-md-10 col-lg-9" id="divUserAddress" style="display:none">
             <div class="card-header">
                 <h3>Weather</h3>
-                <button class="col-12 btn text-center btn-primary" id="btnEnvCreate" type="button">Create Address</button>
-                <button class="col-12 btn text-center btn-success" id="btnEnvDelet" type="button">Delete Address</button>
+                <button class="col-12 btn text-center btn-primary" id="btnWeatherCreate" type="button">Create Address</button>
+                <button class="col-12 btn text-center btn-success" id="btnWeatherDelete" type="button">Delete Address</button>
                 <button class="col-12 btn text-center btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
             </div>
         </div>
@@ -610,12 +610,13 @@
         $.ajax({
             url: 'https://simplecoop.swollenhippo.com/settings.php',
             type: 'PUT',
-            data: {SessionID:sessionStorage.getItem('SessionID'),setting:strSettings,value:strValue},
+            data: {SessionID:sessionStorage.getItem('SessionID'),setting:strUpdatedSetting,value:strUpdatedValue},
             success: function(result) {
                 console.log(result);
             }
         });
     })
+    
 
     $('#btnIncreaseTemperature').on('click',function(){
          strTempertaure = +$('#txtTemperature').val();
