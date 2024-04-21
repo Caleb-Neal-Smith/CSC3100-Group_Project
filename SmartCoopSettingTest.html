@@ -335,7 +335,25 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script>
-    $.post()
+    /*async function settingAjax(sessionID, setSetting, setValue) {
+        let result;
+
+        try {
+            result = await $.ajax({
+                url: 'https://simplecoop.swollenhippo.com/settings.php',
+                type: 'POST',
+                data: {
+                    SessionID: sessionID,
+                    setting: setting,
+                    value: value
+                }
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }*/
+
+    var objDefaultSettings;
     var strCoopID;
     const ctx = document.getElementById('eggsChart');
     const ctxTwo = document.getElementById('myChart');
@@ -973,7 +991,7 @@
         $.getJSON('https://simplecoop.swollenhippo.com/users.php', {Email:strEmail}, function(result) {
             //temporary console.log
             console.log(result);
-            if(result.Email == strEmail) {
+            if(result) {
                 blnError = true;
                 strErrorMessage = strErrorMessage + '<p>Email is already in use. </p>';
             }
@@ -1044,62 +1062,114 @@
                     html: strErrorMessage,
                     icon: "error"
                 });
-            } else {
-            //Displays success if there are no errors in the input validation
-                Swal.fire({
-                    title: "Successful Registered",
-                    text: 'You have successfully logged in!',
-                    icon: "success"
-                });
-            //If success, slide register up and slide up dashboard
-                $('#divRegister').slideUp(function(){
-                    $('#divDashboard').slideDown();
-                    $('#navLogin').attr('data-card', 'Dashboard');
-                    $('#navRegister').attr('data-card', 'Dashboard');
-                })
-                console.log('No errors found');
-                //Create new user
-                $.post('https://simplecoop.swollenhippo.com/users.php', {Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strRegistrationID}, function(result) {
+        } else {
+            //Create new user
+            $.post('https://simplecoop.swollenhippo.com/users.php', {Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strRegistrationID}, function(result) {
                     result = JSON.parse(result);
                     console.log(result.Outcome);
                     $.post('https://simplecoop.swollenhippo.com/sessions.php', {Email:strEmail,Password:strPassword}, function(result){
-                    //The names of the JSON values passed may need to be changed
-                    //Should I change names of callback function parameters?
-                    result = JSON.parse(result)
-                    console.log(result);
-                    sessionStorage.setItem('SessionID', result.SessionID);
-                    console.log(sessionStorage.getItem('SessionID'));
-                    $.ajax({
-                        url: 'https://simplecoop.swollenhippo.com/coop.php',
-                        type: 'PUT',
-                        data: {SessionID:sessionStorage.getItem('SessionID'),Street1:strStreetAddress1,Street2:strStreetAddress2,City:strCity,State:strState,ZIP:strZipCode}, //Is this right?
-                        success: function(coopUpdate) {
-                            coopUpdate = JSON.parse(coopUpdate)
-                            console.log(coopUpdate.Outcome);
-                            // Loop to execute the code block 100 times
-                            //I'm commenting out the for loop for now to avoid overloading the database
-                            /*for (var i = 0; i < 100; i++) {
-                                // The SessionID and additional data with random temperature, humidity, and observationdatetime
-                                var requestData = {
-                                    SessionID:sessionStorage.getItem('SessionID'),
-                                    observationDateTime: getRandomObservationDatetime(),
-                                    temperature: getRandomTemperature(),
-                                    humidity: getRandomHumidity()
-                                };
-                                // Making the AJAX request using POST
-                                $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
-                                    console.log(result);
-                                });
-                            }*/
-                            $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID')}, function(coopResults) {
-                                coopResults.forEach(function(strCoopDetail) {
-                                    console.log(strCoopDetail);
+                        //The names of the JSON values passed may need to be changed
+                        //Should I change names of callback function parameters?
+                        result = JSON.parse(result)
+                        console.log(result);
+                        sessionStorage.setItem('SessionID', result.SessionID);
+                        console.log(sessionStorage.getItem('SessionID'));
+                        $.ajax({
+                            url: 'https://simplecoop.swollenhippo.com/coop.php',
+                            type: 'PUT',
+                            data: {SessionID:sessionStorage.getItem('SessionID'),Street1:strStreetAddress1,Street2:strStreetAddress2,City:strCity,State:strState,ZIP:strZipCode}, //Is this right?
+                            success: function(coopUpdate) {
+                                coopUpdate = JSON.parse(coopUpdate)
+                                console.log(coopUpdate.Outcome);
+                                // Loop to execute the code block 100 times
+                                //I'm commenting out the for loop for now to avoid overloading the database
+                                /*for (var i = 0; i < 100; i++) {
+                                    // The SessionID and additional data with random temperature, humidity, and observationdatetime
+                                    var requestData = {
+                                        SessionID:sessionStorage.getItem('SessionID'),
+                                        observationDateTime: getRandomObservationDatetime(),
+                                        temperature: getRandomTemperature(),
+                                        humidity: getRandomHumidity()
+                                    };
+                                    // Making the AJAX request using POST
+                                    $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
+                                        console.log(result);
+                                    });
+                                }*/
+                                //IMPORTANT: May not need this "get" to coop.php
+                                $.getJSON('https://simplecoop.swollenhippo.com/coop.php', {SessionID:sessionStorage.getItem('SessionID')}, function(coopResults) {
+                                    coopResults.forEach(function(strCoopDetail) {
+                                        console.log(strCoopDetail);
+                                    })
                                 })
-                            })
-                        }
+                                //Displays success if there are no errors in the input validation
+                                Swal.fire({
+                                    title: "Successful Registered",
+                                    text: 'You have successfully logged in!',
+                                    icon: "success"
+                                });
+                                //If success, slide register up and slide up dashboard
+                                objDefaultSettings = {
+                                    "settings":["temperature", "door_state", "water_in_liters", "food_in_gallons"],
+                                    "values":["70", "closed", "5", "5"]
+                                }
+                                /*strSettings = $('#txtSettings').val();
+                                strValue = $('#txtValue').val();
+
+                                let blnError = false;
+                                let strErrorMessage = '';
+                                //Settings must not be blank
+                                if (strSettings.length < 1){
+                                    blnError = true;
+                                    strErrorMessage = strErrorMessage + '<p>Settings cannot be blank.</p>';
+                                }
+                                //Value must not be blank
+                                if (strValue.length < 1){
+                                    blnError = true;
+                                    strErrorMessage = strErrorMessage + '<p>Value cannot be blank.</p>';
+                                }
+                                if(blnError == true){
+                                        console.log(strErrorMessage);
+                                        Swal.fire({
+                                            title: "Oops",
+                                            html: strErrorMessage,
+                                            icon: "error"
+                                        });
+                                } else {*/
+                                console.log(objDefaultSettings.settings.length);
+                              
+                                
+                                for (var i = 0; i < 4; i++) {
+                                    $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[i],value:objDefaultSettings.values[i]},function(result){
+                                        result = JSON.parse(result);
+                                        if (result.Error) {
+                                            Swal.fire({
+                                                title: "Oops!",
+                                                html:  result.Error + '<p> :The error that occured</p>',
+                                                icon: "error"
+                                            });
+                                        } else {
+                                            console.log(result);
+                                        }
+                                        if(i == 3) {
+                                            $.getJSON('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:objDefaultSettings.settings[3]},function(result){
+                                                console.log(result);
+                                            })
+
+                                            /*}*/
+                                            $('#divRegister').slideUp(function(){
+                                                $('#divDashboard').slideDown();
+                                                $('#navLogin').attr('data-card', 'Dashboard');
+                                                $('#navRegister').attr('data-card', 'Dashboard');
+                                            })
+                                            console.log('No errors found');
+                                        }
+                                    })
+                                }
+                            }
+                        })
                     })
-                })
-            })  
+            })
         }
     })
     //Click event for the Login Button
