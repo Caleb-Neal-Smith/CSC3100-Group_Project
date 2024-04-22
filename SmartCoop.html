@@ -7,12 +7,25 @@
     <title>Smart Coop</title>
     <!--Content delivery network for Bootstrap stylesheet (bootsrap).-->
     <link href="css/lib/bootsrap.min.css" rel="stylesheet">
+    <style> 
+        body { 
+            font-family: western; 
+        } 
+    </style>
     <!--<link href="data.css" rel="stylesheet">-->
     
 
 </head>
 <!--This Section of code formats the body of the file.-->
 <body class="bg-dark">
+    <style>
+        body {
+          background-image: url('https://hengear.com/cdn/shop/products/IMG_4655.jpg?v=1712933371');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+        </style>
     <!-- The navigation bar -->
         <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark"> <!--Source for NavBar: https://bootswatch.com/yeti/-->
 
@@ -53,8 +66,21 @@
                 </div>
             </div>
         </nav>
-      
-    <div class="d-flex justify-content-center align-items-center vh-100 pt-4" id="divMain"> 
+    <div>
+
+    <!--This section of code creates the div for the main content of the page.-->
+    <div class="d-flex justify-content-center align-items-center vh-100 pt-4" id="divMain">
+        <div class="card col-12 col-md-5 col-lg-4" id="divMessage" style="display:none;">
+            <div class="card-header d-flex justify-content-center align-items-center">
+                <h3>Welcome To Simple Coop</h3>
+            </div>
+            <div class="card-body">
+                <p id="pMessage">Hello and welcome to the Simple Coop website. We first want to thank you for choosing simple coop as your smart coop program. We want to make your experience of owning a chicken coop easy and worry free. Please enjoy being a member of the simple Coop family.</p>
+                <button class="col-12 btn btn-success mt-4" id="btnGoToLogin" type="button">Login</button>
+                <button class="col-12 btn btn-success mt-4" id="btnGoToRegister" type="button">Register</button>
+            </div>
+        </div>
+        <!--This section of code creates the card for the login page.--> 
         <div class="card col-12 col-md-5 col-lg-4" id="divLogin" style="display:none;">  
             <!--This section of code sets up the formating for the card header.-->
             <div class="card-header d-flex justify-content-center align-items-center">
@@ -211,7 +237,7 @@
                 <h3>Environment</h3>
                 <button class="col-12 btn text-center btn-primary" id="btnEnvCreate" type="button">Create Environment</button>
                 <button class="col-12 btn text-center btn-danger" id="btnEnvDelete" type="button">Delete Environment</button>
-                <button class="col-12 btn text-center btn-success" id="btnEnvView" type="button">View Environment</button>
+                <button class="col-12 btn text-center-primary mb1 bg-black" id="btnEnvView" type="button">View Environment</button>
                 <button class="col-12 btn text-center btn-success" id="btnViewEnvDetails" type="button">View Environment Details</button>
                 <button class="col-12 btn text-center btn-secondary" id="btnReturnEnvironment" type="button">Return to Dashboard</button>
             </div>
@@ -357,9 +383,10 @@
         <div class="card col-12 col-md-10 col-lg-9" id="divUserAddress" style="display:none">
             <div class="card-header">
                 <h3>Weather</h3>
-                <button class="col-12 btn text-center btn-primary" id="btnWeatherCreate" type="button">Create Address</button>
-                <button class="col-12 btn text-center btn-success" id="btnWeatherDelete" type="button">Delete Address</button>
-                <button class="col-12 btn text-center btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
+                <button class="col-12 btn text-center btn btn-primary" id="btnAddAddress" type="button">Create Address</button>
+                <button class="col-12 btn text-center btn btn-success" id="btnDeleteAddress" type="button">Delete Address</button>
+                <button class="col-12 btn text-center btn btn-primary mb1 bg-black" id="btnViewAddress" type="button">View Weather at Address</button>
+                <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
             </div>
         </div>
         <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none;">
@@ -369,8 +396,46 @@
             <div class="card-body">
                 <canvas id="envChart"></canvas>
             </div>
+            <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnTempChart" type="button">Return to Dashboard</button>
         </div>
+    
+    <div id="divAddWeatherAddress" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
+        <div class="card-header">
+            <h3>Address</h3>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <label for="txtStreetAddress1" class="form-label">Street Address Line 1</label>
+                    <input id="txtStreetAddress1" placeholder="Street Address 1" aria-label="Street Address 1"  class="form-control">
+                </div>
+                <!--Form section for entering city.-->
+                <div class="form-group">
+                    <label for="txtCity" class="form-label">City</label>
+                    <input id="txtCity"  placeholder="City" aria-label="City" class="form-control">
+                </div>
+                <!--Form section for entering state.-->
+                <div class="form-group">
+                    <label for="txtState" class="form-label">State</label>
+                    <input id="txtState"  placeholder="State" aria-label="State" class="form-control">
+                </div>
+                <!--Form section for entering zipcode.-->
+                <div class="form-group">
+                    <label for="txtZipCode" class="form-label">Zip Code</label>
+                    <input id="txtZipCode"  placeholder="Zip Code" aria-label="Zip Code" class="form-control">
+                </div>
+            </form>
+        </div>
+        <button class="col-12 btn text-cent btn btn-secondary" id="btnAddWeatherAddress" type="button">Return to Dashboard</button>
+    </div>   
 
+    <div id="divWeather" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
+        <div class="card-header">
+            <h3>Weather</h3>
+        </div>
+        <div class="card-body">
+        </div>
+        <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnWeather" type="button">Return to Dashboard</button>
     </div>
     <!-- Necessary scripts for jquery, bootstrap, and sweetalert -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -743,12 +808,12 @@
         function(sessionDetails){
             console.log(sessionDetails);    
             if(sessionDetails == null){
-                $('#divLogin').slideToggle("slow")  
+                $('#divMessage').slideToggle("slow")  
             } else{
                 $('#divDashboard').slideToggle("slow")  
             }
     })*/
-    
+
     $('#btnUserAddress').on('click',function(){
         $('#divDashboard').slideUp(function(){
             $('#divUserAddress').slideDown();
@@ -757,6 +822,46 @@
     $('#btnReturnUserAddress').on('click',function(){
         $('#divUserAddress').slideUp(function(){
             $('#divDashboard').slideDown();
+        })
+    })
+    $('#btnReturnTempChart').on('click',function(){
+        $('#divEnvChart').slideUp(function(){
+            $('#divEnvironment').slideDown();
+        })
+    })
+    $('#btnAddAddress').on('click',function(){
+        $('#divUserAddress').slideUp(function(){
+            $('#divAddWeatherAddress').slideDown();
+        })
+    })
+    $('#btnAddWeatherAddress').on('click',function(){
+        $('#divAddWeatherAddress').slideUp(function(){
+            $('#divUserAddress').slideDown();
+        })
+    })
+    $('#btnViewAddress').on('click',function(){
+        $('#divUserAddress').slideUp(function(){
+            $('#divWeather').slideDown();
+        })
+    })
+    $('#btnReturnWeather').on('click',function(){
+        $('#divWeather').slideUp(function(){
+            $('#divUserAddress').slideDown();
+        })
+    })
+    $('#btnReturnWeather').on('click',function(){
+        $('#divWeather').slideUp(function(){
+            $('#divUserAddress').slideDown();
+        })
+    })
+    $('#btnGoToLogin').on('click',function(){
+        $('#divMessage').slideUp(function(){
+            $('#divLogin').slideDown();
+        })
+    })
+    $('#btnGoToRegister').on('click',function(){
+        $('#divMessage').slideUp(function(){
+            $('#divRegister').slideDown();
         })
     })
     $('#btnSettings').on('click',function(){
