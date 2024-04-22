@@ -2,12 +2,17 @@
 Authors: Alec Jones, Nolen Jensen, Samuel Sims, Mitchell Kiriazes, Caleb Smith, and Christian Scott  
 
 
-## **ideas**
-- change dashboard to a grid with icons?
-- add additional buttons to navbar?
-- add About Us page somewhere maybe?
+
 
 ## **changelog**
+
+### 4.21.3
+**added**
+- added calebs environment changes
+
+**changed**
+- updated dashboard and got the env working
+
 
 ### 4.21.3
 **added**
@@ -16,10 +21,6 @@ Authors: Alec Jones, Nolen Jensen, Samuel Sims, Mitchell Kiriazes, Caleb Smith, 
 **changed**
 - fixed a couple settings errors with navSettings button, and removed redundancy
 - changed dropdown buttons to button type
-
-**to do**
-- change account button to 3 lines to make it more uniform like a normal webpage
-- change smartcoop button to be an icon and not lame  
 
 
 ### 4.21.2

@@ -225,7 +225,10 @@
         top: 100px;
         left: 45px; 
         }
-
+        #divDashboard {
+        justify-content: center;
+        align-items: center;
+        }
     </style>
 </head>
 <!--This Section of code formats the body of the file.-->
@@ -389,47 +392,69 @@
             </div>
         </div>
         <!-- Post_login dashboard creation/placeholder -->
-        <div class="card col-12 col-md-10 col-lg-9" id="divDashboard" style="display:none;">
-            <div class="card-header">
+        <!-- <div class="card col-12 col-md-10 col-lg-9" id="divDashboard" style="display:none;"> -->
+        <div class="col-12 col-md-10 col-lg-9 justify-content-center align-items-center" id="divDashboard" style="display:none;">
+            <!-- <div class="card-header">
                 <h3>Dashboard</h3>
             </div>
-            <div class="card-body">
-                <form>
-                    <button class="col-12 btn text-center btn-primary" id="btnEggs" type="button">Eggs</button>   
-                </form>
-                <form>
-                    <button class="col-12 btn text-center btn-success" id="btnEnvModify" type="button">Modify Environment</button>
-                </form>
-                <form>
-                                                        <!--Should this be mb-1?-->
-                    <button class="col-12 btn text-center btn-primary mb1 bg-black" id="btnUserAddress" type="button">View Weather</button>
-                </form>
-                <form>
-                    <button class="col-12 btn text-center btn-secondary" id="btnSettings" type="button">Settings</button>
-                </form>
-                <button class="col-12 btn btn-danger mt-4" id="btnLogout" type="button">Logout</button>
-            </div>
-        </div>
-        
-        <div class="card col-12 col-md-10 col-lg-9" id="divEggs" style="display:none">
-            <div class="card-header">
-                <h3>Eggs</h3>
-            </div>
-            <div class="card-body">
-                <div class="col-12 row">
-                    <form class="col-4">
-                        <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
-                        <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
-                        <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
-                        <button class="btn text-center btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
-                        <button class="btn text-center btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
-                    </form>
-                    <div class="col-8">
-                        <canvas id="eggsChart" style="display:none"></canvas>
+            <div class="card-body"> -->
+                <div class="card col-12 col-md-10 col-lg-9 justify-content-center" id="divEggs">
+                    <div class="card-header">
+                        <h3>Eggs</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-12 row">
+                            <div class="col-12 row">
+                                <form class="col-4">
+                                    <label for="txtEggs" class="form-label">Number of Eggs</label>
+                                    <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
+                                    <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
+                                    <label for="txtEggsDate" class="form-label">Days to View</label>
+                                    <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
+                                    <button class="btn text-center btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
+
+                                </form>
+                                <div class="col-8">
+                                    <canvas id="eggsChart" style="display:none"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9 mt-4">
+                    <div class="card-header">
+                        <h3>Environment</h3>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <canvas id="envChart"></canvas>
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <label for="txtTemperature" class="form-label">Temperature (°F)</label>
+                                <input type="text" id="txtObservationTemperature" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="txtHumidity" class="form-label">Humidity (%)</label>
+                                <input type="text" id="txtObservationHumidity" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="txtDate" class="form-label">Date and Time</label>
+                                <input type="datetime-local" id="txtObservationDateTime" class="form-control">
+                            </div>
+                            <button class="col-12 btn text-center btn-primary mt-4" id="btnAddObservation" type="button">Add Observation</button>
+                        </form>
+                    </div>
+                   
+                </div>
+                
+                <form>
+                    <button class="col-9 btn text-center btn-secondary mt-4" id="btnSettings" type="button">Settings</button>
+                </form>
+                <button class="col-9 btn btn-danger mt-4" id="btnLogout" type="button">Logout</button>
+            <!-- </div> -->
         </div>
+
          
         <div class="card col-12 col-md-10 col-lg-9" id="divEnvironment" style="display:none">
             <div class="card-header">
@@ -548,69 +573,67 @@
         <div class="card col-12 col-md-10 col-lg-9" id="divUserAddress" style="display:none">
             <div class="card-header">
                 <h3>Weather</h3>
-                <button class="col-12 btn text-center btn-primary" id="btnEnvCreate" type="button">Create Address</button>
-                <button class="col-12 btn text-center btn-success" id="btnEnvDelet" type="button">Delete Address</button>                    <button class="col-12 btn text-center btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
-                </div>
+                <button class="col-12 btn text-center btn-primary" id="btnWeatherCreate" type="button">Create Address</button>
+                <button class="col-12 btn text-center btn-success" id="btnWeatherDelete" type="button">Delete Address</button>
+                <button class="col-12 btn text-center btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
             </div>
-            <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none;">
-                <div class="card-header">
-                    <h3>Environment</h3>
-                </div>
-                <div class="card-body">
-                    <div id="divTempChart" class="card"> <!--IMPORTANT: May need to add back "height:100vh" into style attribute-->
-                        <div class="card-header">
-                            <h5>Temperature</h5>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="envTemperatureChart"></canvas>
-                        </div>
-                    </div>
-                    <div id="divHumidityChart" class="card">
-                        <div class="card-header">
-                            <h5>Humidity</h5>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="envHumidityChart"></canvas>
-                        </div>
-                    </div>
-                    <!--<canvas id="myChart"></canvas>-->
-                    <!--<button class="col-12 btn text-center btn-secondary" id="btnReturnEnvDetails" type="button">Return to Dashboard</button>-->
-                </div>
         </div>
+        
+    
+    <div id="divAddWeatherAddress" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
+        <div class="card-header">
+            <h3>Address</h3>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <label for="txtStreetAddress1" class="form-label">Street Address Line 1</label>
+                    <input id="txtStreetAddress1" placeholder="Street Address 1" aria-label="Street Address 1"  class="form-control">
+                </div>
+                <!--Form section for entering city.-->
+                <div class="form-group">
+                    <label for="txtCity" class="form-label">City</label>
+                    <input id="txtCity"  placeholder="City" aria-label="City" class="form-control">
+                </div>
+                <!--Form section for entering state.-->
+                <div class="form-group">
+                    <label for="txtState" class="form-label">State</label>
+                    <input id="txtState"  placeholder="State" aria-label="State" class="form-control">
+                </div>
+                <!--Form section for entering zipcode.-->
+                <div class="form-group">
+                    <label for="txtZipCode" class="form-label">Zip Code</label>
+                    <input id="txtZipCode"  placeholder="Zip Code" aria-label="Zip Code" class="form-control">
+                </div>
+            </form>
+        </div>
+        <button class="col-12 btn text-center btn-secondary" id="btnAddWeatherAddress" type="button">Return to Dashboard</button>
+    </div>   
 
+    <div id="divWeather" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
+        <div class="card-header">
+            <h3>Weather</h3>
+        </div>
+        <div class="card-body">
+        </div>
+        <button class="col-12 btn text-center btn-secondary" id="btnReturnWeather" type="button">Return to Dashboard</button>
     </div>
-    <!-- Necessary scripts for jquery, bootstrap, sweetalert, and chartJS -->
+    </div>
+    <!-- Necessary scripts for jquery, bootstrap, and sweetalert -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script>
-    /*async function settingAjax(sessionID, setSetting, setValue) {
-        let result;
-
-        try {
-            result = await $.ajax({
-                url: 'https://simplecoop.swollenhippo.com/settings.php',
-                type: 'POST',
-                data: {
-                    SessionID: sessionID,
-                    setting: setting,
-                    value: value
-                }
-            })
-        } catch (error) {
-            console.error(error);
-        }
-    }*/
-
     var objDefaultSettings;
     var strCoopID;
     const ctx = document.getElementById('eggsChart');
     const ctxTwo = document.getElementById('myChart');
-    const ctxEnvironment = document.getElementById('envChart');
-        //Cofiguration object for eggsChart
-        var objEggConfig = {
+    //const ctxEnvironment = document.getElementById('envChart');
+    //Cofiguration object for eggsChart
+    var objEggConfig = {
         type: 'line',
         data:{
             labels: [],
@@ -628,12 +651,13 @@
             },
             responsive: true,
             maintainAspectRatio: true
-        }
+        },
     }
-
+    var ctxEnvironment = document.getElementById('envChart');
+    var envChart;
     var eggChart = new Chart(ctx, objEggConfig);
-    //Configuration object for tempChart
-    var objTempConfig = {
+    //Configuration object for envChart
+    var objEnvConfig = {
         type: 'line',
         data: {
             labels: [],
@@ -641,24 +665,8 @@
                 label: 'Temperature (°F)',
                 data: [],
                 borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false
-        },
-    }
-    var objHumidityConfig = {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Humidity',
+            }, {
+                label: 'Humidity (%)',
                 data: [],
                 borderWidth: 1
             }]
@@ -666,46 +674,78 @@
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    min: 20
                 }
             },
             responsive: true,
             maintainAspectRatio: false
         },
     }
+    function createEnvChart(callback) {
+        let intDays = 5;
+        let count = 0;
+        let day = '';
+        $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
+            envResults.forEach(function(envDetail) {
+                console.log(envDetail);
+                count++;
+                //day = envDetail.ObservationDateTime.getDay() + '-' + envDetail.ObservationDateTime.getMonth() + '-' + envDetail.ObservationDateTime.getFullYear();
+                day = envDetail.ObservationDateTime.split(' ')[0]; 
+                objEnvConfig.data.labels.push(day);
+                objEnvConfig.data.datasets[0].data.push(envDetail.Temperature);
+                objEnvConfig.data.datasets[1].data.push(envDetail.Humidity);
+            })
+            console.log(count);
+            envChart = new Chart(ctxEnvironment, objEnvConfig);
+            //tempChart = new Chart(ctxTemperature, objTempConfig);
+            //humidityChart = new Chart(ctxHumidity, objHumidityConfig);
+            
+            /*$('#divEnvironment').slideUp(function() {
+                $('#divEnvChart').slideDown();
+            });*/
+            callback();
+        })
+    }
+    // createEnvChart(function() {
+    //     console.log("Chart created");
+    // });
+
+    // $(document).ready(function(){
+    //     let mainElement = document.getElementById('divMain');
+    //     let boolContains = mainElement.classList.contains("vh-100");
+    //     console.log(boolContains);
+    //     if(!boolContains) {
+    //         $('#divMain').addClass("vh-100");
+    //     }
+    // })
+    
+    
+    $.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
+        {SessionID:sessionStorage.getItem('SessionID')},
+        function(sessionDetails){
+            console.log(sessionDetails);
+            if(sessionDetails == null){
+                $('#divMessage').slideToggle("slow")  
+                updateNavbar();
+                $('#navLogin').show();
+                $('#navRegister').show();
+            } else{
+                $('#divMain').removeClass("vh-100");
+                createEnvChart(function() {
+                    $('#divDashboard').slideToggle("slow")
+                    updateTemperature();
+                })  
+            }
+            updateNavbar(sessionDetails);
+    })
+    
+    
+
+    
+    
     //I may delete this commented code later because it may not be needed. - Caleb
-    /*new Chart(ctxTwo, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of votes',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });*/
-    /*var tempChart = new Chart(ctxTemperature, {
-        type: 'line',
-        data: {
-            //labels: [],
-            datasets: [{
-                label: 'Temperature (°F)',
-                //data: [12, 19, 3, 5, 2, 3],
-                //borderWidth: 1
-            }]
-        },
-        options: {},
-    });*/
+   
+
     /*let intDays = 5;
     $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
         
@@ -770,7 +810,6 @@
     })
 
     $('#btnViewEnvDetails').on('click',function(){
-        
         let intDays = 5;
         let count = 0;
         let day = '';
@@ -780,19 +819,15 @@
                 count++;
                 //day = envDetail.ObservationDateTime.getDay() + '-' + envDetail.ObservationDateTime.getMonth() + '-' + envDetail.ObservationDateTime.getFullYear();
                 day = envDetail.ObservationDateTime.split(' ')[0]; 
-                objTempConfig.data.labels.push(day);
-                objTempConfig.data.datasets.forEach((dataset) => {
-                    dataset.data.push(envDetail.Temperature);
-                })
-                objHumidityConfig.data.labels.push(day);
-                objHumidityConfig.data.datasets.forEach((dataset) => {
-                    dataset.data.push(envDetail.Humidity);
-                })
+                objEnvConfig.data.labels.push(day);
+                objEnvConfig.data.datasets[0].data.push(envDetail.Temperature);
+                objEnvConfig.data.datasets[1].data.push(envDetail.Humidity);
             })
             console.log(count);
-            tempChart = new Chart(ctxTemperature, objTempConfig);
-            humidityChart = new Chart(ctxHumidity, objHumidityConfig);
-
+            envChart = new Chart(ctxEnvironment, objEnvConfig);
+            //tempChart = new Chart(ctxTemperature, objTempConfig);
+            //humidityChart = new Chart(ctxHumidity, objHumidityConfig);
+            
             $('#divEnvironment').slideUp(function() {
                 $('#divEnvChart').slideDown();
             });
@@ -1438,21 +1473,21 @@
 
     
 
-    $.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
-        {SessionID:sessionStorage.getItem('SessionID')},
-        function(sessionDetails){
-            console.log(sessionDetails);    
-            if(sessionDetails == null){
-                $('#divMessage').slideToggle("slow")  
-                updateNavbar();
-                $('#navLogin').show();
-                $('#navRegister').show();
-            } else{
-                $('#divDashboard').slideToggle("slow")
-                updateTemperature();  
-            }
-            updateNavbar(sessionDetails);
-        })
+    // $.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
+    //     {SessionID:sessionStorage.getItem('SessionID')},
+    //     function(sessionDetails){
+    //         console.log(sessionDetails);    
+    //         if(sessionDetails == null){
+    //             $('#divMessage').slideToggle("slow")  
+    //             updateNavbar();
+    //             $('#navLogin').show();
+    //             $('#navRegister').show();
+    //         } else{
+    //             $('#divDashboard').slideToggle("slow")
+    //             updateTemperature();  
+    //         }
+    //         updateNavbar(sessionDetails);
+    //     })
     // $('#btnSettings').on('click',function(){ 
     //     $('#divDashboard').slideUp(function(){
     //         $('#divSettings').slideDown();
@@ -1657,11 +1692,12 @@
             $('#divDashboard').slideDown();
         })
     })
-    $('#btnReturnEnvDetails').on('click',function(){
+    $('#btnReturnEnvChart').on('click',function(){
         $('#divEnvChart').slideUp(function(){
-            tempChart.destroy();
-            humidityChart.destroy();
-            objTempConfig = {
+            envChart.destroy();
+            // tempChart.destroy();
+            // humidityChart.destroy();
+            objEnvConfig = {
                 type: 'line',
                 data: {
                     labels: [],
@@ -1669,24 +1705,8 @@
                         label: 'Temperature (°F)',
                         data: [],
                         borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false
-                },
-            }
-            objHumidityConfig = {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Temperature (°F)',
+                    }, {
+                        label: 'Humidity (%)',
                         data: [],
                         borderWidth: 1
                     }]
@@ -1694,7 +1714,7 @@
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true
+                            min: 20
                         }
                     },
                     responsive: true,
@@ -1824,10 +1844,9 @@
 
     //On click of the button register
     $('#btnRegister').on('click', function() {
-            // updateTemperature();
-        // Initializes btnError and strError message to false and empty
-        let blnError = false;
-        let strErrorMessage = '';
+    // Initializes btnError and strError message to false and empty
+    let blnError = false;
+    let strErrorMessage = '';
 
         // Sets scoped variable of str(Variable) to the the values in the text boxes in register
         let strEmail = $('#txtEmail').val();
@@ -1835,7 +1854,7 @@
         let strFirstName = $('#txtFirstName').val();
         let strLastName = $('#txtLastName').val();
         let strStreetAddress1 = $('#txtStreetAddress1').val();
-        let strStreetAddress2 = $('#txtStreetAddress2').val(); // Maybe change these lines later
+        let strStreetAddress2 = $('#txtStreetAddress2').val();
         let strStreetAddress = $('#txtStreetAddress1').val() + " " + $('#txtStreetAddress2').val();
         let strCity = $('#txtCity').val();
         let strState = $('#txtState').val();
@@ -1859,10 +1878,10 @@
                 blnError = true;
                 strErrorMessage = strErrorMessage + '<p>Email is already in use. </p>';
             }
-        });
-
-        // Ensures that the first name txt box is not blank
-        if (strFirstName.length < 1) {
+           
+        })
+        //Ensures that the first name txt box is blank
+        if (strFirstName.length < 1){
             blnError = true;
             strErrorMessage = strErrorMessage + '<p>First Name cannot be blank.</p>';
         }
@@ -2094,11 +2113,16 @@
                                                                                                 } else {
                                                                                                     console.log(result);
                                                                                                     $('#divRegister').slideUp(function() {
-                                                                                                    $('#divMain').removeClass('vh-100');
-                                                                                                    $('#divDashboard').slideDown();
-                                                                                                    $('#navLogin').attr('data-card', 'Dashboard');
-                                                                                                    $('#navRegister').attr('data-card', 'Dashboard');
-                                                                                                    updateTemperature();
+                                                                                                        generateRecords(function() {
+                                                                                                            createEnvChart(function() {
+                                                                                                                $('#divMain').removeClass('vh-100');
+                                                                                                                $('#divDashboard').slideDown();
+                                                                                                                $('#navLogin').attr('data-card', 'Dashboard');
+                                                                                                                $('#navRegister').attr('data-card', 'Dashboard');
+                                                                                                                updateTemperature();
+                                                                                                            })
+                                                                                                        })
+                                                                                                        
                                                                                                     });
                                                                                                 }
                                                                                             });
@@ -2128,6 +2152,7 @@
 
     //Click event for the Login Button
     $('#btnLogin').on('click',function(){
+        console.log("Login button clicked");
         //Creates variables to hold the user's email and password
         let strLoginEmail = $('#txtLoginEmail').val();
         let strLoginPassword = $('#txtLoginPassword').val();
@@ -2154,7 +2179,7 @@
         $.getJSON('https://simplecoop.swollenhippo.com/users.php', {Email:strLoginEmail}, function(result) {
             /*Compares the entered password to the password associated with the 
               account of the entered email, and if it matches it will allow Login.*/
-            console.log('Email: ' + result.Email + ' ' + 'Password: ' + result.Password)
+            //console.log('Email: ' + result.Email + ' ' + 'Password: ' + result.Password)
             if(result)
             {
                 checkEmailandPassword = true;
@@ -2173,7 +2198,7 @@
             }
             else{
                     blnError = true;
-                    strErrorMessage += '<p>Email or Password not associated with an account';
+                    strErrorMessage += '<p>Email or Password not associated with an account</p>';
             }
             if(blnError == true){
                 Swal.fire({
@@ -2181,7 +2206,7 @@
                     html: strErrorMessage,
                     icon: 'error'
                 });
-                } 
+            } 
                 else{
                 //If verification passes, slide down login page and slide up dashboard page
                     $.post('https://simplecoop.swollenhippo.com/sessions.php', {Email:strLoginEmail,Password:strLoginPassword}, function(result){
@@ -2191,12 +2216,14 @@
                         sessionStorage.setItem('SessionID', result.SessionID);
                         console.log(sessionStorage.getItem('SessionID'));
                         $('#divLogin').slideUp(function(){
-                            $('#divMain').removeClass('vh-100');
-                            $('#divDashboard').slideDown();
-                            $('#navLogin').attr('data-card', 'Dashboard');
-                            $('#navRegister').attr('data-card', 'Dashboard');
+                            createEnvChart(function() {
+                                $('#divMain').removeClass('vh-100');
+                                $('#divDashboard').slideDown();
+                                $('#navLogin').attr('data-card', 'Dashboard');
+                                $('#navRegister').attr('data-card', 'Dashboard');
                             updateNavbar(result);
                             updateTemperature();
+                            })
                         })
                          /*for (var i = 0; i < 100; i++) {
                              // The SessionID and additional data with random temperature, humidity, and observationdatetime
@@ -2226,7 +2253,7 @@
                 }
         })
     })
-    
+
     //This function shows up on the dashboard and gives the user the option to logout
     $('#btnLogout').on('click', function(){
         logout();
@@ -2266,6 +2293,31 @@ function logout(item) {
             sessionStorage.removeItem('SessionID');
             if ($('#divDashboard').is(':visible')) {
                 $('#divDashboard').slideUp(function(){
+                    envChart.destroy();
+                    objEnvConfig = {
+                        type: 'line',
+                        data: {
+                            labels: [],
+                            datasets: [{
+                                label: 'Temperature (°F)',
+                                data: [],
+                                borderWidth: 1
+                            }, {
+                                label: 'Humidity (%)',
+                                data: [],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    min: 20
+                                }
+                            },
+                            responsive: true,
+                            maintainAspectRatio: false
+                        },
+                    }
                     $('#divMain').addClass('vh-100');
                     $('#divLogin').slideDown();
                     $('#txtLoginEmail').val('');
@@ -2377,6 +2429,47 @@ function logout(item) {
     });
 }
 
+$('#btnAddObservation').on('click',function(){
+        let strObservationDateTime = $('#txtObservationDateTime').val();
+        let strObservationTemperature = $('#txtObservationTemperature').val();
+        let strObservationHumidity = $('#txtObservationHumidity').val();
+        
+        $.post('https://simplecoop.swollenhippo.com/environment.php',{SessionID:sessionStorage.getItem('SessionID'),observationDateTime:strObservationDateTime,temperature:strObservationTemperature,humidity:strObservationHumidity},function(result){
+                console.log(result);
+            $('#divEnvChart').slideToggle(function() {
+                    envChart.destroy();
+                    objEnvConfig = {
+                        type: 'line',
+                        data: {
+                            labels: [],
+                            datasets: [{
+                                label: 'Temperature (°F)',
+                                data: [],
+                                borderWidth: 1
+                            }, {
+                                label: 'Humidity (%)',
+                                data: [],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    min: 20
+                                }
+                            },
+                            responsive: true,
+                            maintainAspectRatio: false
+                        },
+                    }
+                    createEnvChart(function() {
+                        $('#divEnvChart').slideToggle();
+                    })
+                   
+            })
+        })
+    })
+
 //This function is used to return to the dashboard from any of the 
 function returnHome() {
     if($('#divEggs').is(':visible')){
@@ -2439,7 +2532,6 @@ function updateNavbar(sessionDetails) {
         $('#navLogin').show();
         $('#navRegister').show();
         $('#navHome').show();
-
         $('#navLogin').text('Settings');
         $('#navLogin').attr('id', 'navSettings');
         $('#navRegister').text('Logout');
@@ -2575,7 +2667,7 @@ function phoneFormat(input){
         return input; 
     }
     //Generate random enviroment
-/*
+
 function getRandomObservationDatetime() {
   // Get the current date
    var currentDate = new Date();
@@ -2596,22 +2688,25 @@ function getRandomHumidity() {
   // Generate a random humidity between 30 and 98
    return Math.random() * (98 - 30) + 30;
 }
-/* I don't know if we need the loop down here or not. I think we may need to 
-   do this loop whenever an account (or Coop ID) is registered.
+
+function generateRecords(callback) {
+    for (var i = 0; i < 100; i++) {
+    // The SessionID and additional data with random temperature, humidity, and observationdatetime
+    var requestData = {
+        SessionID:sessionStorage.getItem('SessionID'),
+        temperature: getRandomTemperature(),
+        observationDateTime: getRandomObservationDatetime(),
+        humidity: getRandomHumidity()
+    };
+    // Making the AJAX request using POST
+    $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
+        console.log(result);
+    });
+    }
+    callback();
+}
 // Loop to execute the code block 100 times
-for (var i = 0; i < 100; i++) {
-  // The SessionID and additional data with random temperature, humidity, and observationdatetime
-   var requestData = {
-     SessionID:sessionStorage.getItem('SessionID'),
-     temperature: getRandomTemperature(),
-     observationDateTime: getRandomObservationDatetime(),
-     humidity: getRandomHumidity()
-   };
-  // Making the AJAX request using POST
-   $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
-      console.log(result);
-   });
-} */
+
 
 
 
