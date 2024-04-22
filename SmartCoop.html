@@ -731,11 +731,14 @@
         function(sessionDetails){
             console.log(sessionDetails);    
             if(sessionDetails == null){
-                $('#divLogin').slideToggle("slow")  
+                console.log("Show login")
+                $('#divLogin').slideToggle("slow");
             } else{
+                console.log("Show Dashboard");
                 $('#divMain').removeClass("vh-100");
                 createEnvChart(function() {
-                    $('#divDashboard').slideToggle("slow")  
+                    $('#divDashboard').slideToggle("slow")
+                    updateTemperature();
                 })
             }
     })
@@ -1472,17 +1475,17 @@
 
     
 
-    $.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
-        {SessionID:sessionStorage.getItem('SessionID')},
-        function(sessionDetails){
-            console.log(sessionDetails);    
-            if(sessionDetails == null){
-                $('#divLogin').slideToggle("slow")  
-            } else{
-                $('#divDashboard').slideToggle("slow")
-                updateTemperature();
-            }
-        })
+    // $.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
+    //     {SessionID:sessionStorage.getItem('SessionID')},
+    //     function(sessionDetails){
+    //         console.log(sessionDetails);    
+    //         if(sessionDetails == null){
+    //             $('#divLogin').slideToggle("slow")  
+    //         } else{
+    //             $('#divDashboard').slideToggle("slow")
+    //             updateTemperature();
+    //         }
+    //     })
     $('#btnSettings').on('click',function(){ 
         $('#divDashboard').slideUp(function(){
             $('#divSettings').slideDown();
