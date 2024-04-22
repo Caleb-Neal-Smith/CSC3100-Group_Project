@@ -7,6 +7,11 @@
     <title>Smart Coop</title>
     <!--Content delivery network for Bootstrap stylesheet (bootsrap).-->
     <link href="css/lib/bootsrap.min.css" rel="stylesheet">
+    <style> 
+        body { 
+            font-family: western; 
+        } 
+    </style>
 </head>
 <!--This Section of code formats the body of the file.-->
 <body class="bg-dark">
@@ -62,7 +67,7 @@
 
     <!--This section of code creates the div for the main content of the page.-->
     <div class="d-flex justify-content-center align-items-center vh-100 pt-4" id="divMain">
-        <div class="card col-12 col-md-5 col-lg-4" id="divMessage">
+        <div class="card col-12 col-md-5 col-lg-4" id="divMessage" style="display:none;">
             <div class="card-header d-flex justify-content-center align-items-center">
                 <h3>Welcome To Simple Coop</h3>
             </div>
@@ -441,12 +446,12 @@
         function(sessionDetails){
             console.log(sessionDetails);    
             if(sessionDetails == null){
-                $('#divLogin').slideToggle("slow")  
+                $('#divMessage').slideToggle("slow")  
             } else{
                 $('#divDashboard').slideToggle("slow")  
             }
         })
-    
+
     $('#btnUserAddress').on('click',function(){
         $('#divDashboard').slideUp(function(){
             $('#divUserAddress').slideDown();
@@ -485,6 +490,16 @@
     $('#btnReturnWeather').on('click',function(){
         $('#divWeather').slideUp(function(){
             $('#divUserAddress').slideDown();
+        })
+    })
+    $('#btnGoToLogin').on('click',function(){
+        $('#divMessage').slideUp(function(){
+            $('#divLogin').slideDown();
+        })
+    })
+    $('#btnGoToRegister').on('click',function(){
+        $('#divMessage').slideUp(function(){
+            $('#divRegister').slideDown();
         })
     })
     $('#btnSettings').on('click',function(){ 
