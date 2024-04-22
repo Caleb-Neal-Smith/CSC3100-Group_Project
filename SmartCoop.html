@@ -38,7 +38,7 @@
                     <ul class="navbar-nav me-auto">
                         <!-- The home link -->
                         <li class="nav-item">
-                            <a class="nav-link active" id="navHome">Home
+                            <a class="nav-link active" id="navHome" type="button">Home
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
@@ -68,7 +68,7 @@
 
     <!--This section of code creates the div for the main content of the page.-->
     <div class="d-flex justify-content-center align-items-center vh-100 pt-4" id="divMain">
-        <div class="card col-12 col-md-5 col-lg-4" id="divMessage">
+        <div class="card col-12 col-md-5 col-lg-4" id="divMessage" style="display:none">
             <div class="card-header d-flex justify-content-center align-items-center">
                 <h3>Welcome To Simple Coop</h3>
             </div>
@@ -447,7 +447,7 @@
         function(sessionDetails){
             console.log(sessionDetails);    
             if(sessionDetails == null){
-                $('#divLogin').slideToggle("slow")
+                $('#divMessage').slideToggle("slow")
             } else{
                 $('#divDashboard').slideToggle("slow")  
             }
@@ -1092,6 +1092,8 @@ function logout() {
                     $('#divLogin').slideToggle();
                     $('#txtLoginEmail').val('');
                     $('#txtLoginPassword').val('');
+                    $('#navRegister').hide();
+                    $('#navLogin').show();
                 })
             } else if ($('#divLogin').is(':visible')) {
                 $('#divLogin').slideUp(function(){
@@ -1107,6 +1109,8 @@ function logout() {
                     $('#txtState').val('');
                     $('#txtZipCode').val('');
                     $('#txtPhoneNumber').val('');
+                    $('#navLogin').hide();
+                    $('#navRegister').show();
                 })
             }
             // add any other divs that need to be closed here^
@@ -1161,17 +1165,20 @@ function isLoggedIn(sessionDetails) {
 // Update the navbar based on the user's login status
 function updateNavbar(sessionDetails) {
     if(sessionDetails != null) {        
-        // If the user is logged in, change the navLogin to navSettings and navRegister to navLogout
+        // If the user is logged in, change the navLogin to navSettings and navRegister to navLogout     
+        $('#navLogin').show();
+        $('#navRegister').show();   
         $('#navLogin').text('Settings');
         $('#navLogin').attr('id', 'navSettings');
+        $('#navRegister').text('Logout');
+        $('#navRegister').attr('id', 'navLogout');
+        $('#navHome').show();
         $('#navSettings').off('click'); // Remove the previous click event handler
         $('#navSettings').on('click', function() {
             // Add functionality to show the settings
             $('#btnSettings').click();
         });
 
-        $('#navRegister').text('Logout');
-        $('#navRegister').attr('id', 'navLogout');
         $('#navLogout').off('click'); // Remove the previous click event handler
         $('#navLogout').on('click', function() {
             // Add functionality to log out the user
@@ -1181,33 +1188,40 @@ function updateNavbar(sessionDetails) {
         // If the user is not logged in, change the navSettings to navLogin and navLogout to navRegister
         $('#navSettings').text('Login');
         $('#navSettings').attr('id', 'navLogin');
+        $('#navLogout').text('Register');
+        $('#navLogout').attr('id', 'navRegister');
+        $('#navHome').hide();
+        // if ($('#divRegister').is(':visible')) {
+        //     $('#navRegister').hide();
+        //     $('#navLogin').show();
+        // } else if ($('#divLogin').is(':visible')) {
+        //     $('#navLogin').hide();
+        //     $('#navRegister').show();
+        // }
         $('#navLogin').off('click'); // Remove the previous click event handler
         $('#navLogin').on('click', function() {
             // Add functionality to show the login form
             // $('#divLogin').slideDown();
             logout();
         });
-
-        $('#navLogout').text('Register');
-        $('#navLogout').attr('id', 'navRegister');
         $('#navRegister').off('click'); // Remove the previous click event handler
         $('#navRegister').on('click', function() {
-                //commented out the following because of redundancy with logout()
-                // $('#divLogin').slideUp(function(){
-                //     $('#divRegister').slideDown();
-                //     $('#divMain').addClass('vh-100');
-                //     $('#txtFirstName').val('');
-                //     $('#txtLastName').val('');
-                //     $('#txtEmail').val('');
-                //     $('#txtPassword').val('');
-                //     $('#txtStreetAddress1').val('');
-                //     $('#txtStreetAddress2').val('');
-                //     $('#txtCity').val('');
-                //     $('#txtState').val('');
-                //     $('#txtZipCode').val('');
-                //     $('#txtPhoneNumber').val('');
-                // })
-                logout();
+            //commented out the following because of redundancy with logout()
+            // $('#divLogin').slideUp(function(){
+            //     $('#divRegister').slideDown();
+            //     $('#divMain').addClass('vh-100');
+            //     $('#txtFirstName').val('');
+            //     $('#txtLastName').val('');
+            //     $('#txtEmail').val('');
+            //     $('#txtPassword').val('');
+            //     $('#txtStreetAddress1').val('');
+            //     $('#txtStreetAddress2').val('');
+            //     $('#txtCity').val('');
+            //     $('#txtState').val('');
+            //     $('#txtZipCode').val('');
+            //     $('#txtPhoneNumber').val('');
+            // })
+            logout();
         });
     }
 }
