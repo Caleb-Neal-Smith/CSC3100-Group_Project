@@ -15,6 +15,7 @@ Authors: Alec Jones, Nolen Jensen, Samuel Sims, Mitchell Kiriazes, Caleb Smith, 
 
 **changed**
 - fixed a couple settings errors with navSettings button, and removed redundancy
+- changed dropdown buttons to button type
 
 **to do**
 - change account button to 3 lines to make it more uniform like a normal webpage
