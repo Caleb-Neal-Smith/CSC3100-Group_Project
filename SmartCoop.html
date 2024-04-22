@@ -453,23 +453,7 @@
                 <h3>Environment</h3>
             </div>
             <div class="card-body">
-                <div id="divTempChart" class="card"> <!--IMPORTANT: May need to add back "height:100vh" into style attribute-->
-                    <div class="card-header">
-                        <h5>Temperature</h5>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="envTemperatureChart"></canvas>
-                    </div>
-                </div>
-                <div id="divHumidityChart" class="card">
-                    <div class="card-header">
-                        <h5>Humidity</h5>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="envHumidityChart"></canvas>
-                    </div>
-                </div>
-                <!--<button class="col-12 btn text-center btn-secondary" id="btnReturnEnvDetails" type="button">Return to Dashboard</button>-->
+                <canvas id="envChart"></canvas>
             </div>
             <button class="col-12 btn text-center btn-secondary" id="btnReturnEnvChart" type="button">Return to Dashboard</button>
         </div>
@@ -568,7 +552,6 @@
         }
     }*/
 
-    var objDefaultSettings;
     var strCoopID;
     const ctx = document.getElementById('eggsChart');
     const ctxTwo = document.getElementById('myChart');
@@ -620,7 +603,7 @@
         },
         }
     //Configuration object for tempChart
-    var objTempEnvConfig = {
+    var objEnvConfig = {
         type: 'line',
         data: {
             labels: [],
@@ -757,8 +740,8 @@
                 count++;
                 //day = envDetail.ObservationDateTime.getDay() + '-' + envDetail.ObservationDateTime.getMonth() + '-' + envDetail.ObservationDateTime.getFullYear();
                 day = envDetail.ObservationDateTime.split(' ')[0]; 
-                objTempEnvConfig.data.labels.push(day);
-                objTempEnvConfig.data.datasets[0].data.push(envDetail.Temperature);
+                objEnvConfig.data.labels.push(day);
+                objEnvConfig.data.datasets[0].data.push(envDetail.Temperature);
                 objEnvConfig.data.datasets[1].data.push(envDetail.Humidity);
                 
                 //objHumidityConfig.data.labels.push(day);
@@ -1229,7 +1212,7 @@
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true
+                            min: 20
                         }
                     },
                     responsive: true,
