@@ -176,6 +176,7 @@
                 <button class="col-12 btn btn-danger mt-4" id="btnLogout" type="button">Logout</button>
             </div>
         </div>
+        
         <div class="card col-12 col-md-10 col-lg-9" id="divEggs" style="display:none">
             <div class="card-header">
                 <h3>Eggs</h3>
@@ -183,10 +184,8 @@
             <div class="card-body">
                 <div class="col-12 row">
                     <form class="col-4">
-                        <label for="txtEggs" class="form-label">Number of Eggs</label>
                         <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
                         <button class="btn btn text-center btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
-                        <label for="txtEggsDate" class="form-label">Days to View</label>
                         <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
                         <button class="btn text-center btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
                         <button class="btn text-center btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
@@ -358,8 +357,8 @@
     const ctx = document.getElementById('eggsChart');
     const ctxTwo = document.getElementById('myChart');
     const ctxEnvironment = document.getElementById('envChart');
-    //Cofiguration object for eggsChart
-    var objEggConfig = {
+        //Cofiguration object for eggsChart
+        var objEggConfig = {
         type: 'line',
         data:{
             labels: [],
@@ -377,8 +376,10 @@
             },
             responsive: true,
             maintainAspectRatio: true
-        },
         }
+    }
+
+    var eggChart = new Chart(ctx, objEggConfig);
     //Configuration object for tempChart
     var objTempConfig = {
         type: 'line',
@@ -466,19 +467,54 @@
         let intDays = $('#txtEggsDate').val();
         let count = 0;
         let day = '';
-        $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID'), days:intDays}, function(eggResults){
-            eggResults.forEach(function(eggDetails){
-                console.log(eggDetails)
-                count++;
-                day = eggDetails.LogDateTime.split(' ')[0];
-                objEggConfig.data.labels.push(day);
-                objEggConfig.data.datasets.forEach((dataset) => {
-                    dataset.data.push(eggDetails.Harvested);
+
+        if($('#txtEggsDate').val() < 0 || $('#txtEggsDate').val() == 0 || $('#txtEggsDate').val() == null){
+            console.log("Error: Days must be greater than 0");
+            Swal.fire({
+                title: "Oops",
+                html: "Days must be greater than 0",
+                icon: "error"}
+                );
+        }
+        else{
+            eggChart.clear();
+            eggChart.destroy();
+            objEggConfig = {
+            type: 'line',
+            data:{
+                labels: [],
+                datasets: [{
+                    label: 'Eggs',
+                    data: [],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: true
+            }
+            }
+            eggChart = new Chart(ctx, objEggConfig);
+            $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID'), days:intDays}, function(eggResults){
+                eggResults.forEach(function(eggDetails){
+                    console.log(eggDetails)
+                    count++;
+                    day = eggDetails.LogDateTime.split(' ')[0];
+                    eggChart.data.labels.push(day);
+                    eggChart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(eggDetails.Harvested);
+                    });
+                    eggChart.update()
                 })
-                var tempChart = new Chart(ctx, objEggConfig);
-                $('#eggsChart').show();
+                $('#eggsChart').slideDown();
             })
-        })
+        }
+
     })
 
     $('#btnViewEnvDetails').on('click',function(){
@@ -747,6 +783,7 @@
             $('#divSettings').slideDown();
         })
     })*/
+  
     $('#btnEggs').on('click',function(){
         $('#divDashboard').slideUp(function(){
             $('#divEggs').slideDown();
@@ -759,39 +796,43 @@
         let blnError = false;
         let strErrorMessage = '';
         //numEggs must not be blank
-        if (!numEggs){
+        if (!numEggs || numEggs <=0){
             blnError = true;
             strErrorMessage = strErrorMessage + '<p>Number of eggs cannot be blank.</p>';
         }
-        if(blnError == true){
+        else if(blnError == true){
             console.log(strErrorMessage);
             Swal.fire({
                 title: "Oops",
                 html: strErrorMessage,
                 icon: "error"
             });
-        } else {
-            $.ajax({
-                method: "POST",
-                url: 'https://simplecoop.swollenhippo.com/eggs.php',
-                data: {SessionID:sessionStorage.getItem('SessionID'), ObservationDateTime:currentDate, eggs:numEggs},
-            }).done(function(result) {
-                console.log(result);
+        }
+        else {
+            objEggs = {
+                date: [currentDate],
+                eggs: [numEggs]
+            }
+            $.post('https://simplecoop.swollenhippo.com/eggs.php', { SessionID: sessionStorage.getItem('SessionID'), observationDateTime: objEggs.date[0], eggs: objEggs.eggs[0] }, function(result) {
+                result = JSON.parse(result);
+                console.log(numEggs);
                 if (result.Error) {
                     Swal.fire({
                         title: "Oops!",
-                        html:  result.Error + '<p> :The error that occured</p>',
+                        html: result.Error + '<p> :The error that occured</p>',
                         icon: "error"
                     });
                 } else {
                     console.log(result);
                 }
-            })
+            });
         }
     })
     $('#btnReturnEggs').on('click',function(){
         $('#divEggs').slideUp(function(){
-            $('#divDashboard').slideDown();
+            $('#divDashboard').slideDown(function(){
+                $('#eggsChart').slideUp();
+            });
         })
     })
     
