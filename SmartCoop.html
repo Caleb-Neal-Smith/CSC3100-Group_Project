@@ -702,7 +702,21 @@
         })
     }
     
-    
+    /**
+     * This code snippet makes an AJAX request to retrieve session details from a server.
+     * It uses the jQuery `$.getJSON()` method to send a GET request to the specified URL.
+     * The request includes a `SessionID` parameter obtained from the browser's sessionStorage.
+     * 
+     * If the `sessionDetails` returned from the server is null, it means the user is not logged in.
+     * In this case, the code toggles the visibility of the `divMessage` element, updates the navbar,
+     * and shows the login and register buttons.
+     * 
+     * If the `sessionDetails` is not null, it means the user is logged in. The code removes the
+     * "vh-100" class from the `divMain` element, creates an environment chart, toggles the visibility
+     * of the `divDashboard` element, and updates the temperature.
+     * 
+     * Finally, the code calls the `updateNavbar()` function, passing the `sessionDetails` as an argument.
+     */
     $.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
         {SessionID:sessionStorage.getItem('SessionID')},
         function(sessionDetails){
@@ -722,18 +736,23 @@
             updateNavbar(sessionDetails);
     })
     
-    
 
     
 
     
+    //  This code handles the click event of the "View Eggs" button. 
+    //  It retrieves the number of days from the input field and makes an AJAX request to fetch egg data. 
+    // The retrieved data is then used to update and display a line chart of egg production. 
     $('#btnViewEggs').on('click',function(){
+        // Retrieve the number of days from the input field
         let intDays = $('#txtEggsDate').val();
         let count = 0;
         let day = '';
 
+        // Validate the input: days must be greater than 0
         if($('#txtEggsDate').val() < 0 || $('#txtEggsDate').val() == 0 || $('#txtEggsDate').val() == null){
             console.log("Error: Days must be greater than 0");
+            // Display an error message using SweetAlert library
             Swal.fire({
                 title: "Oops",
                 html: "Days must be greater than 0",
@@ -741,8 +760,11 @@
                 );
         }
         else{
+            // Clear and destroy the existing chart
             eggChart.clear();
             eggChart.destroy();
+
+            // Configure the chart options
             objEggConfig = {
             type: 'line',
             data:{
@@ -763,22 +785,30 @@
                 maintainAspectRatio: true
             }
             }
+
+            // Create a new chart instance
             eggChart = new Chart(ctx, objEggConfig);
+
+            // Make an AJAX request to fetch egg data
             $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID'), days:intDays}, function(eggResults){
+                // Process each egg detail
                 eggResults.forEach(function(eggDetails){
                     console.log(eggDetails)
                     count++;
                     day = eggDetails.LogDateTime.split(' ')[0];
+                    // Add the day to the chart labels
                     eggChart.data.labels.push(day);
+                    // Add the harvested egg count to the chart dataset
                     eggChart.data.datasets.forEach((dataset) => {
                         dataset.data.push(eggDetails.Harvested);
                     });
+                    // Update the chart
                     eggChart.update()
                 })
+                // Slide down the chart container to display the chart
                 $('#eggsChart').slideDown();
             })
         }
-
     })
 
     $('#btnViewEnvDetails').on('click',function(){
@@ -1016,6 +1046,7 @@
         }
      })
 
+     // opens the settings menu
     $('#btnSettings').on('click',function(){
         $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"opening_time" }, function(settingsOpeningResult){
             $("#txtDoorOpeningTime").val(settingsOpeningResult.Value);
@@ -1026,7 +1057,12 @@
         })  
 
         
-
+        /**
+         * Makes an AJAX request to retrieve the fan state settings from the server and updates the UI accordingly.
+         * 
+         * @param {string} SessionID - The session ID of the user.
+         * @param {string} setting - The setting to retrieve (in this case, "fan_state").
+         */
         $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"fan_state" }, function(settingsFanResult){
             if (settingsFanResult.Value === "Off") {
                 $('#picFanOff').show();
@@ -1192,6 +1228,12 @@
 
 
     
+
+        // This code handles the functionality of toggling the fan options in the SmartCoop application.
+        // It contains event handlers for each fan option (Off, Low, Medium, High) and updates the corresponding fan images accordingly.
+        // Additionally, it checks if no fan option is checked and displays the default fan image.
+        // The code also resets the checked state of other fan options when a new option is selected.
+
     $('#toggleOffFan').on('click',function(){
         $('#picFanOff').show();
         $('#picFanLow').hide();
@@ -1976,6 +2018,7 @@ document.getElementById('txtPhoneNumber').addEventListener('keyup',function(evt)
 // We need to manually format the phone number on page load
 document.getElementById('txtPhoneNumber').value = phoneFormat(document.getElementById('txtPhoneNumber').value);
 
+//  This function logs out the user and performs necessary cleanup tasks
 function logout(item) {
     $.ajax({
         url: 'https://simplecoop.swollenhippo.com/sessions.php',
@@ -2114,87 +2157,100 @@ function logout(item) {
     });
 }
 
+
 $('#btnAddObservation').on('click',function(){
-        let strObservationDateTime = $('#txtObservationDateTime').val();
-        let strObservationTemperature = $('#txtObservationTemperature').val();
-        let strObservationHumidity = $('#txtObservationHumidity').val();
-        
-        $.post('https://simplecoop.swollenhippo.com/environment.php',{SessionID:sessionStorage.getItem('SessionID'),observationDateTime:strObservationDateTime,temperature:strObservationTemperature,humidity:strObservationHumidity},function(result){
-                console.log(result);
-            $('#divEnvChart').slideToggle(function() {
-                    envChart.destroy();
-                    objEnvConfig = {
-                        type: 'line',
-                        data: {
-                            labels: [],
-                            datasets: [{
-                                label: 'Temperature (°F)',
-                                data: [],
-                                borderWidth: 1
-                            }, {
-                                label: 'Humidity (%)',
-                                data: [],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    min: 20
-                                }
-                            },
-                            responsive: true,
-                            maintainAspectRatio: false
-                        },
-                    }
-                    createEnvChart(function() {
-                        $('#divEnvChart').slideToggle();
-                    })
-                   
+    let strObservationDateTime = $('#txtObservationDateTime').val();
+    let strObservationTemperature = $('#txtObservationTemperature').val();
+    let strObservationHumidity = $('#txtObservationHumidity').val();
+    
+    // Send a POST request to the server to add the observation data.
+    $.post('https://simplecoop.swollenhippo.com/environment.php',{SessionID:sessionStorage.getItem('SessionID'),observationDateTime:strObservationDateTime,temperature:strObservationTemperature,humidity:strObservationHumidity},function(result){
+        console.log(result);
+        // Slide toggle the environment chart div.
+        $('#divEnvChart').slideToggle(function() {
+            // Destroy the existing environment chart.
+            envChart.destroy();
+            // Configure the environment chart with empty data.
+            objEnvConfig = {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Temperature (°F)',
+                        data: [],
+                        borderWidth: 1
+                    }, {
+                        label: 'Humidity (%)',
+                        data: [],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            min: 20
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                },
+            }
+            // Create the environment chart with the updated configuration.
+            createEnvChart(function() {
+                // Slide toggle the environment chart div.
+                $('#divEnvChart').slideToggle();
             })
         })
     })
+})
 
-//This function is used to return to the dashboard from any of the 
-function returnHome() {
-    if($('#divEggs').is(':visible')){
-        $('#divEggs').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
-    } else if ($('#divEnvironment').is(':visible')){
-        $('#divEnvironment').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
-    } else if ($('#divSettings').is(':visible')){
-        $('#divSettings').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
-    } else if ($('#divUserAddress').is(':visible')){
-        $('#divUserAddress').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
-    }
-}
 
-function settingMenu() {
-    if ($('#divDashboard').is(':visible')) {
-        $('#divDashboard').slideUp(function(){
-            $('#divSettings').slideDown();
-        })
-    } else if ($('#divEggs').is(':visible')) {
-        $('#divEggs').slideUp(function(){
-            $('#divSettings').slideDown();
-        })
-    } else if ($('#divEnvironment').is(':visible')) {
-        $('#divEnvironment').slideUp(function(){
-            $('#divSettings').slideDown();
-        })
-    } else if ($('#divUserAddress').is(':visible')) {
-        $('#divUserAddress').slideUp(function(){
-            $('#divSettings').slideDown();
-        })
+        // This function is used to return to the dashboard from any of the other sections.
+        // It checks which section is currently visible and slides it up, then slides down the dashboard section.
+
+    function returnHome() {
+        if ($('#divEggs').is(':visible')) {
+            $('#divEggs').slideUp(function () {
+                $('#divDashboard').slideDown();
+            })
+        } else if ($('#divEnvironment').is(':visible')) {
+            $('#divEnvironment').slideUp(function () {
+                $('#divDashboard').slideDown();
+            })
+        } else if ($('#divSettings').is(':visible')) {
+            $('#divSettings').slideUp(function () {
+                $('#divDashboard').slideDown();
+            })
+        } else if ($('#divUserAddress').is(':visible')) {
+            $('#divUserAddress').slideUp(function () {
+                $('#divDashboard').slideDown();
+            })
+        }
     }
-}
+
+    /**
+     * This function is used to navigate to the settings section from any of the other sections.
+     * It checks which section is currently visible and slides it up, then slides down the settings section.
+     */
+    function settingMenu() {
+        if ($('#divDashboard').is(':visible')) {
+            $('#divDashboard').slideUp(function () {
+                $('#divSettings').slideDown();
+            })
+        } else if ($('#divEggs').is(':visible')) {
+            $('#divEggs').slideUp(function () {
+                $('#divSettings').slideDown();
+            })
+        } else if ($('#divEnvironment').is(':visible')) {
+            $('#divEnvironment').slideUp(function () {
+                $('#divSettings').slideDown();
+            })
+        } else if ($('#divUserAddress').is(':visible')) {
+            $('#divUserAddress').slideUp(function () {
+                $('#divSettings').slideDown();
+            })
+        }
+    }
 
 // NOTE: isLoggedIn is not currently being used, so should be fine to delete but ive been using it as a test.
 function isLoggedIn(sessionDetails) {
@@ -2268,37 +2324,52 @@ function updateNavbar(sessionDetails) {
 }
 
 
+/**
+ * This function updates the temperature range and value on the webpage.
+ * It makes three AJAX requests to retrieve the temperature settings from the server.
+ * The retrieved values are used to dynamically generate an HTML range input element with corresponding minimum and maximum temperature values.
+ * The range element is then appended to the 'range' element on the webpage.
+ * The function also updates the temperature value and range based on the retrieved settings.
+ * 
+ * @returns {void}
+ */
 function updateTemperature() {
-     $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"temperature" }, function(settingsTempResult){
+    // AJAX request to retrieve current temperature setting
+    $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"temperature" }, function(settingsTempResult){
         
+        // AJAX request to retrieve minimum temperature setting
         $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"min_Temp" }, function(settingsMinTempResult){
             
+            // AJAX request to retrieve maximum temperature setting
             $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"max_Temp" }, function(settingsMaxTempResult){ 
             
-            let rangeHTML = '<input id="minTemp" type="text" value="' + settingsMinTempResult.Value + '"> ' + 
-                '<input id="tempRange" type="range" min="' + settingsMinTempResult.Value + '"  max="' + 
-                settingsMaxTempResult.Value + '" value="42">' + 
-                '<input id="maxTemp" type="text" value="'+ settingsMaxTempResult.Value + '">';
+                // Generate HTML for the temperature range input element
+                let rangeHTML = '<input id="minTemp" type="text" value="' + settingsMinTempResult.Value + '"> ' + 
+                    '<input id="tempRange" type="range" min="' + settingsMinTempResult.Value + '"  max="' + 
+                    settingsMaxTempResult.Value + '" value="42">' + 
+                    '<input id="maxTemp" type="text" value="'+ settingsMaxTempResult.Value + '">';
 
-            $('#range').empty().append(rangeHTML);
-            // $('#range').append(rangeHTML);
-            
-            console.log(settingsTempResult.Value);
+                // Append the range element to the 'range' element on the webpage
+                $('#range').empty().append(rangeHTML);
+                
+                // Log the retrieved settings values to the console
+                console.log(settingsTempResult.Value);
+                console.log(settingsMinTempResult.Value);
+                console.log(settingsMaxTempResult.Value);
 
-            console.log(settingsMinTempResult.Value);
-            console.log(settingsMaxTempResult.Value);
+                // Set the values of the minimum and maximum temperature input elements
+                $('#maxTemp').val(settingsMaxTempResult.Value);
+                $('#minTemp').val(settingsMinTempResult.Value);
 
+                // Delayed update of temperature value and range
+                setTimeout(function() {
+                    temperature.dataset.value = settingsTempResult.Value + "°F";
+                    tempRange.value = temperature.dataset.value;
+                    
+                    // Calculate and set the height of the temperature range element based on the retrieved settings
+                    temperature.style.height = (tempRange.value - settingsMinTempResult.Value) / (settingsMaxTempResult.Value - settingsMinTempResult.Value) * 100 + "%"; 
 
-            $('#maxTemp').val(settingsMaxTempResult.Value);
-            $('#minTemp').val(settingsMinTempResult.Value);
-
-            setTimeout(function() {
-            temperature.dataset.value = settingsTempResult.Value + "°F";
-            tempRange.value = temperature.dataset.value;
-            
-            temperature.style.height = (tempRange.value - settingsMinTempResult.Value) / (settingsMaxTempResult.Value - settingsMinTempResult.Value) * 100 + "%"; 
-
-            }, 2500); // Replace 1000 with the desired delay in milliseconds
+                }, 2500); // Replace 1000 with the desired delay in milliseconds
         
             })  
         })
