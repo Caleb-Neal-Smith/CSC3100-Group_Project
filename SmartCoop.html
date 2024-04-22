@@ -196,7 +196,7 @@
                         <button class="btn text-center btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
                     </form>
                     <div class="col-8">
-                        <canvas id="eggsChart" style="display:none"></canvas>
+                        <canvas id="eggsChart"></canvas>
                     </div>
                 </div>  
             </div>
@@ -643,9 +643,7 @@
     })
     $('#btnReturnEggs').on('click',function(){
         $('#divEggs').slideUp(function(){
-            $('#divDashboard').slideDown(function(){
-                $('#eggsChart').slideUp();
-            });
+            $('#divDashboard').slideDown();
         })
     })
     
@@ -790,7 +788,12 @@
         let strZipCode = $('#txtZipCode').val();
         let strPhoneNumber = $('#txtPhoneNumber').val();
         let strRegistrationID = $('#txtRegistrationID').val();
-    
+        
+        //If street Address is blank then it sets streetAddress2 to be 'N/A'
+        if(streetAddress2==''){
+            streetAddress2 = 'N/A';
+        }
+
         //Checks if the email follows the selected format
         if(!strEmail.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) { 
             /*Source for Regular Expression:
@@ -884,6 +887,11 @@
                     $('#divDashboard').slideDown();
                     $('#navLogin').attr('data-card', 'Dashboard');
                     $('#navRegister').attr('data-card', 'Dashboard');
+                })
+
+                $.post('https://simplecoop.swollenhippo.com/useraddress.php', {Email:strEmail, Street1:strStreetAddress1, Street2:strStreetAddress2, City:strCity, State:strState, ZIP:strZipCode}, function(result) {
+                    result = JSON.parse(result);
+                    console.log(result.Outcome);
                 })
                 console.log('No errors found');
                 //Create new user
