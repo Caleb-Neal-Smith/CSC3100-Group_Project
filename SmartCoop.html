@@ -408,7 +408,7 @@
                                     <label for="txtEggsDate" class="form-label">Days to View</label>
                                     <input id="txtEggsDate" placeholder="Date" aria-placeholder="Date" class="form-control">
                                     <button class="btn text-center btn-primary" id="btnViewEggs" type="button">View Egg Count</button>
-                                    <button class="btn text-center btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
+
                                 </form>
                                 <div class="col-8">
                                     <canvas id="eggsChart" style="display:none"></canvas>
@@ -417,7 +417,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9 mt-4"> <!--style="position:relative;height:100vh;width:80vw;display:none;;"-->
+                <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9 mt-4">
                     <div class="card-header">
                         <h3>Environment</h3>
                     </div>
@@ -441,18 +441,9 @@
                             <button class="col-12 btn text-center btn-primary mt-4" id="btnAddObservation" type="button">Add Observation</button>
                         </form>
                     </div>
-                    <!--<button class="col-12 btn text-center btn-secondary" id="btnReturnEnvChart" type="button">Return to Dashboard</button>-->
+                   
                 </div>
-                <!--<form>
-                    <button class="col-12 btn text-center btn-primary" id="btnEggs" type="button">Eggs</button>   
-                </form>
-                <form>
-                    <button class="col-12 btn text-center btn-success" id="btnEnvModify" type="button">Modify Environment</button>
-                </form>
-                <form>
-                                                        Should this be mb-1?
-                    <button class="col-12 btn text-center btn-primary mb1 bg-black" id="btnUserAddress" type="button">View Weather</button>
-                </form>-->
+                
                 <form>
                     <button class="col-9 btn text-center btn-secondary mt-4" id="btnSettings" type="button">Settings</button>
                 </form>
@@ -661,7 +652,7 @@
     var ctxEnvironment = document.getElementById('envChart');
     var envChart;
     var eggChart = new Chart(ctx, objEggConfig);
-    //Configuration object for tempChart
+    //Configuration object for envChart
     var objEnvConfig = {
         type: 'line',
         data: {
@@ -680,7 +671,6 @@
             scales: {
                 y: {
                     min: 20
-                    //beginAtZero: true
                 }
             },
             responsive: true,
@@ -2098,13 +2088,16 @@
                                                                                                 } else {
                                                                                                     console.log(result);
                                                                                                     $('#divRegister').slideUp(function() {
-                                                                                                        createEnvChart(function() {
-                                                                                                            $('#divMain').removeClass('vh-100');
-                                                                                                            $('#divDashboard').slideDown();
-                                                                                                            $('#navLogin').attr('data-card', 'Dashboard');
-                                                                                                            $('#navRegister').attr('data-card', 'Dashboard');
-                                                                                                            updateTemperature();
+                                                                                                        generateRecords(function() {
+                                                                                                            createEnvChart(function() {
+                                                                                                                $('#divMain').removeClass('vh-100');
+                                                                                                                $('#divDashboard').slideDown();
+                                                                                                                $('#navLogin').attr('data-card', 'Dashboard');
+                                                                                                                $('#navRegister').attr('data-card', 'Dashboard');
+                                                                                                                updateTemperature();
+                                                                                                            })
                                                                                                         })
+                                                                                                        
                                                                                                     });
                                                                                                 }
                                                                                             });
@@ -2263,7 +2256,6 @@
                             scales: {
                                 y: {
                                     min: 20
-                                    //beginAtZero: true
                                 }
                             },
                             responsive: true,
@@ -2304,7 +2296,6 @@
                             scales: {
                                 y: {
                                     min: 20
-                                    //beginAtZero: true
                                 }
                             },
                             responsive: true,
@@ -2396,7 +2387,7 @@ function phoneFormat(input){
         return input; 
     }
     //Generate random enviroment
-/*
+
 function getRandomObservationDatetime() {
   // Get the current date
    var currentDate = new Date();
@@ -2417,22 +2408,25 @@ function getRandomHumidity() {
   // Generate a random humidity between 30 and 98
    return Math.random() * (98 - 30) + 30;
 }
-/* I don't know if we need the loop down here or not. I think we may need to 
-   do this loop whenever an account (or Coop ID) is registered.
+
+function generateRecords(callback) {
+    for (var i = 0; i < 100; i++) {
+    // The SessionID and additional data with random temperature, humidity, and observationdatetime
+    var requestData = {
+        SessionID:sessionStorage.getItem('SessionID'),
+        temperature: getRandomTemperature(),
+        observationDateTime: getRandomObservationDatetime(),
+        humidity: getRandomHumidity()
+    };
+    // Making the AJAX request using POST
+    $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
+        console.log(result);
+    });
+    }
+    callback();
+}
 // Loop to execute the code block 100 times
-for (var i = 0; i < 100; i++) {
-  // The SessionID and additional data with random temperature, humidity, and observationdatetime
-   var requestData = {
-     SessionID:sessionStorage.getItem('SessionID'),
-     temperature: getRandomTemperature(),
-     observationDateTime: getRandomObservationDatetime(),
-     humidity: getRandomHumidity()
-   };
-  // Making the AJAX request using POST
-   $.post('https://simplecoop.swollenhippo.com/environment.php', requestData,  function(result) {
-      console.log(result);
-   });
-} */
+
 
 
 
