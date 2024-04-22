@@ -7,7 +7,7 @@
     <title>Smart Coop</title>
     <!--Content delivery network for Bootstrap stylesheet (bootsrap).-->
     <link href="css/lib/bootsrap.min.css" rel="stylesheet">
-    <link href="data.css" rel="stylesheet">
+    <!--<link href="data.css" rel="stylesheet">-->
     <style> 
         body { 
             font-family: western; 
@@ -578,8 +578,6 @@
         },
         }
     var ctxEnvironment = document.getElementById('envChart');
-    var ctxTemperature = document.getElementById('envTemperatureChart');
-    var ctxHumidity = document.getElementById('envHumidityChart');
     var envChart;
     //Cofiguration object for eggsChart
     var objEggConfig = {
@@ -628,79 +626,9 @@
             maintainAspectRatio: false
         },
     }
-    var objHumidityConfig = {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Humidity',
-                data: [],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false
-        },
-    }
-    // var objHumidityConfig = {
-    //     type: 'line',
-    //     data: {
-    //         labels: [],
-    //         datasets: [{
-    //             label: 'Humidity (%)',
-    //             data: [],
-    //             borderWidth: 1
-    //         }]
-    //     },
-    //     options: {
-    //         scales: {
-    //             y: {
-    //                 beginAtZero: true
-    //             }
-    //         },
-    //         responsive: true,
-    //         maintainAspectRatio: false
-    //     },
-    // }
     //I may delete this commented code later because it may not be needed. - Caleb
-    /*new Chart(ctxTwo, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of votes',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });*/
-    /*var tempChart = new Chart(ctxTemperature, {
-        type: 'line',
-        data: {
-            //labels: [],
-            datasets: [{
-                label: 'Temperature (°F)',
-                //data: [12, 19, 3, 5, 2, 3],
-                //borderWidth: 1
-            }]
-        },
-        options: {},
-    });*/
+   
+
     /*let intDays = 5;
     $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
         
@@ -889,18 +817,7 @@
     })
 
     //Gets the ammount of eggs to display on the dashboard
-    $.getJSON('https://simplecoop.swollenhippo',function(result){
-    if(result){
-        result.forEach(egg)
-        {
-            numEggs = numEggs + egg.num;
-        }
-        document.getElementById("numEggs").innerHTML = numEggs;
-    }
-    else{
-        numEggs = 0;
-    }
-    })
+
     //Generatee-fill the Coop ID input on the registration page.
     //We only need to generate one Coop ID, so we will leave this commented out
     /*$.post('https://simplecoop.swollenhippo.com/coop.php', function(result) {
@@ -1011,33 +928,8 @@
 
     
 
-    $('#btnIncreaseTemperature').on('click',function(){
-         strTempertaure = +$('#txtTemperature').val();
-         strTempertaure = strTempertaure + 1;
-         //Set the text box equal to the new value
-         $('#txtTemperature').val(strTempertaure);
-     })
-
-     $('#btnDecreaseTemperature').on('click',function(){
-         let strTempertaure = +$('#txtTemperature').val();
-         strTempertaure = strTempertaure - 1;
-         //Set the text box equal to the new value
-         $('#txtTemperature').val(strTempertaure);
-     })
-
-    // $('#btnIncreaseTemperature').on('click',function(){
-    //     strTempertaure = +$('#txtTemperature').val();
-    //     strTempertaure = strTempertaure + 1;
-    //     //Set the text box equal to the new value
-    //     $('#txtTemperature').val(strTempertaure);
-    // })
-
-    // $('#btnDecreaseTemperature').on('click',function(){
-    //     let strTempertaure = +$('#txtTemperature').val();
-    //     strTempertaure = strTempertaure - 1;
-    //     //Set the text box equal to the new value
-    //     $('#txtTemperature').val(strTempertaure);
-    // })
+    
+    
 
     $('#btnAddSettings').on('click',function(){
         strSettings = $('#txtSettings').val();
@@ -1222,53 +1114,6 @@
             $('#divDashboard').slideDown();
         })
     })
-    $('#btnReturnEnvDetails').on('click',function(){
-        $('#divEnvChart').slideUp(function(){
-            tempChart.destroy();
-            humidityChart.destroy();
-            objTempConfig = {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Temperature (°F)',
-                        data: [],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false
-                },
-            }
-            objHumidityConfig = {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Temperature (°F)',
-                        data: [],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false
-                },
-            }
-            $('#divDashboard').slideDown();
-        })
-    })
     $('#btnReturnSettings').on('click',function(){
         $('#divSettings').slideUp(function(){
             $('#divDashboard').slideDown();
@@ -1415,18 +1260,7 @@
                 blnError = true;
                 strErrorMessage = strErrorMessage + '<p>Email is already in use. </p>';
             }
-            //fix this later (the 'GET' method for this web service does not return an array (I don't think))
-            /*const arrUsers = Array.from(result)
-            arrUsers.forEach(function(strUserDetail)
-            {
-                //iterates through users to check if email is in use
-                if(strUserDetail.Email == strEmail)
-                {
-                    blnError = true;
-                    strErrorMessage += '<p>Email is already in use. </p>'
-                }
-            }
-            )*/
+           
         })
         //Ensures that the first name txt box is blank
         if (strFirstName.length < 1){
@@ -1454,7 +1288,7 @@
         }
         if (strState.length < 1) {
             blnError = true;
-            strErrorMessage = strErrorMessage + '<p>City cannot be blank. </p>';
+            strErrorMessage = strErrorMessage + '<p>State cannot be blank. </p>';
         } else if (strState.length < 2) {
             blnError = true;
             strErrorMessage = strErrorMessage + '<p>Invalid state name. </p>';
