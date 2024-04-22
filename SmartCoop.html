@@ -7,15 +7,219 @@
     <title>Smart Coop</title>
     <!--Content delivery network for Bootstrap stylesheet (bootsrap).-->
     <link href="css/lib/bootsrap.min.css" rel="stylesheet">
-    <!--<link href="data.css" rel="stylesheet">-->
-    <style> 
-        body { 
-            font-family: western; 
-        } 
-    </style>
-    <!--<link href="data.css" rel="stylesheet">-->
+    <!-- <link href="css/lib/data.css" rel="stylesheet"> -->
+    <style>
+        /* Styles for the thermometer container */
+        .thermometer-container {
+          width: 25px;
+          margin-bottom: 50px;
+          position: relative;
+        }
     
+        /* Styles for the thermometer */
+        .thermometer {
+          width: 100%;
+          background: #38383f;
+          height: 240px;
+          position: relative;
+          border: 9px solid #2a2a2e;
+          border-radius: 20px;
+          z-index: 1;
+        }
+    
+        /* Styles for thermometer elements */
+        .thermometer:before, .thermometer:after {
+          position: absolute;
+          content: "";
+          border-radius: 50%;
+        }
+    
+        .thermometer:before {
+          width: 100%;
+          height: 34px;
+          bottom: 9px;
+          background: #38383f;
+          z-index: -1;
+        }
+    
+        .thermometer:after {
+          transform: translateX(-50%);
+          width: 50px;
+          height: 50px;
+          background-color: #3dcadf;
+          bottom: -41px;
+          border: 9px solid #2a2a2e;
+          z-index: -3;
+          left: 50%;
+        }
+    
+        .thermometer #graduations {
+          height: 59%;
+          top: 20%;
+          width: 50%;
+          position: absolute;
+          border-top: 2px solid rgba(0, 0, 0, 0.5);
+          border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+        }
+    
+        .thermometer #graduations:before {
+          content: "";
+          height: 34%;
+          width: 100%;
+          top: 32%;
+        }
+    
+        .thermometer #temperature {
+          bottom: 0;
+          background: linear-gradient(#f17a65, #3dcadf) no-repeat bottom;
+          width: 100%;
+          border-radius: 20px;
+          background-size: 100% 240px;
+          transition: all 0.2s ease-in-out;
+          position: absolute;
+        }
+    
+        .thermometer #temperature:before {
+          content: attr(data-value);
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          z-index: 2;
+          padding: 5px 10px;
+          border-radius: 5px;
+          font-size: 1em;
+          line-height: 1;
+          transform: translateY(50%);
+          left: calc(100% + 1em / 1.5);
+          top: calc(-1em + 5px - 5px * 2);
+          position: absolute;
+        }
+    
+        .thermometer #temperature:after {
+          content: "";
+          border-top: 0.45455em solid transparent;
+          border-bottom: 0.45455em solid transparent;
+          border-right: 0.66667em solid rgba(0, 0, 0, 0.7);
+          left: 100%;
+          top: calc(-1em / 2.2 + 5px);
+          position: absolute;
+        }
+        .thermometer-container {
+        width: 50px; /* Adjust this width as needed */
+        margin: auto; /* Center the thermometer */
+        }
 
+        /* Styles for the Food Silo thermometer */
+
+        /* Adjustments for the foodBar element */
+        #foodBar {
+            bottom: 0;
+            background: linear-gradient(#f17a65, #3dcadf) no-repeat bottom;
+            width: 100%;
+            border-radius: 20px;
+            background-size: 100% 240px;
+            transition: all 0.2s ease-in-out;
+            position: absolute;
+        }
+
+        #foodBar:before {
+            content: attr(data-value);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            z-index: 2;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 1em;
+            line-height: 1;
+            transform: translateY(50%);
+            left: calc(100% + 1em / 1.5);
+            top: calc(-1em + 5px - 5px * 2);
+            position: absolute;
+        }
+
+        #foodBar:after {
+            content: "";
+            border-top: 0.45455em solid transparent;
+            border-bottom: 0.45455em solid transparent;
+            border-right: 0.66667em solid rgba(0, 0, 0, 0.7);
+            left: 100%;
+            top: calc(-1em / 2.2 + 5px);
+            position: absolute;
+        }
+
+        .graduations {
+            height: 59%;
+            top: 20%;
+            width: 50%;
+            position: absolute;
+            border-top: 2px solid rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+        }
+
+        .graduations:before {
+            content: "";
+            height: 34%;
+            width: 100%;
+            top: 32%;
+        }
+
+       /* Adjustments for the waterBar element */
+        #waterBar {
+            bottom: 0;
+            background: linear-gradient(#f17a65, #3dcadf) no-repeat bottom;
+            width: 100%;
+            border-radius: 20px;
+            background-size: 100% 240px;
+            transition: all 0.2s ease-in-out;
+            position: absolute;
+        }
+
+        #waterBar:before {
+            content: attr(data-value);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            z-index: 2;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 1em;
+            line-height: 1;
+            transform: translateY(50%);
+            left: calc(100% + 1em / 1.5);
+            top: calc(-1em + 5px - 5px * 2);
+            position: absolute;
+        }
+
+        #waterBar:after {
+            content: "";
+            border-top: 0.45455em solid transparent;
+            border-bottom: 0.45455em solid transparent;
+            border-right: 0.66667em solid rgba(0, 0, 0, 0.7);
+            left: 100%;
+            top: calc(-1em / 2.2 + 5px);
+            position: absolute;
+        }
+
+        #divSettings {
+        position: absolute;
+        top: 70px; /* Adjust this value to push the card down further */
+        height: auto;
+        width: 80vw;
+        display: none;
+        }
+        .silo {
+        position: absolute;
+        height: auto;
+        width: 6vw;
+        top: 0; /* Adjust as needed */
+        left: 0; /* Adjust as needed */
+        }
+
+        .silo-bar {
+        position: absolute;
+        top: 100px;
+        left: 45px; 
+        }
+
+      </style>
 </head>
 <!--This Section of code formats the body of the file.-->
 <body class="bg-dark">
@@ -266,7 +470,7 @@
                 <button class="col-12 btn text-center btn-secondary" id="btnReturnEnvironment" type="button">Return to Dashboard</button>
             </div>
         </div>
-        <div class="card col-12 col-md-10 col-lg-9" id="divSettings" style="display:none;height:100vh">
+        <div class="card col-12 col-md-10 col-lg-9" id="divSettings" style="position:absolute;width:80vw;display:none;">
             <div class="card-header">
                 <h3>Settings</h3>
             </div>
@@ -285,6 +489,7 @@
                             <input id="txtDoorClosingTime" type="time" class="form-control">
                             <button class="btn text-center btn-primary btnUpdateSetting" type="button">Update</button>
                         </div>
+                        <button class="col-12 btn text-center btn btn-primary mt-3" id="btnUpdateDoorTimes" type="button">Update Door Times</button>
                         <body>
                             <h3 class="mt-3">Emergency Override</h3>
                             <div class="toggle">
@@ -294,27 +499,29 @@
                                 <label for="toggle-checkbox" class="toggle-label">Close</label>
                                 <button class="btn text-center btn-primary btnUpdateSetting" type="button">Update</button>
                             </div>
-                         </body>
+                        </body>
+                        <div class="justify-content-center d-flex" id="imageContainer">
+                            <img src="https://media.istockphoto.com/id/1140967663/vector/door-vector-icon.jpg?s=612x612&w=0&k=20&c=JItcjeedrZcUddY8LYTtOA3nBl5hPWEI8Xf4oO8NaZE=" width="200" height="200" class="mt-3" style="display:none" id="picDoorClosed">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAbFBMVEX29vZCQkL8/PwsLCz5+fnHx8cvLy88PDyDg4P///+jo6M9PT1AQEDd3d00NDQuLi6srKza2tpMTEy0tLQ3Nzfr6+vQ0NDIyMhUVFTk5OSlpaWTk5NtbW13d3eKiooPDw9dXV29vb1lZWUkJCQaHYyaAAAChElEQVR4nO3d3XLaMBBAYSMJCWFjF2IIEEiT8v7vWHv5MzMkgTYd4e35LnOxkzN2BBeZVZYBAAAAAAAAAAAAAAAAAAAAAO7jUv8C/5IzxmQrlY3OuRjN6nk9egt2Nk/963wvZ2LMVosfr0tvfQj5YGCHWh5i807GbL54ev01K8s6FIMDr6DQyYObPr1sZqUvQ3GKU1DYtpn59H28GVhbh/yyreeFTZvLJsPxdpn7ss6vpPW38HBQjpuDsvKftfWwUA6T9qB8q5qD8uo72eNCZ64dlDcWuvbD/yh1yQfcYjPz7UF5R9u5cDI+Wz/oN4Dob3wprxW64S6c1LOYOuYqY/+s71DoOz+wj/memkp9of5n+FeFz+oLhz9tK6gtzLLppLHa5noL5WuNGQW9hfsZFCZFIYUyg8KkKKRQZlCYFIUUygwKk6KQQplBYVIUUigzKEyKQgplBoVJUUihzKAwKQoplBkUJkUhhTJDWWERct2F9fJlW2suDCMT47RWXOjbrLiu1RYW8m+ybuHVFup/hu3foYnTtkhr4f4sLTQXNo9R+efhCYWPgkIKZQaFSVFIocygMCkKKZQZFCZFIYUyg8KkKKRQZlCYFIUUygwKk6KQQplBYVIUUigzKEyKQgplhuZC14qaC7Xv+tK/r+1/2LnXh0J2X/a+MFbftYO2fNAdtLJHuNK8R7i7C/q+zv0u6I7UJZ857vMeLe2uunXndW/2eZ91drJbX3/559nDwr3mebps9a5yr37X6W6EwtpS2d0IF073W7Rr23ONhaJ5b7XeUXLBmeM9Mztf67pnpsPJ3SVK7wrqcPvjVuV9T13a+wAAAAAAAAAAAAAAAAAAAADgHr8BO+tAWfcqr8kAAAAASUVORK5CYII=" width="200" height="200" class="mt-3" style="display:none" id="picDoorOpen">
+                        </div>
                     </div>
                 </form>
-                
-                <!-- Input for updating temperature -->
-                <div class="card-body">
-                    <h3>Temperature</h3>
-                    <div>
-                        <button id="btnIncreaseTemperature" class="btn-image btn-primary mb-1" aria-label="Up Arrow button" type="button">
-                            <img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-512.png" width="20" height="20">
-                        </button>
-                        <input id="txtTemperature" type="number" class="form-control" width="20" height="20">
+                <h3 class="mt-3">Coop Tempertaure</h3>
+                <div id="wrapper" class="mt-3">	
+                    <div id="termometer" class="thermometer thermometer-container">
+                        <div id="temperature" style="height:0" data-value="0°C"></div>
+                        <div id="graduations"></div>
                     </div>
-                    <button id="btnDecreaseTemperature" class="btn-image btn-primary mt-1" aria-label="Down Arrow button" type="button">
-                        <img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-down-01-512.png" width="20" height="20">
-                    </button>
-                    <button class="btn text-center btn-primary btnUpdateSetting" type="button">Update</button>
-                </div>
-                <!-- Input for fan speed -->
+                    <div id="playground" class="mt-5">	
+                        <div id="range">
+                            <!-- <input id="minTemp" type="text" value="-20">
+                            <input id="tempRange" type="range" min="0"  max="100" value="42">
+                            <input id="maxTemp" type="text" value="100"> -->
+                        </div>
+                    </div>
+                    <button class="col-12 btn text-center btn btn-primary mt-3" id="btnUpdateTemperature" type="button">Update Temperature</button>
                 <div class="form-group">
-                    <h3>Fan Speed</h3>
+                    <h3 class="mt-3">Fan Speed</h3>
                     <div class="d-flex justify-content-center">
                         <input type="checkbox" id="toggleOffFan" class="togglecheckbox ms-4">
                         <label for="toggle-checkbox" class="toggle-label">Off</label>
@@ -326,135 +533,46 @@
                         <label for="toggle-checkbox" class="toggle-label">High</label>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <img src="https://cdn.icon-icons.com/icons2/2248/PNG/512/fan_off_icon_135650.png" width="100" height="100" class="ms-4 mt-3">
-                        <img src="https://static-00.iconduck.com/assets.00/fan-speed-1-icon-487x512-goboalws.png" width="100" height="100" class="ms-4 mt-3">
-                        <img src="https://static-00.iconduck.com/assets.00/fan-speed-2-icon-487x512-zowmbvgo.png" width="100" height="100" class="ms-4 mt-3">
-                        <img src="https://static-00.iconduck.com/assets.00/fan-speed-3-icon-487x512-zodsf8u5.png" width="100" height="100" class="ms-4 mt-3">
+                        <img id="picFanOff" src="https://cdn.icon-icons.com/icons2/2248/PNG/512/fan_off_icon_135650.png" width="100" height="100" class="ms-4 mt-3">
+                        <img id="picFanLow" src="https://static-00.iconduck.com/assets.00/fan-speed-1-icon-487x512-goboalws.png" width="100" height="100" class="ms-4 mt-3" style="display:none">
+                        <img id="picFanMedium" src="https://static-00.iconduck.com/assets.00/fan-speed-2-icon-487x512-zowmbvgo.png" width="100" height="100" class="ms-4 mt-3" style="display:none">
+                        <img id="picFanHigh" src="https://static-00.iconduck.com/assets.00/fan-speed-3-icon-487x512-zodsf8u5.png" width="100" height="100" class="ms-4 mt-3" style="display:none">
                     </div>
+                    <button class="col-12 btn text-center btn btn-primary mt-3" id="btnUpdateFanSpeed" type="button">Update Fan Speed</button>
                 </div>
                 <div class="form-group">
                     <h3 class="mt-3">Food Silo (Max: 100 gallons)</h3>
                 </div>
-                <div>
-                    <progress id="progressFood" value="65" max = "100"></progress>
+                <div class="thermometer-container">
+                    <img src="https://media.istockphoto.com/id/1371913379/vector/cartoon-tower-silo-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=1YD-Foeyt_9QTIG2U1fxXMFCtfQYrqZoxLXr-jWq_B0=" width="100" height="400" class="ms-4 mt-3">
+                    <div id="wrapper" class="mt-3">    
+                        <div id="thermometer" class="thermometer silo-bar">
+                            <div id="foodBar" style="height:0%;" data-value="0 Gallons"></div>
+                            <div class="graduations"></div>
+                        </div>
+                    </div>
+                </div>
                     <input id="txtAddFood" placeholder="Add Food (Gallons)" aria-label="Add Food" class="form-control">
                     <button class="col-12 btn text-center btn btn-primary mt-3" id="btnAddFood" type="button">Added Food</button>
                 </div>
                 <div class="form-group">
                     <h3 class="mt-3">Water Storage (Max: 100 Liters)</h3>
                 </div>
-                <div>
-                    <progress id="progressWater" value="70" max = "100"></progress>
-                    <input id="txtAddWater" placeholder="Add Water (Liters)" aria-label="Add Water" class="form-control">
-                    <button class="col-12 btn text-center btn btn-primary mt-3" id="btnAddWater" type="button">Added Water</button>
-                </div>
-                <button class="col-12 btn text-center btn btn-secondary mt-3" id="btnReturnSettings" type="button">Return to Dashboard</button>
-                <!-- Input for updating temperature -->
-                <div class="card-body">
-                    <h3>Temperature</h3>
-                    <div>
-                        <button id="btnIncreaseTemperature" class="btn-image btn-primary mb-1" aria-label="Up Arrow button" type="button">
-                            <img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-512.png" width="20" height="20">
-                        </button>
-                        <input id="txtTemperature" type="number" class="form-control" width="20" height="20">
-                </div>
-                    <button id="btnDecreaseTemperature" class="btn-image btn-primary mt-1" aria-label="Down Arrow button" type="button">
-                        <img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-down-01-512.png" width="20" height="20">
-                    </button>
-                </div>
-                <!-- Input for fan speed -->
-                <div class="form-group">
-                    <h3>Fan Speed</h3>
-                    <div class="d-flex justify-content-center">
-                        <input type="checkbox" id="toggleOffFan" class="togglecheckbox ms-4">
-                        <label for="toggle-checkbox" class="toggle-label">Off</label>
-                        <input type="checkbox" id="toggleLowFan" class="togglecheckbox ms-4">
-                        <label for="toggle-checkbox" class="toggle-label">Low</label>
-                        <input type="checkbox" id="toggleMediumFan" class="togglecheckbox ms-4">
-                        <label for="toggle-checkbox" class="toggle-label">Medium</label>
-                        <input type="checkbox" id="toggleHighFan" class="togglecheckbox ms-4">
-                        <label for="toggle-checkbox" class="toggle-label">High</label>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <img src="https://cdn.icon-icons.com/icons2/2248/PNG/512/fan_off_icon_135650.png" width="100" height="100" class="ms-4 mt-3">
-                        <img src="https://static-00.iconduck.com/assets.00/fan-speed-1-icon-487x512-goboalws.png" width="100" height="100" class="ms-4 mt-3">
-                        <img src="https://static-00.iconduck.com/assets.00/fan-speed-2-icon-487x512-zowmbvgo.png" width="100" height="100" class="ms-4 mt-3">
-                        <img src="https://static-00.iconduck.com/assets.00/fan-speed-3-icon-487x512-zodsf8u5.png" width="100" height="100" class="ms-4 mt-3">
+                <div class="thermometer-container">
+                    <img src="https://media.istockphoto.com/id/1371913379/vector/cartoon-tower-silo-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=1YD-Foeyt_9QTIG2U1fxXMFCtfQYrqZoxLXr-jWq_B0=" width="100" height="400" class="ms-4 mt-3">
+                    <div id="wrapper" class="mt-3">	
+                        <div id="thermometer" class="thermometer silo-bar">
+                            <div id="waterBar" style="height:0" data-value="0 Liters"></div>
+                            <div id="graduations"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <h3 class="mt-3">Food Silo (Max: 100 gallons)</h3>
-                </div>
-                <div>
-                    <progress id="progressFood" value="65" max = "100"></progress>
-                    <input id="txtAddFood" placeholder="Add Food (Gallons)" aria-label="Add Food" class="form-control">
-                    <button class="col-12 btn text-center btn btn-primary mt-3" id="btnAddFood" type="button">Added Food</button>
-                </div>
-                <div class="form-group">
-                    <h3 class="mt-3">Water Storage (Max: 100 Liters)</h3>
-                </div>
-                <div>
-                    <progress id="progressWater" value="70" max = "100"></progress>
                     <input id="txtAddWater" placeholder="Add Water (Liters)" aria-label="Add Water" class="form-control">
                     <button class="col-12 btn text-center btn btn-primary mt-3" id="btnAddWater" type="button">Added Water</button>
+                    <button class="col-12 btn text-center btn btn-secondary mt-3" id="btnReturnSettings" type="button">Return to Dashboard</button>
                 </div>
-                <button class="col-12 btn text-center btn btn-secondary mt-3" id="btnReturnSettings" type="button">Return to Dashboard</button>
             </div>
-        
-                    <!-- Input for updating temperature -->
-                    <div class="card-body">
-                        <h3>Temperature</h3>
-                        <div>
-                            <button id="btnIncreaseTemperature" class="btn-image btn-primary mb-1" aria-label="Up Arrow button" type="button">
-                                <img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-512.png" width="20" height="20">
-                            </button>
-                            <input id="txtTemperature" type="number" class="form-control" width="20" height="20">
-                        </div>
-                        <button id="btnDecreaseTemperature" class="btn-image btn-primary mt-1" aria-label="Down Arrow button" type="button">
-                            <img src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-down-01-512.png" width="20" height="20">
-                        </button>
-                        <button class="btn text-center btn-primary btnUpdateSetting" type="button">Update</button>
-                </div>
-                    <!-- Input for fan speed -->
-                    <div class="form-group">
-                        <h3>Fan Speed</h3>
-                        <div class="d-flex justify-content-center">
-                            <input type="checkbox" id="toggleOffFan" class="togglecheckbox ms-4">
-                            <label for="toggle-checkbox" class="toggle-label">Off</label>
-                            <input type="checkbox" id="toggleLowFan" class="togglecheckbox ms-4">
-                            <label for="toggle-checkbox" class="toggle-label">Low</label>
-                            <input type="checkbox" id="toggleMediumFan" class="togglecheckbox ms-4">
-                            <label for="toggle-checkbox" class="toggle-label">Medium</label>
-                            <input type="checkbox" id="toggleHighFan" class="togglecheckbox ms-4">
-                            <label for="toggle-checkbox" class="toggle-label">High</label>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <img src="https://cdn.icon-icons.com/icons2/2248/PNG/512/fan_off_icon_135650.png" width="100" height="100" class="ms-4 mt-3">
-                            <img src="https://static-00.iconduck.com/assets.00/fan-speed-1-icon-487x512-goboalws.png" width="100" height="100" class="ms-4 mt-3">
-                            <img src="https://static-00.iconduck.com/assets.00/fan-speed-2-icon-487x512-zowmbvgo.png" width="100" height="100" class="ms-4 mt-3">
-                            <img src="https://static-00.iconduck.com/assets.00/fan-speed-3-icon-487x512-zodsf8u5.png" width="100" height="100" class="ms-4 mt-3">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <h3 class="mt-3">Food Silo (Max: 100 gallons)</h3>
-                    </div>
-                    <div>
-                        <progress id="progressFood" value="65" max = "100"></progress>
-                        <input id="txtAddFood" placeholder="Add Food (Gallons)" aria-label="Add Food" class="form-control">
-                        <button class="col-12 btn text-center btn btn-primary mt-3" id="btnAddFood" type="button">Added Food</button>
-                    </div>
-                    <div class="form-group">
-                        <h3 class="mt-3">Water Storage (Max: 100 Liters)</h3>
-                    </div>
-                    <div>
-                        <progress id="progressWater" value="70" max = "100"></progress>
-                        <input id="txtAddWater" placeholder="Add Water (Liters)" aria-label="Add Water" class="form-control">
-                        <button class="col-12 btn text-center btn-primary mt-3" id="btnAddWater" type="button">Added Water</button>
-                    </div>
-                    <button class="col-12 btn text-center btn-secondary mt-3" id="btnReturnSettings" type="button">Return to Dashboard</button>
-                </div>
-            
-        
+        </div>
         <div class="card col-12 col-md-10 col-lg-9" id="divUserAddress" style="display:none">
             <div class="card-header">
                 <h3>Weather</h3>
@@ -509,6 +627,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script>
     var objDefaultSettings;
@@ -713,60 +832,516 @@
             });
         })
     })
+ 
+    
+    
+    
+
+    $('#btnUpdateTemperature').on('click',function(){
+        let minTemp = parseInt($('#minTemp').val());
+        let maxTemp = parseInt($('#maxTemp').val());
+        let temp = $('#temperature').data('value');
+        let tempValue = parseInt(temp.split('°')[0]); // Parse as integer
+        let tempUnit = temp.split('°')[1];
+        let tempValueF = 0;
+
+        tempValueF = tempValue;
+        
+        if (tempValueF >= minTemp && tempValueF <= maxTemp) {
+            Swal.fire({
+                title: "Success",
+                html: "The temperature was successfully updated.",
+                icon: "success"
+            });
+            $.ajax({
+                url: 'https://simplecoop.swollenhippo.com/settings.php',
+                type: 'PUT',
+                data: {SessionID:sessionStorage.getItem('SessionID'), setting:"temperature", value:tempValueF},
+                success: function(tempResult){
+                    $.ajax({
+                    url: 'https://simplecoop.swollenhippo.com/settings.php',
+                    type: 'PUT',
+                    data: {SessionID:sessionStorage.getItem('SessionID'), setting:"min_Temp", value:minTemp},
+                    success: function(tempResult){
+                        $.ajax({
+                        url: 'https://simplecoop.swollenhippo.com/settings.php',
+                        type: 'PUT',
+                        data: {SessionID:sessionStorage.getItem('SessionID'), setting:"max_Temp", value:maxTemp},
+                        success: function(tempResult){
+                            
+                        }
+                    });
+                    }
+                });
+                }
+            });
+        } else {
+            Swal.fire({
+                title: "Oops",
+                html: "The temperature is out of range. Please try again.",
+                icon: "error"
+            });
+        }
+
+    })
+
+    $('#btnUpdateFanSpeed').on('click',function(){
+        let fanSpeed = '';
+
+        if ($('#toggleOffFan').is(':checked')) {
+            fanSpeed = 'Off';
+        } else if ($('#toggleLowFan').is(':checked')) {
+            fanSpeed = 'Low';
+        } else if ($('#toggleMediumFan').is(':checked')) {
+            fanSpeed = 'Medium';
+        } else if ($('#toggleHighFan').is(':checked')) {
+            fanSpeed = 'High';
+        } else {
+            fanSpeed = 'Off';
+        }
+        
+        Swal.fire({
+            title: "Success",
+            html: "The fan speed was successfully updated.",
+            icon: "success"
+        });
+
+        $.ajax({
+            url: 'https://simplecoop.swollenhippo.com/settings.php',
+            type: 'PUT',
+            data: {SessionID:sessionStorage.getItem('SessionID'), setting:"fan_state", value:fanSpeed},
+            success: function(fanResult){
+            }
+        });
+    })
+
     $('#btnAddFood').on('click',function(){
-         let foodAdded = +$('#txtAddFood').val();
-         let progressBarFood = document.getElementById('progressFood');
-         if (progressBarFood) {
-             progressBarFood.value = progressBarFood.value + foodAdded;
-         }
-         $('#txtAddFood').val('')
+        let foodAdded = +$('#txtAddFood').val();
+        let progressBarFood = document.getElementById('progressFood');
+        if (progressBarFood) {
+            progressBarFood.value = progressBarFood.value + foodAdded;
+        }
+        $('#txtAddFood').val('')
+    })
+    $('#btnAddFood').on('click',function(){
+        let foodAdded = +$('#txtAddFood').val();
+
+        if (foodBar && foodAdded > 0) { // Remove the upper limit check since we'll check it later
+            // Assuming foodBar is the DOM element representing your food bar
+
+            // Get the current value from the dataset
+            let currentValue = foodBar.dataset.value;
+
+            // Extract the numerical value using regex
+            let match = currentValue.match(/\d+/); // Match one or more digits
+            let numericalValue = match ? parseInt(match[0]) : NaN;
+
+            // Check if the numerical value is valid
+            if (!isNaN(numericalValue)) {
+                // Add the new foodAdded value to the numerical value
+                let newValue = numericalValue + foodAdded;
+
+                // Check if the new value exceeds the limit
+                if (newValue <= 100) {
+                    // Construct the new dataset value
+                    let newDatasetValue = newValue.toString() + " Gallons";
+
+                    // Update the dataset value with the new value
+                    foodBar.dataset.value = newDatasetValue;
+
+                    // Update the height of the foodBar
+                    foodBar.style.height = newValue + '%';
+
+                    // Send the updated value to the server
+                    $.ajax({
+                        url: 'https://simplecoop.swollenhippo.com/settings.php',
+                        type: 'PUT',
+                        data: {SessionID:sessionStorage.getItem('SessionID'), setting:"food_in_gallons", value:newDatasetValue},
+                        success: function(foodResult){
+                            console.log(foodResult.Value);
+                        }
+                    });
+
+                    // Reset the input field
+                    $('#txtAddFood').val('');
+
+                    // Show success message
+                    Swal.fire({
+                        title: "Success",
+                        html: "The amount of food added was successful.",
+                        icon: "success"
+                            });
+                } else {
+                    Swal.fire({
+                        title: "Oops",
+                        html: "The amount of food added is too high. Please try again.",
+                        icon: "error"
+                    });
+                }
+            } else {
+                console.error("Invalid dataset value format");
+            }
+        } else {
+            Swal.fire({
+                title: "Oops",
+                html: "The amount of food added is invalid. Please try again.",
+                icon: "error"
+            });
+        }
      })
 
      $('#btnAddWater').on('click',function(){
-         let waterAdded = +$('#txtAddWater').val();
-         let progressBarWater = document.getElementById('progressWater');
-         if (progressBarWater) {
-             progressBarWater.value = progressBarWater.value + waterAdded;
-         }
-         $('#txtAddWater').val('')
+        let waterAdded = +$('#txtAddWater').val();
+
+        if (waterBar && waterAdded > 0) { // Remove the upper limit check since we'll check it later
+            // Assuming waterBar is the DOM element representing your water bar
+
+            // Get the current value from the dataset
+            let currentValue = waterBar.dataset.value;
+
+            // Extract the numerical value using regex
+            let match = currentValue.match(/\d+/); // Match one or more digits
+            let numericalValue = match ? parseInt(match[0]) : NaN;
+
+            // Check if the numerical value is valid
+            if (!isNaN(numericalValue)) {
+                // Add the new waterAdded value to the numerical value
+                let newValue = numericalValue + waterAdded;
+
+                // Check if the new value exceeds the limit
+                if (newValue <= 100) {
+                    // Construct the new dataset value
+                    let newDatasetValue = newValue.toString() + " Liters";
+
+                    // Update the dataset value with the new value
+                    waterBar.dataset.value = newDatasetValue;
+
+                    // Update the height of the waterBar
+                    waterBar.style.height = newValue + '%';
+
+                    // Send the updated value to the server
+                    $.ajax({
+                        url: 'https://simplecoop.swollenhippo.com/settings.php',
+                        type: 'PUT',
+                        data: {SessionID:sessionStorage.getItem('SessionID'), setting:"water_in_liters", value:newDatasetValue},
+                        success: function(waterResult){
+                            console.log(waterResult.Value);
+                        }
+                    });
+
+                    // Reset the input field
+                    $('#txtAddWater').val('');
+
+                    // Show success message
+                    Swal.fire({
+                        title: "Success",
+                        html: "The amount of water added was successful.",
+                        icon: "success"
+                            });
+                } else {
+                    Swal.fire({
+                        title: "Oops",
+                        html: "The amount of water added is too high. Please try again.",
+                        icon: "error"
+                    });
+                }
+            } else {
+                console.error("Invalid dataset value format");
+            }
+        } else {
+            Swal.fire({
+                title: "Oops",
+                html: "The amount of water added is invalid. Please try again.",
+                icon: "error"
+            });
+        }
      })
 
-    $('#btnSettings').on('click',function(){
-        let date = new Date();
-        console.log(date)
-        // Assuming you have a variable called foodAmount that holds the value for the food amount
-        let foodAmount = 70; // Example value
-        let progressBarFood = document.getElementById('progressFood');
-        if (progressBarFood) {
-            progressBarFood.value = foodAmount;
-        }
+     $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"temperature" }, function(settingsTempResult){
+        
+        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"min_Temp" }, function(settingsMinTempResult){
+            
+            $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"max_Temp" }, function(settingsMaxTempResult){ 
+            
+            let rangeHTML = '<input id="minTemp" type="text" value="' + settingsMinTempResult.Value + '"> ' + 
+                '<input id="tempRange" type="range" min="' + settingsMinTempResult.Value + '"  max="' + settingsMaxTempResult.Value + '" value="42">' + 
+                '<input id="maxTemp" type="text" value="'+ settingsMaxTempResult.Value + '">';
 
-        let waterAmount = 50; // Example value
-        let progressBarWater = document.getElementById('progressWater');
-        if (progressBarWater) {
-            progressBarWater.value = waterAmount;
-        }
+            $('#range').append(rangeHTML);
+            
+            console.log(settingsTempResult.Value);
+
+            console.log(settingsMinTempResult.Value);
+            console.log(settingsMaxTempResult.Value);
 
 
-    });
+            $('#maxTemp').val(settingsMaxTempResult.Value);
+            $('#minTemp').val(settingsMinTempResult.Value);
 
+            setTimeout(function() {
+            temperature.dataset.value = settingsTempResult.Value + "°F";
+            tempRange.setAttribute("value", temperature.dataset.value);
+            
+            temperature.style.height = (tempRange.value - settingsMinTempResult.Value) / (settingsMaxTempResult.Value - settingsMinTempResult.Value) * 100 + "%"; 
+
+            }, 2500); // Replace 1000 with the desired delay in milliseconds
+        
+            })  
+        })
+        })
     
+    $('#btnSettings').on('click',function(){
+        
+        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"opening_time" }, function(settingsOpeningResult){
+            $("#txtDoorOpeningTime").val(settingsOpeningResult.Value);
+        })
+
+        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"closing_time" }, function(settingsClosingResult){
+            $("#txtDoorClosingTime").val(settingsClosingResult.Value);
+        })  
+
+        
+
+        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"fan_state" }, function(settingsFanResult){
+            if (settingsFanResult.Value === "Off") {
+                $('#picFanOff').show();
+                $('#picFanLow').hide();
+                $('#picFanMedium').hide();
+                $('#picFanHigh').hide();
+
+                $('#toggleOffFan').prop('checked',true);
+            } else if (settingsFanResult.Value === "Low") {
+                $('#picFanOff').hide();
+                $('#picFanLow').show();
+                $('#picFanMedium').hide();
+                $('#picFanHigh').hide();
+
+                $('#toggleLowFan').prop('checked',true);
+            } else if (settingsFanResult.Value === "Medium") {
+                $('#picFanOff').hide();
+                $('#picFanLow').hide();
+                $('#picFanMedium').show();
+                $('#picFanHigh').hide();
+
+                $('#toggleMediumFan').prop('checked',true);
+            } else if (settingsFanResult.Value === "High"){
+                $('#picFanOff').hide();
+                $('#picFanLow').hide();
+                $('#picFanMedium').hide();
+                $('#picFanHigh').show();
+
+                $('#toggleHighFan').prop('checked',true);
+            }
+        })
+
+        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"door_state" }, function(settingsDoorResult){
+            
+                let currentTime = moment().format('HH:mm');
+                let openingTime = $('#txtDoorOpeningTime').val();
+                let closingTime = $('#txtDoorClosingTime').val();
+
+                if (moment(currentTime, 'HH:mm').isBetween(moment(openingTime, 'HH:mm'), moment(closingTime, 'HH:mm'))) {
+                    // Show the open door picture
+                    $('#picDoorOpen').show();
+                    // Hide the closed door picture
+                    $('#picDoorClosed').hide();
+                } else {
+                    // Show the closed door picture
+                    $('#picDoorClosed').show();
+                    // Hide the open door picture
+                    $('#picDoorOpen').hide();
+                }
+            
+        })
+
+        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"food_in_gallons"}, function(settingsFoodResult){
+            foodBar.dataset.value = settingsFoodResult.Value;
+
+            let currentValue = foodBar.dataset.value;
+
+            // Extract the numerical value using regex
+            let match = currentValue.match(/\d+/); // Match one or more digits
+            let numericalValue = match ? parseInt(match[0]) : NaN;
+
+            // Check if the numerical value is valid
+            if (!isNaN(numericalValue)) {
+                // Add 20 to the numerical value
+                var newValue = numericalValue;
+
+                // Construct the new dataset value
+                foodBar.style.height = newValue + '%';
+
+            } else {
+                console.error("Invalid dataset value format");
+            }
+        });
+
+        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:"water_in_liters" }, function(settingsWaterResult){
+            waterBar.dataset.value = settingsWaterResult.Value;
+
+            let currentValue = waterBar.dataset.value;
+
+            // Extract the numerical value using regex
+            let match = currentValue.match(/\d+/); // Match one or more digits
+            let numericalValue = match ? parseInt(match[0]) : NaN;
+
+            // Check if the numerical value is valid
+            if (!isNaN(numericalValue)) {
+                // Add 20 to the numerical value
+                var newValue = numericalValue;
+
+                // Construct the new dataset value
+                waterBar.style.height = newValue + '%';
+
+            } else {
+                console.error("Invalid dataset value format");
+            }
+        })
+
+        setTimeout(function() {
+            //Update the thermometer with the new range
+            range.min = config.minTemp;
+            range.max = config.maxTemp;
+
+            $('#divDashboard').slideUp(function(){
+                $('#divSettings').slideDown();
+                })
+            });
+
+            const units = {
+                Celcius: "°C",
+                Fahrenheit: "°F"
+            };
+
+            const config = {
+                minTemp: minTemp.value,
+                maxTemp: maxTemp.value,
+                unit: "Fahrenheit"
+            };
+
+            // Change min and max temperature values
+
+            const tempValueInputs = document.querySelectorAll("input[type='text']");
+
+            tempValueInputs.forEach((input) => {
+                input.addEventListener("change", (event) => {
+                    const newValue = event.target.value;
+                    
+                    if(isNaN(newValue)) {
+                        return input.value = config[input.id];
+                    } else {
+                        config[input.id] = input.value;
+                        range[input.id.slice(0, 3)] = config[input.id]; // Update range
+                        return setTemperature(); // Update temperature
+                    }
+                });
+            });
+
+            // Switch unit of temperature
+
+            const unitP = document.getElementById("unit");
+
+            // unitP.addEventListener("click", () => {
+            //     config.unit = config.unit === "Celcius" ? "Fahrenheit" : "Celcius";
+            //     unitP.innerHTML = config.unit + ' ' + units[config.unit];
+            //     return setTemperature();
+            // })
+
+            //Change temperature
+
+            const range = document.querySelector("input[type='range']");
+            const temperature = document.getElementById("temperature");
+
+            function setTemperature() {
+                temperature.style.height = (range.value - config.minTemp) / (config.maxTemp - config.minTemp) * 100 + "%";
+                temperature.dataset.value = range.value + units[config.unit];
+            }
+        
+            range.addEventListener("input", setTemperature);
+            setTimeout(setTemperature, 1000);
+        }, );
+
+        
+
     $('#toggleOffFan').on('click',function(){
+        $('#picFanOff').show();
+        $('#picFanLow').hide();
+        $('#picFanMedium').hide();
+        $('#picFanHigh').hide();
+
+        // Check if no fan box is checked
+        if (!$('#toggleOffFan').prop('checked') && 
+            !$('#toggleLowFan').prop('checked') && 
+            !$('#toggleMediumFan').prop('checked') && 
+            !$('#toggleHighFan').prop('checked')) {
+            $('#picFanOff').show();
+            $('#picFanLow').hide();
+            $('#picFanMedium').hide();
+            $('#picFanHigh').hide();
+        }
+
         $('#toggleLowFan').prop('checked',false);
         $('#toggleMediumFan').prop('checked',false);
         $('#toggleHighFan').prop('checked',false);
     })
     $('#toggleLowFan').on('click',function(){
+        $('#picFanOff').hide();
+        $('#picFanLow').show();
+        $('#picFanMedium').hide();
+        $('#picFanHigh').hide();
+
+        // Check if no fan box is checked
+        if (!$('#toggleOffFan').prop('checked') && 
+            !$('#toggleLowFan').prop('checked') && 
+            !$('#toggleMediumFan').prop('checked') && 
+            !$('#toggleHighFan').prop('checked')) {
+            $('#picFanOff').show();
+            $('#picFanLow').hide();
+            $('#picFanMedium').hide();
+            $('#picFanHigh').hide();
+        }
+
         $('#toggleOffFan').prop('checked',false);
         $('#toggleMediumFan').prop('checked',false);
         $('#toggleHighFan').prop('checked',false);
     })
     $('#toggleMediumFan').on('click',function(){
+        $('#picFanOff').hide();
+        $('#picFanLow').hide();
+        $('#picFanMedium').show();
+        $('#picFanHigh').hide();
+
+        // Check if no fan box is checked
+        if (!$('#toggleOffFan').prop('checked') && 
+            !$('#toggleLowFan').prop('checked') && 
+            !$('#toggleMediumFan').prop('checked') && 
+            !$('#toggleHighFan').prop('checked')) {
+            $('#picFanOff').show();
+            $('#picFanLow').hide();
+            $('#picFanMedium').hide();
+            $('#picFanHigh').hide();
+        }
+
         $('#toggleOffFan').prop('checked',false);
         $('#toggleLowFan').prop('checked',false);
         $('#toggleHighFan').prop('checked',false);
     })
     $('#toggleHighFan').on('click',function(){
+        $('#picFanOff').hide();
+        $('#picFanLow').hide();
+        $('#picFanMedium').hide();
+        $('#picFanHigh').show();
+
+        // Check if no fan box is checked
+        if (!$('#toggleOffFan').prop('checked') && 
+            !$('#toggleLowFan').prop('checked') && 
+            !$('#toggleMediumFan').prop('checked') && 
+            !$('#toggleHighFan').prop('checked')) {
+            $('#picFanOff').show();
+            $('#picFanLow').hide();
+            $('#picFanMedium').hide();
+            $('#picFanHigh').hide();
+        }
         $('#toggleOffFan').prop('checked',false);
         $('#toggleLowFan').prop('checked',false);
         $('#toggleMediumFan').prop('checked',false);
@@ -776,69 +1351,164 @@
         $('#toggleClose').prop('checked',false);
     })
 
-    $('#toggleClose').on('click',function(){
-        $('#toggleOpen').prop('checked',false);
+    $('#toggleOpen').on('click',function(){
+        if (!$('#toggleOpen').prop('checked')) {
+            // Code to handle when door closing checkbox is unselected
+            console.log("Door opening option unselected");
+
+            if ($('#toggleOpen').prop('checked') || $('#toggleClose').prop('checked')) {
+                // Do nothing
+            } else {
+                let currentTime = moment().format('HH:mm');
+                let openingTime = $('#txtDoorOpeningTime').val();
+                let closingTime = $('#txtDoorClosingTime').val();
+
+                if (moment(currentTime, 'HH:mm').isBetween(moment(openingTime, 'HH:mm'), moment(closingTime, 'HH:mm'))) {
+                    // Show the open door picture
+                    $('#picDoorOpen').show();
+                    // Hide the closed door picture
+                    $('#picDoorClosed').hide();
+                } else {
+                    // Show the closed door picture
+                    $('#picDoorClosed').show();
+                    // Hide the open door picture
+                    $('#picDoorOpen').hide();
+                }
+            }
+        } else {
+            // Code to handle when door closing checkbox is selected
+            console.log("Door opening option selected");
+            $('#toggleClose').prop('checked',false);
+            // Show the open door picture
+            $('#picDoorOpen').show();
+            // Hide the closed door picture
+            $('#picDoorClosed').hide();
+        }
     })
+
+    $('#toggleClose').on('click',function(){
+        // Check if the checkboxes are unselected
+        if (!$('#toggleClose').prop('checked')) {
+            // Code to handle when door closing checkbox is unselected
+            console.log("Door closing option unselected");
+
+            if ($('#toggleOpen').prop('checked') || $('#toggleClose').prop('checked')) {
+                // Do nothing
+            } else {
+                let currentTime = moment().format('HH:mm');
+                let openingTime = $('#txtDoorOpeningTime').val();
+                let closingTime = $('#txtDoorClosingTime').val();
+
+                if (moment(currentTime, 'HH:mm').isBetween(moment(openingTime, 'HH:mm'), moment(closingTime, 'HH:mm'))) {
+                    // Show the open door picture
+                    $('#picDoorOpen').show();
+                    // Hide the closed door picture
+                    $('#picDoorClosed').hide();
+                } else {
+                    // Show the closed door picture
+                    $('#picDoorClosed').show();
+                    // Hide the open door picture
+                    $('#picDoorOpen').hide();
+                }
+            }
+        } else {
+            // Code to handle when door closing checkbox is selected
+            console.log("Door closing option selected");
+            $('#toggleOpen').prop('checked',false);
+            // Show the closed door picture
+            $('#picDoorClosed').show();
+            // Hide the open door picture
+            $('#picDoorOpen').hide();
+        }
+    })
+
+    $('#btnUpdateDoorTimes').on('click',function(){
+        let strDoorOpeningTime = $('#txtDoorOpeningTime').val();
+        let strDoorClosingTime = $('#txtDoorClosingTime').val();
+
+        console.log(strDoorOpeningTime);
+        console.log(strDoorClosingTime);
+
+        let blnError = false;
+        let strErrorMessage = '';
+        //Settings must not be blank
+        if (strDoorOpeningTime.length < 1){
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>Door Opening Time cannot be blank.</p>';
+        }
+        if (strDoorClosingTime.length < 1){
+            blnError = true;
+            strErrorMessage = strErrorMessage + '<p>Door Closing Time cannot be blank.</p>';
+        }
+        if(blnError == true){
+        console.log(strErrorMessage);
+        } else{
+            Swal.fire({
+                title: "Success",
+                text: "Door Times successfully updated",
+                icon: "success"
+            });
+                
+            $.ajax({
+                url: 'https://simplecoop.swollenhippo.com/settings.php',
+                type: 'PUT',
+                data: {SessionID:sessionStorage.getItem('SessionID'),setting:'opening_time',value:strDoorOpeningTime},
+                success: function(result) {
+                    result = JSON.parse(result);
+                    if(result.Error){
+                        Swal.fire({
+                            title: "Oops",
+                            html:  result.Error + '<p> :The error that occurred</p>',
+                            icon: "error"
+                        });
+                    } else{
+                        console.log(result.Outcome);
+                        $.ajax({
+                        url: 'https://simplecoop.swollenhippo.com/settings.php',
+                        type: 'PUT',
+                        data: {SessionID:sessionStorage.getItem('SessionID'),setting:'closing_time',value:strDoorClosingTime},
+                        success: function(result) {
+                            result = JSON.parse(result);
+                            if(result.Error){
+                                Swal.fire({
+                                    title: "Oops",
+                                    html:  result.Error + '<p> :The error that occurred</p>',
+                                    icon: "error"
+                                });
+                            } else{
+                                console.log(result.Outcome);
+                            }
+                        }
+                    });
+                    }
+                }
+            });
+
+            if ($('#toggleOpen').prop('checked') || $('#toggleClose').prop('checked')) {
+                // Do nothing
+            } else {
+                let currentTime = moment().format('HH:mm');
+                let openingTime = $('#txtDoorOpeningTime').val();
+                let closingTime = $('#txtDoorClosingTime').val();
+
+                if (moment(currentTime, 'HH:mm').isBetween(moment(openingTime, 'HH:mm'), moment(closingTime, 'HH:mm'))) {
+                    // Show the open door picture
+                    $('#picDoorOpen').show();
+                    // Hide the closed door picture
+                    $('#picDoorClosed').hide();
+                } else {
+                    // Show the closed door picture
+                    $('#picDoorClosed').show();
+                    // Hide the open door picture
+                    $('#picDoorOpen').hide();
+                }
+            }
+        }
+    })
+
    
     
     //Our CoopID: 9QWFCCR4
-    $('#btnAddWater').on('click',function(){
-        let waterAdded = +$('#txtAddWater').val();
-        let progressBarWater = document.getElementById('progressWater');
-        if (progressBarWater) {
-            progressBarWater.value = progressBarWater.value + waterAdded;
-        }
-        $('#txtAddWater').val('')
-    })
-
-    $('#btnSettings').on('click',function(){
-        let date = new Date();
-        console.log(date)
-        // Assuming you have a variable called foodAmount that holds the value for the food amount
-        let foodAmount = 70; // Example value
-        let progressBarFood = document.getElementById('progressFood');
-        if (progressBarFood) {
-            progressBarFood.value = foodAmount;
-        }
-
-        let waterAmount = 50; // Example value
-        let progressBarWater = document.getElementById('progressWater');
-        if (progressBarWater) {
-            progressBarWater.value = waterAmount;
-        }
-
-    
-    });
-    $('#toggleOffFan').on('click',function(){
-        $('#toggleLowFan').prop('checked',false);
-        $('#toggleMediumFan').prop('checked',false);
-        $('#toggleHighFan').prop('checked',false);
-    })
-    $('#toggleLowFan').on('click',function(){
-        $('#toggleOffFan').prop('checked',false);
-        $('#toggleMediumFan').prop('checked',false);
-        $('#toggleHighFan').prop('checked',false);
-    })
-    $('#toggleMediumFan').on('click',function(){
-        $('#toggleOffFan').prop('checked',false);
-        $('#toggleLowFan').prop('checked',false);
-        $('#toggleHighFan').prop('checked',false);
-    })
-    $('#toggleHighFan').on('click',function(){
-        $('#toggleOffFan').prop('checked',false);
-        $('#toggleLowFan').prop('checked',false);
-        $('#toggleMediumFan').prop('checked',false);
-    })
-
-    $('#toggleOpen').on('click',function(){
-        $('#toggleClose').prop('checked',false);
-    })
-
-    $('#toggleClose').on('click',function(){
-        $('#toggleOpen').prop('checked',false);
-    })
-
-    //Gets the ammount of eggs to display on the dashboard
 
     //Generatee-fill the Coop ID input on the registration page.
     //We only need to generate one Coop ID, so we will leave this commented out
@@ -851,16 +1521,22 @@
 
     
 
-    /*$.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
+    $.getJSON('https://simplecoop.swollenhippo.com/sessions.php',
         {SessionID:sessionStorage.getItem('SessionID')},
         function(sessionDetails){
             console.log(sessionDetails);    
             if(sessionDetails == null){
-                $('#divMessage').slideToggle("slow")  
+                $('#divLogin').slideToggle("slow")  
             } else{
                 $('#divDashboard').slideToggle("slow")  
             }
-    })*/
+        })
+    
+    $('#btnSettings').on('click',function(){ 
+        $('#divDashboard').slideUp(function(){
+            $('#divSettings').slideDown();
+        })
+    })
 
     $('#btnUserAddress').on('click',function(){
         $('#divDashboard').slideUp(function(){
@@ -872,179 +1548,7 @@
             $('#divDashboard').slideDown();
         })
     })
-    $('#btnReturnTempChart').on('click',function(){
-        $('#divEnvChart').slideUp(function(){
-            $('#divEnvironment').slideDown();
-        })
-    })
-    $('#btnAddAddress').on('click',function(){
-        $('#divUserAddress').slideUp(function(){
-            $('#divAddWeatherAddress').slideDown();
-        })
-    })
-    $('#btnAddWeatherAddress').on('click',function(){
-        $('#divAddWeatherAddress').slideUp(function(){
-            $('#divUserAddress').slideDown();
-        })
-    })
-    $('#btnViewAddress').on('click',function(){
-        $('#divUserAddress').slideUp(function(){
-            $('#divWeather').slideDown();
-        })
-    })
-    $('#btnReturnWeather').on('click',function(){
-        $('#divWeather').slideUp(function(){
-            $('#divUserAddress').slideDown();
-        })
-    })
-    // $('#btnReturnWeather').on('click',function(){
-    //     $('#divWeather').slideUp(function(){
-    //         $('#divUserAddress').slideDown();
-    //     })
-    // })
-    $('#btnGoToLogin').on('click',function(){
-        $('#divMessage').slideUp(function(){
-            $('#divLogin').slideDown();
-        })
-    })
-    $('#btnGoToRegister').on('click',function(){
-        $('#divMessage').slideUp(function(){
-            $('#divRegister').slideDown();
-        })
-    })
-    $('#btnSettings').on('click',function(){
-        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', function(result) {
-            console.log(result);
-        })
-
-        $('#divDashboard').slideUp(function(){
-            $('#divSettings').slideDown();
-        })
-    })
-    $('#btnUpdateSettings').on('click',function(){
     
-        $.ajax({
-            url: 'https://simplecoop.swollenhippo.com/settings.php',
-            type: 'PUT',
-            data: {SessionID:sessionStorage.getItem('SessionID'),setting:strSettings,value:strValue},
-            success: function(result) {
-                console.log(result);
-            }
-        });
-    })
-    
-
-    $('#btnIncreaseTemperature').on('click',function(){
-         strTempertaure = +$('#txtTemperature').val();
-         strTempertaure = strTempertaure + 1;
-         //Set the text box equal to the new value
-         $('#txtTemperature').val(strTempertaure);
-     })
-
-     $('#btnDecreaseTemperature').on('click',function(){
-         let strTempertaure = +$('#txtTemperature').val();
-         strTempertaure = strTempertaure - 1;
-         //Set the text box equal to the new value
-         $('#txtTemperature').val(strTempertaure);
-     })
-
-    
-
-    
-    
-
-    $('#btnAddSettings').on('click',function(){
-        strSettings = $('#txtSettings').val();
-        strValue = $('#txtValue').val();
-
-        let blnError = false;
-        let strErrorMessage = '';
-        //Settings must not be blank
-        if (strSettings.length < 1){
-            blnError = true;
-            strErrorMessage = strErrorMessage + '<p>Settings cannot be blank.</p>';
-        }
-        //Value must not be blank
-        if (strValue.length < 1){
-            blnError = true;
-            strErrorMessage = strErrorMessage + '<p>Value cannot be blank.</p>';
-        }
-        if(blnError == true){
-                console.log(strErrorMessage);
-                Swal.fire({
-                    title: "Oops",
-                    html: strErrorMessage,
-                    icon: "error"
-                });
-            } else {
-                $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:strSettings,value:strValue},function(result){
-                result = JSON.parse(result);
-                if (result.Error) {
-                    Swal.fire({
-                        title: "Oops!",
-                        html:  result.Error + '<p> :The error that occured</p>',
-                        icon: "error"
-                    });
-                } else {
-                    console.log(result);
-                }
-            })
-        }
-    })
-    $('#btnDelSettings').on('click',function(){
-        strDelSetting = $('#txtDelSetting').val();
-        //strValue = $('#txtValue').val();
-
-        let blnError = false;
-        let strErrorMessage = '';
-        //Settings must not be blank
-        if (strDelSetting.length < 1){
-            blnError = true;
-            strErrorMessage = strErrorMessage + '<p>Settings cannot be blank.</p>';
-        }
-        if(blnError == true){
-            console.log(strErrorMessage);
-            Swal.fire({
-                title: "Oops",
-                html: strErrorMessage,
-                icon: "error"
-            });
-        }
-        else{
-            $.ajax({
-            url: 'https://simplecoop.swollenhippo.com/settings.php',
-            type: 'DELETE',
-            data: {SessionID:sessionStorage.getItem('SessionID'),setting:strDelSetting},
-            success: function(result) {
-                result = JSON.parse(result);
-                if(result.Error){
-                    Swal.fire({
-                        title: "Oops",
-                        html:  result.Error + '<p> :The error that occured</p>',
-                        icon: "error"
-                    });
-                } else{
-                    console.log(result.Outcome);
-                }
-            }
-            });
-            
-        }
-    })
-
-    $('#btnViewSetting').on('click',function(){
-        let strSetting = $('#txtViewSetting').val();
-        $.getJSON('https://simplecoop.swollenhippo.com/settings.php', {SessionID:sessionStorage.getItem('SessionID'), setting:strSetting}, function(result) {
-            console.log(result);
-        })
-    })
-    //I think we have a duplicate block of code here (see lines 321-325), so I commented this one out:
-    /*$('#btnSettings').on('click',function(){
-        $('#divDashboard').slideUp(function(){
-            $('#divSettings').slideDown();
-        })
-    })*/
-  
     $('#btnEggs').on('click',function(){
         $('#divDashboard').slideUp(function(){
             $('#divEggs').slideDown();
@@ -1251,10 +1755,10 @@
     })
 
     //On click of the button register
-    $('#btnRegister').on('click', function(){
-    //Initializes btnError and strError message to flase and empty
-        let blnError = false;
-        let strErrorMessage = '';
+    $('#btnRegister').on('click', function() {
+    // Initializes btnError and strError message to false and empty
+    let blnError = false;
+    let strErrorMessage = '';
 
     //Sets scoped variable of str(Variable) to the the values in the text boxes in register
         let strEmail = $('#txtEmail').val();
@@ -1734,7 +2238,6 @@ function phoneFormat(input){
     //Generate random enviroment
 /*
 function getRandomObservationDatetime() {
-/*function getRandomObservationDatetime() {
   // Get the current date
    var currentDate = new Date();
   // Generate a random number of days between 0 and 100
@@ -1754,6 +2257,8 @@ function getRandomHumidity() {
   // Generate a random humidity between 30 and 98
    return Math.random() * (98 - 30) + 30;
 }
+/* I don't know if we need the loop down here or not. I think we may need to 
+   do this loop whenever an account (or Coop ID) is registered.
 // Loop to execute the code block 100 times
 for (var i = 0; i < 100; i++) {
   // The SessionID and additional data with random temperature, humidity, and observationdatetime
@@ -1768,6 +2273,9 @@ for (var i = 0; i < 100; i++) {
       console.log(result);
    });
 } */
+
+
+
 </script>
 </body>
 </html>
