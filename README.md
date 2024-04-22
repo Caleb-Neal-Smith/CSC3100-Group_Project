@@ -14,6 +14,20 @@ dont merge until it's done, cause i dont want it to break everything else
 
 ## **changelog**
 
+### 4.21.1
+**added**
+- added splash page -- alec
+
+**changed**
+- changed account dropdown to only show login or register
+- integrated splash page with logout() function
+    - tweaked logout()
+- added more styling - alec
+
+**to do**
+- change account button to 3 lines to make it more uniform like a normal webpage
+- change smartcoop button to be an icon and not lame  
+
 ### 4.18.2
 **added**
 - added padding for navbar so things arent under it when scrolled to top.
@@ -22,11 +36,6 @@ dont merge until it's done, cause i dont want it to break everything else
 - modified navbar so that it is fixed -- is frontmost above everything, and also stays fixed on the top instead of disappearing when you scroll.
 - fixed navbar when logged out. **If possible, I need help where one of the two dropdown buttons disappears when logged out.**
 - changed smartcoop button so it refreshes page.(subject to change)
-
-**to do**
-- change account button to 3 lines to make it more uniform like a normal webpage
-- change account dropdown to only show login or register
-- change smartcoop button to be an icon and not lame  
   
   
 ### 4.18.1
