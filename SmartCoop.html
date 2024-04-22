@@ -263,9 +263,34 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     var strCoopID;
-    const ctx = document.getElementById('chartEggs');
+
     const ctxTwo = document.getElementById('myChart');
     const ctxEnvironment = document.getElementById('envChart');
+
+    const ctx = document.getElementById('eggsChart');
+    //Cofiguration object for eggsChart
+    var objEggConfig = {
+        type: 'line',
+        data:{
+            labels: [],
+            datasets: [{
+                label: 'Eggs',
+                data: [],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    }
+
+    var eggChart = new Chart(ctx, objEggConfig);
     //Configuration object for tempChart
     var objConfig = {
         type: 'line',
@@ -610,7 +635,9 @@
     })
     $('#btnReturnEggs').on('click',function(){
         $('#divEggs').slideUp(function(){
-            $('#divDashboard').slideDown();
+            $('#divDashboard').slideDown(function(){
+                $('#eggsChart').slideUp();
+            });
         })
     })
     
