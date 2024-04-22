@@ -524,34 +524,40 @@
     $('#btnAddEggs').on('click',function(){
         numEggs = $('#txtEggs').val();
 
+        let currentDate = moment().format('YYYY-MM-DD HH:mm:ss')
         let blnError = false;
         let strErrorMessage = '';
         //numEggs must not be blank
-        if (!numEggs){
+        if (!numEggs || numEggs <=0){
             blnError = true;
             strErrorMessage = strErrorMessage + '<p>Number of eggs cannot be blank.</p>';
         }
-        if(blnError == true){
+        else if(blnError == true){
             console.log(strErrorMessage);
             Swal.fire({
                 title: "Oops",
                 html: strErrorMessage,
                 icon: "error"
             });
-        } else {
-            $.post('https://www.thesimplehomestead.com/simpletime/eggs.php',{SessionID:sessionStorage.getItem('SessionID'),eggs:numEggs,observationDateTime:currentDate},function(result){
+        }
+        else {
+            objEggs = {
+                date: [currentDate],
+                eggs: [numEggs]
+            }
+            $.post('https://simplecoop.swollenhippo.com/eggs.php', { SessionID: sessionStorage.getItem('SessionID'), observationDateTime: objEggs.date[0], eggs: objEggs.eggs[0] }, function(result) {
                 result = JSON.parse(result);
-                console.log(result);
+                console.log(numEggs);
                 if (result.Error) {
                     Swal.fire({
                         title: "Oops!",
-                        html:  result.Error + '<p> :The error that occured</p>',
+                        html: result.Error + '<p> :The error that occured</p>',
                         icon: "error"
                     });
                 } else {
                     console.log(result);
                 }
-            })
+            });
         }
     })
     $('#btnReturnEggs').on('click',function(){
