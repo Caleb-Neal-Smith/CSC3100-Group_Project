@@ -9,16 +9,24 @@ Authors: Alec Jones, Nolen Jensen, Samuel Sims, Mitchell Kiriazes, Caleb Smith, 
 
 ## **changelog**
 
+### 4.21.3
+**added**
+- merged all changes alec and I made to splash screen, navbar, and theming
+
+**changed**
+- fixed a couple settings errors with navSettings button, and removed redundancy
+
+**to do**
+- change account button to 3 lines to make it more uniform like a normal webpage
+- change smartcoop button to be an icon and not lame  
+
+
 ### 4.21.2
 **added**
 - added all of christian's settings additions
 
 **changed**
 - fixed a couple settings errors
-
-**to do**
-- change account button to 3 lines to make it more uniform like a normal webpage
-- change smartcoop button to be an icon and not lame  
 
 
 ### 4.21.1
