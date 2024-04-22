@@ -7,6 +7,12 @@
     <title>Smart Coop</title>
     <!--Content delivery network for Bootstrap stylesheet (bootsrap).-->
     <link href="css/lib/bootsrap.min.css" rel="stylesheet">
+    <!-- padding for the navbar -->
+    <style>
+        body {
+            padding-top: 56px;
+        }
+    </style>
 </head>
 <!--This Section of code formats the body of the file.-->
 <body class="bg-dark">
@@ -19,11 +25,11 @@
         }
         </style>
     <!-- The navigation bar -->
-        <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark"> <!--Source for NavBar: https://bootswatch.com/yeti/-->
+        <nav class="navbar navbar-expand-lg bg-success fixed-top" data-bs-theme="dark"> <!--Source for NavBar: https://bootswatch.com/yeti/-->
                                                                                                 
             <div class="container-fluid">
                 <!-- The brand logo -->
-                <a class="navbar-brand" href="#">Smart Coop</a>
+                <a class="navbar-brand" href="">Smart Coop</a>
                 <!-- The toggle button for collapsing the navigation links -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -32,7 +38,7 @@
                     <ul class="navbar-nav me-auto">
                         <!-- The home link -->
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Home
+                            <a class="nav-link active" id="navHome">Home
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
@@ -40,17 +46,17 @@
                         <!-- The account dropdown. -->
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Account</a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account</a>
                             <!-- The dropdown menu for account options. Currently both buttons do the same thing as each other, because it uses our existing login/signup button code. -->
                             <div class="dropdown-menu">
                                 <!-- The login option -->
                                 <!--The data-card attribute needs to be Register for this link so that 
                                     it will only work if the Registration card is showing.-->
-                                <a class="dropdown-item" data-card="Register" id="navLogin" href="#">Login</a>
+                                <a class="dropdown-item" data-card="Register" id="navLogin">Login</a>
                                 <!-- The sign up option -->
                                 <!--The data-card attribute needs to be Login for this link so that 
                                     it will only work if the Login card is showing.-->
-                                <a class="dropdown-item" data-card="Login" id="navRegister" href="#">Register</a>
+                                <a class="dropdown-item" data-card="Login" id="navRegister">Register</a>
                             </div>
                         </li>
 
@@ -441,10 +447,11 @@
         function(sessionDetails){
             console.log(sessionDetails);    
             if(sessionDetails == null){
-                $('#divLogin').slideToggle("slow")  
+                $('#divLogin').slideToggle("slow")
             } else{
                 $('#divDashboard').slideToggle("slow")  
             }
+            updateNavbar(sessionDetails);
         })
     
     $('#btnUserAddress').on('click',function(){
@@ -453,9 +460,7 @@
         })
     })
     $('#btnReturnUserAddress').on('click',function(){
-        $('#divUserAddress').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
+        returnHome();
     })
     $('#btnReturnTempChart').on('click',function(){
         $('#divEnvChart').slideUp(function(){
@@ -645,9 +650,7 @@
         }
     })
     $('#btnReturnEggs').on('click',function(){
-        $('#divEggs').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
+        returnHome();
     })
     
     $('#btnEnvModify').on('click',function(){
@@ -656,14 +659,10 @@
         })
     })
     $('#btnReturnEnvironment').on('click',function(){
-        $('#divEnvironment').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
+        returnHome();
     })
     $('#btnReturnSettings').on('click',function(){
-        $('#divSettings').slideUp(function(){
-            $('#divDashboard').slideDown();
-        })
+        returnHome();
     })
 
     //When a button is clicked with the class btnToggle the function gathers the information from the Login and registration text boxes
@@ -700,77 +699,82 @@
             }
         })
     
+// commented out the following because i believe it is redundant from what updateNavbar() does
 
-    $('#navRegister').on('click',function(){
-        //When "Register" is clicked on the navigation bar, toggle from the login card to the registration card
-        //Note: we don't want the "Register" anchor to do anything if the user is already on the registration card
-        let strCard = $(this).attr('data-card')
-        if(strCard == 'Login') {
-            $('#divLogin').slideUp(function(){
-                $('#divRegister').slideDown();
-            })
-            /*Sets the value of each text box on the login card to an empty string and removes the class
-            that forces divMain to take up the entire viewport height */
-            $('#txtLoginEmail').val('');
-            $('#txtLoginPassword').val('');
-            $('#divMain').removeClass('vh-100')
-        } else if(strCard == 'Dashboard') {
-            $('#txtLoginEmail').val('');
-            $('#txtLoginPassword').val('');
+// $('#navRegister').on('click',function(){
+    //     //When "Register" is clicked on the navigation bar, toggle from the login card to the registration card
+    //     //Note: we don't want the "Register" anchor to do anything if the user is already on the registration card
+    //     let strCard = $(this).attr('data-card')
+    //     if(strCard == 'Login') {
+    //         $('#divLogin').slideUp(function(){
+    //             $('#divRegister').slideDown();
+    //         })
+    //         /*Sets the value of each text box on the login card to an empty string and removes the class
+    //         that forces divMain to take up the entire viewport height */
+    //         $('#txtLoginEmail').val('');
+    //         $('#txtLoginPassword').val('');
+    //         $('#divMain').removeClass('vh-100')
+    //     } else if(strCard == 'Dashboard') {
+    //         $('#txtLoginEmail').val('');
+    //         $('#txtLoginPassword').val('');
 
-            $('#divDashboard').slideUp(function(){
-                $('#navRegister').attr('data-card', 'Login');
-                $('#navLogin').attr('data-card', 'Register');
-                $('#divRegister').slideDown();
-            })
-            $('#divMain').removeClass('vh-100')
-        }
+    //         $('#divDashboard').slideUp(function(){
+    //             $('#navRegister').attr('data-card', 'Login');
+    //             $('#navLogin').attr('data-card', 'Register');
+    //             $('#divRegister').slideDown();
+    //         })
+    //         $('#divMain').removeClass('vh-100')
+    //     }
+    // })
+
+    // $('#navLogin').on('click',function(){
+    //     //When "Login" is clicked on the navigation bar, toggle from the registration card to the login card
+    //     //Note: we don't want the "Login" anchor to do anything if the user is already on the login card
+    //     let strCard = $(this).attr('data-card')
+    //     if(strCard == 'Register'){
+    //         $('#divRegister').slideUp(function(){
+    //             $('#divLogin').slideDown();
+    //         })
+    //         /*Sets the value of each text box on the registraion card to an empty string and adds back the viewport 
+    //         height class (this is so the login card will be centered)  */
+    //         $('#txtFirstName').val('');
+    //         $('#txtLastName').val('');
+    //         $('#txtEmail').val('');
+    //         $('#txtPassword').val('');
+    //         //$('#txtRegistrationID').val(''); //Gonna comment this out for now until I find out if we need it here or not
+    //         $('#txtStreetAddress1').val('');
+    //         $('#txtStreetAddress2').val('');
+    //         $('#txtCity').val('');
+    //         $('#txtState').val('');
+    //         $('#txtZipCode').val('');
+    //         $('#txtPhoneNumber').val('');
+    //         $('#divMain').addClass('vh-100');
+    //     } else if(strCard == 'Dashboard') {
+    //         $('#txtFirstName').val('');
+    //         $('#txtLastName').val('');
+    //         $('#txtEmail').val('');
+    //         $('#txtPassword').val('');
+    //         //$('#txtRegistrationID').val('');
+    //         $('#txtStreetAddress1').val('');
+    //         $('#txtStreetAddress2').val('');
+    //         $('#txtCity').val('');
+    //         $('#txtState').val('');
+    //         $('#txtZipCode').val('');
+    //         $('#txtPhoneNumber').val('');
+
+    //         $('#divDashboard').slideUp(function(){
+    //             $('#navRegister').attr('data-card', 'Login');
+    //             $('#navLogin').attr('data-card', 'Register');
+    //             $('#divLogin').slideDown();
+    //         })
+    //         $('#divMain').addClass('vh-100');
+    //     }
+    //     
+    // })
+
+    $('#navHome').on('click',function() {
+        returnHome();
     })
-
-    $('#navLogin').on('click',function(){
-        //When "Login" is clicked on the navigation bar, toggle from the registration card to the login card
-        //Note: we don't want the "Login" anchor to do anything if the user is already on the login card
-        let strCard = $(this).attr('data-card')
-        if(strCard == 'Register'){
-            $('#divRegister').slideUp(function(){
-                $('#divLogin').slideDown();
-            })
-            /*Sets the value of each text box on the registraion card to an empty string and adds back the viewport 
-            height class (this is so the login card will be centered)  */
-            $('#txtFirstName').val('');
-            $('#txtLastName').val('');
-            $('#txtEmail').val('');
-            $('#txtPassword').val('');
-            //$('#txtRegistrationID').val(''); //Gonna comment this out for now until I find out if we need it here or not
-            $('#txtStreetAddress1').val('');
-            $('#txtStreetAddress2').val('');
-            $('#txtCity').val('');
-            $('#txtState').val('');
-            $('#txtZipCode').val('');
-            $('#txtPhoneNumber').val('');
-            $('#divMain').addClass('vh-100');
-        } else if(strCard == 'Dashboard') {
-            $('#txtFirstName').val('');
-            $('#txtLastName').val('');
-            $('#txtEmail').val('');
-            $('#txtPassword').val('');
-            //$('#txtRegistrationID').val('');
-            $('#txtStreetAddress1').val('');
-            $('#txtStreetAddress2').val('');
-            $('#txtCity').val('');
-            $('#txtState').val('');
-            $('#txtZipCode').val('');
-            $('#txtPhoneNumber').val('');
-
-            $('#divDashboard').slideUp(function(){
-                $('#navRegister').attr('data-card', 'Login');
-                $('#navLogin').attr('data-card', 'Register');
-                $('#divLogin').slideDown();
-            })
-            $('#divMain').addClass('vh-100');
-        }
-    })
-
     //On click of the button register
     $('#btnRegister').on('click', function(){
     //Initializes btnError and strError message to flase and empty
@@ -928,7 +932,8 @@
                         }
                     })
                 })
-            })  
+            })
+            updateNavbar();  
         }
     })
     //Click event for the Login Button
@@ -1000,6 +1005,7 @@
                             $('#divDashboard').slideDown();
                             $('#navLogin').attr('data-card', 'Dashboard');
                             $('#navRegister').attr('data-card', 'Dashboard');
+                            updateNavbar(result);
                         })
                     })
                     // Loop to execute the code block 100 times
@@ -1017,26 +1023,14 @@
                             console.log(result);
                         });
                     }
+
                 }
         })
     })
     
     //This function shows up on the dashboard and gives the user the option to logout
     $('#btnLogout').on('click', function(){
-    $.ajax({
-            url: 'https://simplecoop.swollenhippo.com/sessions.php',
-            type: 'DELETE',
-            data: {SessionID:sessionStorage.getItem('SessionID')},
-            success: function(result) {
-                // remove the SessionID item from the browsers Session Storage
-                console.log("Logout button clicked")
-                sessionStorage.removeItem('SessionID');
-                $('#divDashboard').slideUp(function(){
-                    $('#divMain').addClass('vh-100');
-                    $('#divLogin').slideDown();
-                }) 
-            }
-        });
+        logout();
     })
 //On a key click, set var phoneNumber to the Phone Number text box and sent the value to the phoneFormat function
 document.getElementById('txtPhoneNumber').addEventListener('keyup',function(evt){
@@ -1047,6 +1041,176 @@ document.getElementById('txtPhoneNumber').addEventListener('keyup',function(evt)
 
 // We need to manually format the phone number on page load
 document.getElementById('txtPhoneNumber').value = phoneFormat(document.getElementById('txtPhoneNumber').value);
+
+function logout() {
+    $.ajax({
+        url: 'https://simplecoop.swollenhippo.com/sessions.php',
+        type: 'DELETE',
+        data: {SessionID:sessionStorage.getItem('SessionID')},
+        success: function(result) {
+            // remove the SessionID item from the browsers Session Storage
+            console.log("Logout button clicked")
+            sessionStorage.removeItem('SessionID');
+            if ($('#divDashboard').is(':visible')) {
+                $('#divDashboard').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divEggs').is(':visible')) {
+                $('#divEggs').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divEnvironment').is(':visible')) {
+                $('#divEnvironment').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divSettings').is(':visible')) {
+                $('#divSettings').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divUserAddress').is(':visible')) {
+                $('#divUserAddress').slideUp(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideDown();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divRegister').is(':visible')) {
+                $('#divRegister').slideToggle(function(){
+                    $('#divMain').addClass('vh-100');
+                    $('#divLogin').slideToggle();
+                    $('#txtLoginEmail').val('');
+                    $('#txtLoginPassword').val('');
+                })
+            } else if ($('#divLogin').is(':visible')) {
+                $('#divLogin').slideUp(function(){
+                    $('#divRegister').slideDown();
+                    $('#divMain').addClass('vh-100');
+                    $('#txtFirstName').val('');
+                    $('#txtLastName').val('');
+                    $('#txtEmail').val('');
+                    $('#txtPassword').val('');
+                    $('#txtStreetAddress1').val('');
+                    $('#txtStreetAddress2').val('');
+                    $('#txtCity').val('');
+                    $('#txtState').val('');
+                    $('#txtZipCode').val('');
+                    $('#txtPhoneNumber').val('');
+                })
+            }
+            // add any other divs that need to be closed here^
+            updateNavbar();
+
+            // old code: dont delete yet
+            // $('#divDashboard').slideUp(function(){
+            //     $('#divMain').addClass('vh-100');
+            //     $('#divLogin').slideDown();
+            //     updateNavbar();
+            //     $('#divDashboard').getElementById('txtLoginEmail').value = '';
+            //     $('#divDashboard').getElementById('txtLoginPassword').value = '';
+            // }) 
+        }
+    });
+}
+//This function is used to return to the dashboard from any of the 
+function returnHome() {
+    if($('#divEggs').is(':visible')){
+        $('#divEggs').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    } else if ($('#divEnvironment').is(':visible')){
+        $('#divEnvironment').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    } else if ($('#divSettings').is(':visible')){
+        $('#divSettings').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    } else if ($('#divUserAddress').is(':visible')){
+        $('#divUserAddress').slideUp(function(){
+            $('#divDashboard').slideDown();
+        })
+    }
+}
+
+// NOTE: isLoggedIn is not currently being used, so should be fine to delete but ive been using it as a test.
+function isLoggedIn(sessionDetails) {
+    // Check if there's a user session cookie or local storage item
+    if (sessionDetails != null) {
+        // if user is logged in, log the status and return true
+        console.log("User is not logged in.");
+        return false;
+    } else {
+        // if the user isnt logged in, log the status and return false
+        console.log("User is logged in.");
+        return true;
+    }
+}
+
+// Update the navbar based on the user's login status
+function updateNavbar(sessionDetails) {
+    if(sessionDetails != null) {        
+        // If the user is logged in, change the navLogin to navSettings and navRegister to navLogout
+        $('#navLogin').text('Settings');
+        $('#navLogin').attr('id', 'navSettings');
+        $('#navSettings').off('click'); // Remove the previous click event handler
+        $('#navSettings').on('click', function() {
+            // Add functionality to show the settings
+            $('#btnSettings').click();
+        });
+
+        $('#navRegister').text('Logout');
+        $('#navRegister').attr('id', 'navLogout');
+        $('#navLogout').off('click'); // Remove the previous click event handler
+        $('#navLogout').on('click', function() {
+            // Add functionality to log out the user
+            logout();
+        });
+    } else {
+        // If the user is not logged in, change the navSettings to navLogin and navLogout to navRegister
+        $('#navSettings').text('Login');
+        $('#navSettings').attr('id', 'navLogin');
+        $('#navLogin').off('click'); // Remove the previous click event handler
+        $('#navLogin').on('click', function() {
+            // Add functionality to show the login form
+            // $('#divLogin').slideDown();
+            logout();
+        });
+
+        $('#navLogout').text('Register');
+        $('#navLogout').attr('id', 'navRegister');
+        $('#navRegister').off('click'); // Remove the previous click event handler
+        $('#navRegister').on('click', function() {
+                //commented out the following because of redundancy with logout()
+                // $('#divLogin').slideUp(function(){
+                //     $('#divRegister').slideDown();
+                //     $('#divMain').addClass('vh-100');
+                //     $('#txtFirstName').val('');
+                //     $('#txtLastName').val('');
+                //     $('#txtEmail').val('');
+                //     $('#txtPassword').val('');
+                //     $('#txtStreetAddress1').val('');
+                //     $('#txtStreetAddress2').val('');
+                //     $('#txtCity').val('');
+                //     $('#txtState').val('');
+                //     $('#txtZipCode').val('');
+                //     $('#txtPhoneNumber').val('');
+                // })
+                logout();
+        });
+    }
+}
 
 // A function to determine if the pressed key is an integer
 function numberPressed(evt){
@@ -1116,7 +1280,14 @@ for (var i = 0; i < 100; i++) {
    });
 } */
 
-
+$('#btnViewEnvDetails').on('click',function(){
+    let intDays = 5;
+    $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
+        envResults.forEach(function(envDetail) {
+            console.log(envDetail);
+        })
+    })
+})
 
 </script>
 </body>
