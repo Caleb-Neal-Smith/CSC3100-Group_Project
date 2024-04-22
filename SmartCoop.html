@@ -66,7 +66,7 @@
                 </div>
             </div>
         </nav>
-    <div>
+    <!--<div>-->
 
     <!--This section of code creates the div for the main content of the page.-->
     <div class="d-flex justify-content-center align-items-center vh-100 pt-4" id="divMain">
@@ -374,29 +374,29 @@
                     <div>
                         <progress id="progressWater" value="70" max = "100"></progress>
                         <input id="txtAddWater" placeholder="Add Water (Liters)" aria-label="Add Water" class="form-control">
-                        <button class="col-12 btn text-center btn btn-primary mt-3" id="btnAddWater" type="button">Added Water</button>
+                        <button class="col-12 btn text-center btn-primary mt-3" id="btnAddWater" type="button">Added Water</button>
                     </div>
-                    <button class="col-12 btn text-center btn btn-secondary mt-3" id="btnReturnSettings" type="button">Return to Dashboard</button>
+                    <button class="col-12 btn text-center btn-secondary mt-3" id="btnReturnSettings" type="button">Return to Dashboard</button>
                 </div>
-            </div>
-        </div>
+            
+        
         <div class="card col-12 col-md-10 col-lg-9" id="divUserAddress" style="display:none">
             <div class="card-header">
                 <h3>Weather</h3>
-                <button class="col-12 btn text-center btn btn-primary" id="btnAddAddress" type="button">Create Address</button>
-                <button class="col-12 btn text-center btn btn-success" id="btnDeleteAddress" type="button">Delete Address</button>
-                <button class="col-12 btn text-center btn btn-primary mb1 bg-black" id="btnViewAddress" type="button">View Weather at Address</button>
-                <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
+                <button class="col-12 btn text-center btn-primary" id="btnAddAddress" type="button">Create Address</button>
+                <button class="col-12 btn text-center btn-success" id="btnDeleteAddress" type="button">Delete Address</button>
+                <button class="col-12 btn text-center btn-primary mb1 bg-black" id="btnViewAddress" type="button">View Weather at Address</button>
+                <button class="col-12 btn text-center btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
             </div>
         </div>
-        <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none;">
+        <div id="divEnvChart" class="card col-12 col-md-10 col-lg-9" style="display:none;"> <!--style="position:relative;height:100vh;width:80vw;display:none;"-->
             <div class="card-header">
                 <h3>Environment</h3>
             </div>
             <div class="card-body">
                 <canvas id="envChart"></canvas>
             </div>
-            <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnTempChart" type="button">Return to Dashboard</button>
+            <button class="col-12 btn text-center btn-secondary" id="btnReturnEnvChart" type="button">Return to Dashboard</button>
         </div>
     
     <div id="divAddWeatherAddress" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
@@ -426,7 +426,7 @@
                 </div>
             </form>
         </div>
-        <button class="col-12 btn text-cent btn btn-secondary" id="btnAddWeatherAddress" type="button">Return to Dashboard</button>
+        <button class="col-12 btn text-center btn-secondary" id="btnAddWeatherAddress" type="button">Return to Dashboard</button>
     </div>   
 
     <div id="divWeather" class="card col-12 col-md-10 col-lg-9" style="position:relative;height:100vh;width:80vw;display:none">
@@ -435,7 +435,8 @@
         </div>
         <div class="card-body">
         </div>
-        <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnWeather" type="button">Return to Dashboard</button>
+        <button class="col-12 btn text-center btn-secondary" id="btnReturnWeather" type="button">Return to Dashboard</button>
+    </div>
     </div>
     <!-- Necessary scripts for jquery, bootstrap, and sweetalert -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -621,8 +622,8 @@
                 //day = envDetail.ObservationDateTime.getDay() + '-' + envDetail.ObservationDateTime.getMonth() + '-' + envDetail.ObservationDateTime.getFullYear();
                 day = envDetail.ObservationDateTime.split(' ')[0]; 
                 objEnvConfig.data.labels.push(day);
-                objEnvConfig.data.datasets[0].push(envDetail.Temperature);
-                objEnvConfig.data.datasets[1].push(envDetail.Humidity);
+                objEnvConfig.data.datasets[0].data.push(envDetail.Temperature);
+                objEnvConfig.data.datasets[1].data.push(envDetail.Humidity);
                 
                 //objHumidityConfig.data.labels.push(day);
                 /*objHumidityConfig.data.datasets.forEach((dataset) => {
@@ -639,7 +640,7 @@
             });
         })
     })
-    ctx = document.getElementById('chartEggs');
+    //ctx = document.getElementById('chartEggs');
     var numEggs = 0;
 
     $('#btnAddFood').on('click',function(){
@@ -746,10 +747,6 @@
 
     
     });
-
-    
-    
-    
     $('#toggleOffFan').on('click',function(){
         $('#toggleLowFan').prop('checked',false);
         $('#toggleMediumFan').prop('checked',false);
@@ -849,11 +846,11 @@
             $('#divUserAddress').slideDown();
         })
     })
-    $('#btnReturnWeather').on('click',function(){
-        $('#divWeather').slideUp(function(){
-            $('#divUserAddress').slideDown();
-        })
-    })
+    // $('#btnReturnWeather').on('click',function(){
+    //     $('#divWeather').slideUp(function(){
+    //         $('#divUserAddress').slideDown();
+    //     })
+    // })
     $('#btnGoToLogin').on('click',function(){
         $('#divMessage').slideUp(function(){
             $('#divLogin').slideDown();
@@ -900,19 +897,19 @@
          $('#txtTemperature').val(strTempertaure);
      })
 
-    $('#btnIncreaseTemperature').on('click',function(){
-        strTempertaure = +$('#txtTemperature').val();
-        strTempertaure = strTempertaure + 1;
-        //Set the text box equal to the new value
-        $('#txtTemperature').val(strTempertaure);
-    })
+    // $('#btnIncreaseTemperature').on('click',function(){
+    //     strTempertaure = +$('#txtTemperature').val();
+    //     strTempertaure = strTempertaure + 1;
+    //     //Set the text box equal to the new value
+    //     $('#txtTemperature').val(strTempertaure);
+    // })
 
-    $('#btnDecreaseTemperature').on('click',function(){
-        let strTempertaure = +$('#txtTemperature').val();
-        strTempertaure = strTempertaure - 1;
-        //Set the text box equal to the new value
-        $('#txtTemperature').val(strTempertaure);
-    })
+    // $('#btnDecreaseTemperature').on('click',function(){
+    //     let strTempertaure = +$('#txtTemperature').val();
+    //     strTempertaure = strTempertaure - 1;
+    //     //Set the text box equal to the new value
+    //     $('#txtTemperature').val(strTempertaure);
+    // })
 
     $('#btnAddSettings').on('click',function(){
         strSettings = $('#txtSettings').val();
@@ -1062,11 +1059,12 @@
             $('#divDashboard').slideDown();
         })
     })
-    $('#btnReturnEnvDetails').on('click',function(){
+    $('#btnReturnEnvChart').on('click',function(){
         $('#divEnvChart').slideUp(function(){
-            tempChart.destroy();
-            humidityChart.destroy();
-            objTempConfig = {
+            envChart.destroy();
+            // tempChart.destroy();
+            // humidityChart.destroy();
+            objEnvConfig = {
                 type: 'line',
                 data: {
                     labels: [],
@@ -1074,24 +1072,8 @@
                         label: 'Temperature (°F)',
                         data: [],
                         borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
-                    responsive: true,
-                    maintainAspectRatio: false
-                },
-            }
-            objHumidityConfig = {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Temperature (°F)',
+                    }, {
+                        label: 'Humidity (%)',
                         data: [],
                         borderWidth: 1
                     }]
@@ -1484,6 +1466,7 @@
     })
     //Click event for the Login Button
     $('#btnLogin').on('click',function(){
+        console.log("Login button clicked");
         //Creates variables to hold the user's email and password
         let strLoginEmail = $('#txtLoginEmail').val();
         let strLoginPassword = $('#txtLoginPassword').val();
@@ -1510,7 +1493,7 @@
         $.getJSON('https://simplecoop.swollenhippo.com/users.php', {Email:strLoginEmail}, function(result) {
             /*Compares the entered password to the password associated with the 
               account of the entered email, and if it matches it will allow Login.*/
-            console.log('Email: ' + result.Email + ' ' + 'Password: ' + result.Password)
+            //console.log('Email: ' + result.Email + ' ' + 'Password: ' + result.Password)
             if(result)
             {
                 checkEmailandPassword = true;
@@ -1529,7 +1512,7 @@
             }
             else{
                     blnError = true;
-                    strErrorMessage += '<p>Email or Password not associated with an account';
+                    strErrorMessage += '<p>Email or Password not associated with an account</p>';
             }
             if(blnError == true){
                 Swal.fire({
@@ -1537,7 +1520,7 @@
                     html: strErrorMessage,
                     icon: 'error'
                 });
-                } 
+            } 
                 else{
                 //If verification passes, slide down login page and slide up dashboard page
                     $.post('https://simplecoop.swollenhippo.com/sessions.php', {Email:strLoginEmail,Password:strLoginPassword}, function(result){
