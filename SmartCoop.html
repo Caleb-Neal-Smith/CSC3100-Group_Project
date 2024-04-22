@@ -320,47 +320,7 @@
             maintainAspectRatio: false
         },
     }
-    //I may delete this commented code later because it may not be needed. - Caleb
-    /*new Chart(ctxTwo, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of votes',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });*/
-    /*var tempChart = new Chart(ctxEnvironment, {
-        type: 'line',
-        data: {
-            //labels: [],
-            datasets: [{
-                label: 'Temperature (°F)',
-                //data: [12, 19, 3, 5, 2, 3],
-                //borderWidth: 1
-            }]
-        },
-        options: {},
-    });*/
-    /*let intDays = 5;
-    $.getJSON('https://simplecoop.swollenhippo.com/environment.php', {SessionID:sessionStorage.getItem('SessionID'), days: intDays}, function(envResults) {
-        
-        envResults.forEach(function(envDetail) {
-            console.log(envDetail);
-            
-        })
-    })*/
+    
     
     var numEggs = 0;
 
@@ -388,19 +348,6 @@
         })
     })
 
-    
-    //Gets the ammount of eggs to display on the dashboard
-    
-    //Our CoopID: 9QWFCCR4
-
-    //Generatee-fill the Coop ID input on the registration page.
-    //We only need to generate one Coop ID, so we will leave this commented out
-    /*$.post('https://simplecoop.swollenhippo.com/coop.php', function(result) {
-        result = JSON.parse(result);
-        strCoopID = result.CoopID;
-        console.log(strCoopID);
-        $('#txtRegistrationID').val(strCoopID)
-    })*/
 
     
 
