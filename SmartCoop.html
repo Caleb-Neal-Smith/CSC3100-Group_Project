@@ -7,6 +7,11 @@
     <title>Smart Coop</title>
     <!--Content delivery network for Bootstrap stylesheet (bootsrap).-->
     <link href="css/lib/bootsrap.min.css" rel="stylesheet">
+    <style> 
+        body { 
+            font-family: western; 
+        } 
+    </style>
     <!-- padding for the navbar -->
     <style>
         body {
@@ -68,7 +73,7 @@
 
     <!--This section of code creates the div for the main content of the page.-->
     <div class="d-flex justify-content-center align-items-center vh-100 pt-4" id="divMain">
-        <div class="card col-12 col-md-5 col-lg-4" id="divMessage" style="display:none">
+        <div class="card col-12 col-md-5 col-lg-4" id="divMessage" style="display:none;">
             <div class="card-header d-flex justify-content-center align-items-center">
                 <h3>Welcome To Simple Coop</h3>
             </div>
@@ -231,7 +236,7 @@
                 <h3>Environment</h3>
                 <button class="col-12 btn text-center btn btn-primary" id="btnEnvCreate" type="button">Create Environment</button>
                 <button class="col-12 btn text-center btn btn-danger" id="btnEnvDelet" type="button">Delete Environment</button>
-                <button class="col-12 btn text-center btn btn-success" id="btnEnvView" type="button">View Environment</button>
+                <button class="col-12 btn text-center btn-primary mb1 bg-black" id="btnEnvView" type="button">View Environment</button>
                 <button class="col-12 btn text-center btn btn-success" id="btnViewEnvDetails" type="button">View Environment Details</button>
                 <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEnvironment" type="button">Return to Dashboard</button>
             </div>
@@ -274,7 +279,7 @@
                 <h3>Weather</h3>
                 <button class="col-12 btn text-center btn btn-primary" id="btnAddAddress" type="button">Create Address</button>
                 <button class="col-12 btn text-center btn btn-success" id="btnDeleteAddress" type="button">Delete Address</button>
-                <button class="col-12 btn text-center btn btn-success" id="btnViewAddress" type="button">View Weather at Address</button>
+                <button class="col-12 btn text-center btn btn-primary mb1 bg-black" id="btnViewAddress" type="button">View Weather at Address</button>
                 <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnUserAddress" type="button">Return to Dashboard</button>
             </div>
         </div>
@@ -447,13 +452,13 @@
         function(sessionDetails){
             console.log(sessionDetails);    
             if(sessionDetails == null){
-                $('#divMessage').slideToggle("slow")
+                $('#divMessage').slideToggle("slow")  
             } else{
                 $('#divDashboard').slideToggle("slow")  
             }
             updateNavbar(sessionDetails);
         })
-    
+
     $('#btnUserAddress').on('click',function(){
         $('#divDashboard').slideUp(function(){
             $('#divUserAddress').slideDown();
@@ -490,6 +495,16 @@
     $('#btnReturnWeather').on('click',function(){
         $('#divWeather').slideUp(function(){
             $('#divUserAddress').slideDown();
+        })
+    })
+    $('#btnGoToLogin').on('click',function(){
+        $('#divMessage').slideUp(function(){
+            $('#divLogin').slideDown();
+        })
+    })
+    $('#btnGoToRegister').on('click',function(){
+        $('#divMessage').slideUp(function(){
+            $('#divRegister').slideDown();
         })
     })
     $('#btnSettings').on('click',function(){ 
