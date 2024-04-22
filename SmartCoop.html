@@ -160,17 +160,6 @@
             </div>
             <div class="card-body">
                 <form>
-                    <!--
-                    <div class="row">
-                        <div class="column">
-                        <div class="card">
-                            <h3><span id="numEggs"></span></h3>
-                            <p>Eggs</p>
-                        </div>
-                    </div>
-                    -->
-                </form>
-                <form>
                     <button class="col-12 btn text-center btn btn-primary" id="btnEggs" type="button">Add Eggs</button>   
                 </form>
                 <form>
@@ -191,7 +180,6 @@
             </div>
             <div class="card-body">
                 <form>
-                    <label for="txtEggs" class="form-label">Number of Eggs</label>
                     <input id="txtEggs" placeholder="Eggs" aria-placeholder="Eggs" class="form-control">
                     <button class="col-12 btn text-center btn btn-primary" id="btnAddEggs" type="button">Add Eggs</button>
                     <button class="col-12 btn text-cent btn btn-secondary" id="btnReturnEggs" type="button">Return to Dashboard</button>
@@ -520,6 +508,59 @@
         $('#divDashboard').slideUp(function(){
             $('#divEggs').slideDown();
         })
+    })
+    $('#btnViewEggs').on('click',function(){
+        let intDays = $('#txtEggsDate').val();
+        let count = 0;
+        let day = '';
+
+        if($('#txtEggsDate').val() < 0 || $('#txtEggsDate').val() == 0 || $('#txtEggsDate').val() == null){
+            console.log("Error: Days must be greater than 0");
+            Swal.fire({
+                title: "Oops",
+                html: "Days must be greater than 0",
+                icon: "error"}
+                );
+        }
+        else{
+            eggChart.clear();
+            eggChart.destroy();
+            objEggConfig = {
+            type: 'line',
+            data:{
+                labels: [],
+                datasets: [{
+                    label: 'Eggs',
+                    data: [],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: true
+            }
+            }
+            eggChart = new Chart(ctx, objEggConfig);
+            $.getJSON('https://simplecoop.swollenhippo.com/eggs.php', {SessionID:sessionStorage.getItem('SessionID'), days:intDays}, function(eggResults){
+                eggResults.forEach(function(eggDetails){
+                    console.log(eggDetails)
+                    count++;
+                    day = eggDetails.LogDateTime.split(' ')[0];
+                    eggChart.data.labels.push(day);
+                    eggChart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(eggDetails.Harvested);
+                    });
+                    eggChart.update()
+                })
+                $('#eggsChart').slideDown();
+            })
+        }
+
     })
     $('#btnAddEggs').on('click',function(){
         numEggs = $('#txtEggs').val();
