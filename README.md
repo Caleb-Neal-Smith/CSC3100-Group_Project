@@ -4,6 +4,12 @@ Authors: Alec Jones, Nolen Jensen, Samuel Sims, Mitchell Kiriazes, Caleb Smith, 
 
 
 
+## How to Use
+Simply pull the entire repo and open up SmartCoop.html in a web browser.
+The registration page is no longer functional due to the backend API being deactivated, but you can still log in with these credentials:
+- Email: another@another.com
+- Password: hello!
+
 ## **changelog**
 
 ### 4.21.3
